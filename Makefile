@@ -16,7 +16,7 @@ new: ## Add new post
 	hugo new $${FILE}
 
 edit: ## Edit specific post
-	@vim `ls -d $(POSTS) | peco`
+	@nvim `ls -d $(POSTS) | peco`
 
 deploy: ## Deploy posts
 	hugo
