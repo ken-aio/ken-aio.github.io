@@ -37,7 +37,7 @@ todo link
 hugoのインストールは非常に簡単です。  
 macの場合はbrewでインストールできます。  
 
-```
+```bash
 $ brew install hugo
 $ hugo version
 Hugo Static Site Generator v0.53/extended darwin/amd64 BuildDate: unknown
