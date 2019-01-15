@@ -3,7 +3,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ken-aio.github.io/post/helloworld/</loc>
+    <loc>https://ken-aio.github.io/post/2019/01/15/hugo-even/</loc>
+    <lastmod>2019-01-15T16:40:05+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/post/2019/01/15/helloworld/</loc>
     <lastmod>2019-01-15T13:58:38+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -17,7 +24,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/post/</loc>
-    <lastmod>2019-01-15T13:58:38+09:00</lastmod>
+    <lastmod>2019-01-15T16:40:05+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -30,7 +37,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/</loc>
-    <lastmod>2019-01-15T13:58:38+09:00</lastmod>
+    <lastmod>2019-01-15T16:40:05+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

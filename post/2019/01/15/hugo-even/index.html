@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Hugo &#43; Even でGithubブログを作りました - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="はじめに 心機一転、ブログを始めるにあたって使ったのが github pages hugo でした。 理由としては簡単で、ブログの運用をやりたくないので、楽な方法を探してて見つ" /><meta name="keywords" content="ブログ, hugo, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2019/01/15/hugo-even/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Hugo &#43; Even でGithubブログを作りました" />
+<meta property="og:description" content="はじめに 心機一転、ブログを始めるにあたって使ったのが github pages hugo でした。 理由としては簡単で、ブログの運用をやりたくないので、楽な方法を探してて見つ" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/01/15/hugo-even/" /><meta property="article:published_time" content="2019-01-15T16:40:05&#43;09:00"/>
+<meta property="article:modified_time" content="2019-01-15T16:40:05&#43;09:00"/>
+
+<meta itemprop="name" content="Hugo &#43; Even でGithubブログを作りました">
+<meta itemprop="description" content="はじめに 心機一転、ブログを始めるにあたって使ったのが github pages hugo でした。 理由としては簡単で、ブログの運用をやりたくないので、楽な方法を探してて見つ">
+
+
+<meta itemprop="datePublished" content="2019-01-15T16:40:05&#43;09:00" />
+<meta itemprop="dateModified" content="2019-01-15T16:40:05&#43;09:00" />
+<meta itemprop="wordCount" content="1836">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hugo &#43; Even でGithubブログを作りました"/>
+<meta name="twitter:description" content="はじめに 心機一転、ブログを始めるにあたって使ったのが github pages hugo でした。 理由としては簡単で、ブログの運用をやりたくないので、楽な方法を探してて見つ"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Hugo &#43; Even でGithubブログを作りました</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-15 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#github-pages">Github pages</a></li>
+<li><a href="#hugo">hugo</a>
+<ul>
+<li><a href="#hugoの初期化">hugoの初期化</a></li>
+</ul></li>
+<li><a href="#even">Even</a>
+<ul>
+<li><a href="#evenテーマのインストール">Evenテーマのインストール</a></li>
+<li><a href="#evenの設定">Evenの設定</a></li>
+</ul></li>
+<li><a href="#最初のページを作る">最初のページを作る</a></li>
+<li><a href="#github-pagesにデプロイ">Github pagesにデプロイ</a></li>
+<li><a href="#自動化するmakefile">自動化するMakefile</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p>心機一転、ブログを始めるにあたって使ったのが</p>
+
+<ul>
+<li><a href="https://pages.github.com/">github pages</a></li>
+<li><a href="https://gohugo.io/">hugo</a></li>
+</ul>
+
+<p>でした。<br />
+理由としては簡単で、ブログの運用をやりたくないので、楽な方法を探してて見つかったのがこの組み合わせでした。<br />
+はてブとかでも良かったのですが、せっかくなのでちょっとは技術的な方がよかったというのもあり。</p>
+
+<p>hugoは色々なテーマが公開されていて、好きなテーマをインストールしたらすぐに静的なサイトが作れるという優れものでした。</p>
+
+<p>テーマはファーストインプレッションで</p>
+
+<ul>
+<li><a href="https://themes.gohugo.io/hugo-theme-even/">Even</a></li>
+</ul>
+
+<p>を選びました。</p>
+
+<p>本記事ではこのブログの作成手順を記載します。</p>
+
+<h1 id="github-pages">Github pages</h1>
+
+<p>Github pagesはgithubのサービスで静的サイトのホスティングが出来る機能です。<br />
+やり方は簡単、公式ページの手順に沿って作っていけばそれだけで自分のgithubアカウントの静的サイトが完成します。<br />
+詳しくは <a href="https://pages.github.com/">Github Pages公式サイト</a> を参照してください。</p>
+
+<h1 id="hugo">hugo</h1>
+
+<p>hugoは静的サイトのジェネレータです。<br />
+マークダウン形式で内容を書くとそれの静的サイトをビルドしてくれます。<br />
+Golang製というのもあり、非常に軽いです。<br />
+また、preview用の開発サーバも内包されています。<br />
+開発サーバも更新を自動検知してブラウザを自動reloadしてくれるので、非常に簡単にブログを始めることができます。<br />
+便利なのでとてもオススメです。</p>
+
+<p>hugoは非常に簡単に使い始められます。<br />
+macの場合はbrewでインストールできます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ brew install hugo
+$ hugo version
+Hugo Static Site Generator v0.53/extended darwin/amd64 BuildDate: unknown</pre></td></tr></table>
+</div>
+</div>
+<p>だけです。<br />
+&hellip;書くまでもないですねw</p>
+
+<h2 id="hugoの初期化">hugoの初期化</h2>
+
+<p>まずはhugoプロジェクトを初期化します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ hugo new site {your-site-name}
+$ cd {your-site-name}
+$ git init</pre></td></tr></table>
+</div>
+</div>
+<p>すると、サイト名が出来るので、そこに移動します。</p>
+
+<h1 id="even">Even</h1>
+
+<p>hugoにはブログだけでなく、様々なテーマが公開されています。<br />
+公開されているテーマは <a href="https://themes.gohugo.io/">こちらから</a> 参照できます。<br />
+用途に合わせてテーマの選択ができます。<br />
+今回はこのブログのテーマで使った <a href="https://github.com/olOwOlo/hugo-theme-even">Even</a> の始め方について記載します。</p>
+
+<h2 id="evenテーマのインストール">Evenテーマのインストール</h2>
+
+<p>まずはテーマをインストールします。<br />
+テーマをインストールするには <code>git submodule</code> を使います。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ git submodule add https://github.com/olOwOlo/hugo-theme-even.git themes/even</pre></td></tr></table>
+</div>
+</div>
+<p>これでEvenがインストールされます。</p>
+
+<h2 id="evenの設定">Evenの設定</h2>
+
+<p>submoduleを追加しただけだとEvenを使うことはできません。<br />
+詳しくは <a href="https://github.com/olOwOlo/hugo-theme-even">Even公式ドキュメントのREADME</a> を参照するのがよいです。<br />
+ここでは今回のブログを作成した際の手順を記載します。</p>
+
+<p>まずは設定のテンプレートをコピーしてきます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ cp themes/even/exampleSite/config.toml .</pre></td></tr></table>
+</div>
+</div>
+<p>これをベースに自分のサイトの設定をしていきます。<br />
+色々とカスタマイズのポイントがありますが、最低限、↓の設定を変更すればよいです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">baseURL = &#34;https://ken-aio.github.io/&#34;
+title = &#34;ken-aio&#39;s blog&#34;
+[params]
+  logoTitle = &#34;ken-aio&#39;s blog&#34;
+[params.social]
+  # この辺は全てデフォルトになっているので、適宜、自分のアカウントに変更する</pre></td></tr></table>
+</div>
+</div>
+<h1 id="最初のページを作る">最初のページを作る</h1>
+
+<p>設定が出来たので、最初のページを作ってみます。<br />
+ページを作るのも簡単、hugoコマンドで作れます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ hugo new post/helloworld.md</pre></td></tr></table>
+</div>
+</div>
+<p>あとはhelloworld.mdをカスタマイズしていけばブログが出来ます。<br />
+ローカルでの確認サーバの起動もhugoコマンドで出来ます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ hugo server -wD</pre></td></tr></table>
+</div>
+</div>
+<p><code>-wD</code> はwatch と 自動ビルド です。<br />
+これで localhost:1313 にアクセスするとブログが出来ていると思います。</p>
+
+<h1 id="github-pagesにデプロイ">Github pagesにデプロイ</h1>
+
+<p>最後に本番用のビルドをしてmasterブランチにpushするとGithub Pagesでブログが公開されます。<br />
+※ mdファイル内の <code>draft</code> を <code>false</code> に設定しないと public には反映されないので注意. (これにちょっとハマりました&hellip;w)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ hugo
+$ cp -fr public/* /path/to/github_pages_repo/</pre></td></tr></table>
+</div>
+</div>
+<p>やったね！</p>
+
+<h1 id="自動化するmakefile">自動化するMakefile</h1>
+
+<p>本番ビルドとデプロイを自動化するMakefileを↓を元に作りました。(感謝！)</p>
+
+<p><a href="https://github.com/uqichi/blog/blob/master/Makefile">https://github.com/uqichi/blog/blob/master/Makefile</a></p>
+
+<p>今回作った <a href="https://github.com/ken-aio/ken-aio.github.io/blob/blog/Makefile">Makefile</a> の内容です。<br />
+blogを書くブランチが <code>blog</code> ブランチ、 github pagesに公開するのが <code>master</code> ブランチです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"># from https://github.com/uqichi/blog/blob/master/Makefile
+POSTS       := $(wildcard content/post/*.md)
+FILE_DIR    := `date +&#39;%Y/%m/%d&#39;`
+GITHUB_DIR  := &#34;tmp/ken-aio.github.io&#34;
+
+.DEFAULT_GOAL := help
+
+list: ## List all posts
+	@$(foreach val, $(POSTS), echo $(notdir $(val));)
+
+new: ## Add new post
+	@read -p &#34;Enter post name: &#34; f; \
+	if [ -z $${f} ]; then echo &#34;file name is empty. so exit&#34;; exit 1; \
+	else FILE=&#34;post/$(FILE_DIR)/$${f}.md&#34;; \
+	fi; \
+	hugo new $${FILE}
+
+edit: ## Edit specific post
+	@nvim `ls -d $(POSTS) | peco`
+
+deploy: ## Deploy posts
+	hugo
+	cd tmp &amp;&amp; git clone https://github.com/ken-aio/ken-aio.github.io.git
+	rm -fr $(GITHUB_DIR)/*
+	cp -fr public/* $(GITHUB_DIR)/
+	cd $(GITHUB_DIR)/ &amp;&amp; git config --local user.name ken-aio &amp;&amp; git config --local user.email suguru.akiho@gmail.com
+	cd $(GITHUB_DIR)/ &amp;&amp; git add . &amp;&amp; git commit -m &#34;publish&#34; &amp;&amp; git push origin master
+	rm -fr $(GITHUB_DIR)
+
+server: ## Run local server
+	@hugo server -wD
+
+help:
+	@grep -E &#39;^[a-zA-Z_-]+:.*?## .*$$&#39; $(MAKEFILE_LIST) | sort | awk &#39;BEGIN {FS = &#34;:.*?## &#34;}; {printf &#34;\033[36m%-30s\033[0m %s\n&#34;, $$1, $$2}&#39;
+
+# Aliases
+ls: list
+n:  new
+e:  edit
+s:  server</pre></td></tr></table>
+</div>
+</div>
+<h1 id="まとめ">まとめ</h1>
+
+<p>こんな感じでブログが立ち上がりました。<br />
+作業時間は1〜2時間でした。これでSSL対応のサイトができてしまうなんて、便利な世の中ですね。</p>
+
+<p>それでは引き続きナニカ書いていきます。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-01-15</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/01/15/helloworld/">
+            <span class="next-text nav-default">Hello World</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>
