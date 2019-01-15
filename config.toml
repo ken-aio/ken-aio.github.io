@@ -103,7 +103,7 @@ copyright = "@ken-aio"            # default: author.name ↓        # 默认为�
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
   customCSS = []
-  customJS = []
+  customJS = ["blank_link.js"]
 
   [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
     enable = true
