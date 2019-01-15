@@ -1,7 +1,7 @@
 # from https://github.com/uqichi/blog/blob/master/Makefile
-POSTS      := $(wildcard content/post/*.md)
-POST_FILE  := `date +'%y%m%d%H%M%S'`
-GITHUB_DIR := "tmp/ken-aio.github.io"
+POSTS       := $(wildcard content/post/*.md)
+FILE_PREFIX := `date +'%Y%m%d_%H%M'`
+GITHUB_DIR  := "tmp/ken-aio.github.io"
 
 .DEFAULT_GOAL := help
 
@@ -10,8 +10,8 @@ list: ## List all posts
 
 new: ## Add new post
 	@read -p "Enter post name: " f; \
-	if [ -z $${f} ]; then FILE="post/$(POST_FILE).md"; \
-	else FILE="post/$${f}.md"; \
+	if [ -z $${f} ]; then echo "file name is empty. so exit"; exit 1; \
+	else FILE="post/$(FILE_PREFIX)_$${f}.md"; \
 	fi; \
 	hugo new $${FILE}
 
