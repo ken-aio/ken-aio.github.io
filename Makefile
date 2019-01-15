@@ -1,6 +1,7 @@
 # from https://github.com/uqichi/blog/blob/master/Makefile
 POSTS      := $(wildcard content/post/*.md)
 POST_FILE  := `date +'%y%m%d%H%M%S'`
+GITHUB_DIR := "tmp/ken-aio.github.io"
 
 .DEFAULT_GOAL := help
 
@@ -20,10 +21,11 @@ edit: ## Edit specific post
 deploy: ## Deploy posts
 	hugo
 	cd tmp && git clone https://github.com/ken-aio/ken-aio.github.io.git
-	rm -fr tmp/ken-aio.github.io/*
-	cp -fr public/* tmp/ken-aio.github.io/
-	cd tmp/ken-aio.github.io/ && git add . && git commit -m "publish" && git push origin master
-	rm -fr tmp/ken-aio.github.io
+	rm -fr $(GITHUB_DIR)/*
+	cp -fr public/* $(GITHUB_DIR)/
+	cd $(GITHUB_DIR)/ && git config --local user.name ken-aio && git config --local user.email suguru.akiho@gmail.com
+	cd $(GITHUB_DIR)/ && git add . && git commit -m "publish" && git push origin master
+	rm -fr $(GITHUB_DIR)
 
 server: ## Run local server
 	@hugo server -wD
