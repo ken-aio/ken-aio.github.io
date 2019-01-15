@@ -13,7 +13,7 @@ author: "ken-aio"
 心機一転、ブログを始めるにあたって使ったのが  
 
 todo link
-* github pages
+* [github pages][https://pages.github.com/]
 * hugo
 
 でした。  
@@ -34,8 +34,23 @@ todo link
 # github pages
 
 # hugo
+hugoのインストールは非常に簡単です。  
+macの場合はbrewでインストールできます。  
+
+```
+$ brew install hugo
+$ hugo version
+Hugo Static Site Generator v0.53/extended darwin/amd64 BuildDate: unknown
+```
+
+だけです。  
+...書くまでもないですねw  
 
 # even
+hugoにはブログだけでなく、様々なテーマが公開されています。  
+公開されているテーマは [こちらから](https://themes.gohugo.io/) 参照できます。  
+用途に合わせてテーマの選択ができます。  
+今回はこのブログのテーマで使った [Even][https://github.com/olOwOlo/hugo-theme-even] の始め方について記載します。  
 
 # まとめ
 こんな感じでブログが立ち上がりました。  
