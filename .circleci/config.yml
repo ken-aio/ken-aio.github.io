@@ -1,6 +1,9 @@
 version: 2
 jobs:
   deploy:
+    branches:
+      only:
+        - blog
     working_directory: /tmp/ken-aio
     docker:
       - image: circleci/golang:1.11
