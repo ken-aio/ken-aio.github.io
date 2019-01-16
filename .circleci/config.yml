@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  deploy:
+    working_directory: /tmp/ken-aio
+    docker:
+      - image: circleci/golang:1.11
+    environment:
+      - GOCACHE: "/tmp/go/cache"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - hugo
+      - run:
+          name: install hugo
+          command: |
+            go get -v github.com/spf13/hugo
+      - run:
+          name: deploy
+          command: make deploy
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - deploy:
