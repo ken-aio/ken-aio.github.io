@@ -20,7 +20,7 @@ edit: ## Edit specific post
 
 deploy: ## Deploy posts
 	hugo
-	mkdir -p tmp && cd tmp && git clone https://github.com/ken-aio/ken-aio.github.io.git
+	mkdir -p tmp && cd tmp && git clone git@github.com:ken-aio/ken-aio.github.io.git
 	rm -fr $(GITHUB_DIR)/*
 	cp -fr public/* $(GITHUB_DIR)/
 	cd $(GITHUB_DIR)/ && git config --local user.name ken-aio && git config --local user.email suguru.akiho@gmail.com
