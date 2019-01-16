@@ -8,9 +8,9 @@ jobs:
       - GOCACHE: "/tmp/go/cache"
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - hugo
+      - add_ssh_keys:
+          fingerprints:
+            - "ae:a5:cb:56:aa:65:2a:f8:38:c4:2a:62:c1:0e:22:2a"
       - run:
           name: install hugo
           command: |
