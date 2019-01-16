@@ -1,7 +1,7 @@
 ---
 title: "CircleCIでHugoのブログを自動公開する"
 date: 2019-01-16T16:44:14+09:00
-draft: true
+draft: false
 keywords: []
 description: ""
 tags: ["hugo"]
