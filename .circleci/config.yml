@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11
+    branches:
+        only:
+          - master
+    steps:
+      - run:
+          command: echo "This job runs on only master branch"
