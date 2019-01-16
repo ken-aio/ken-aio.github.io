@@ -36,7 +36,21 @@
   </url>
   
   <url>
+    <loc>https://ken-aio.github.io/tags/hugo/</loc>
+    <lastmod>2019-01-15T16:40:05+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/</loc>
+    <lastmod>2019-01-15T16:40:05+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/others/</loc>
     <lastmod>2019-01-15T16:40:05+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
