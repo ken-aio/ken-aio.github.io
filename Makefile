@@ -1,12 +1,9 @@
 # from https://github.com/uqichi/blog/blob/master/Makefile
-POSTS       := $(wildcard content/post/*.md)
+POST_DIR    := "content/post"
 FILE_DIR    := `date +'%Y/%m/%d'`
 GITHUB_DIR  := "tmp/ken-aio.github.io"
 
 .DEFAULT_GOAL := help
-
-list: ## List all posts
-	@$(foreach val, $(POSTS), echo $(notdir $(val));)
 
 new: ## Add new post
 	@read -p "Enter post name: " f; \
@@ -16,7 +13,7 @@ new: ## Add new post
 	hugo new $${FILE}
 
 edit: ## Edit specific post
-	@nvim `ls -d $(POSTS) | peco`
+	@nvim `find $(POST_DIR) -name *.md | peco`
 
 deploy: ## Deploy posts
 	git submodule update -i
@@ -35,7 +32,6 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # Aliases
-ls: list
 n:  new
 e:  edit
 s:  server

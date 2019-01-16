@@ -153,9 +153,6 @@ GITHUB_DIR  := "tmp/ken-aio.github.io"
 
 .DEFAULT_GOAL := help
 
-list: ## List all posts
-	@$(foreach val, $(POSTS), echo $(notdir $(val));)
-
 new: ## Add new post
 	@read -p "Enter post name: " f; \
 	if [ -z $${f} ]; then echo "file name is empty. so exit"; exit 1; \
@@ -182,7 +179,6 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # Aliases
-ls: list
 n:  new
 e:  edit
 s:  server
