@@ -24,6 +24,7 @@ deploy: ## Deploy posts
 	rm -fr $(GITHUB_DIR)/*
 	cp -fr public/* $(GITHUB_DIR)/
 	cd $(GITHUB_DIR)/ && git config --local user.name ken-aio && git config --local user.email suguru.akiho@gmail.com
+	cd $(GITHUB_DIR)/ && git submodule update -i
 	cd $(GITHUB_DIR)/ && git add . && git commit -m "publish" && git push origin master
 	rm -fr $(GITHUB_DIR)
 
