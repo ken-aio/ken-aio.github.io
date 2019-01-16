@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-01-15T16:40:05&#43;09:00" />
 <meta itemprop="dateModified" content="2019-01-15T16:40:05&#43;09:00" />
-<meta itemprop="wordCount" content="1837">
+<meta itemprop="wordCount" content="1820">
 
 
 
@@ -376,10 +376,6 @@ blogを書くブランチが <code>blog</code> ブランチ、 github pagesに�
 </span><span class="lnt">34
 </span><span class="lnt">35
 </span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma"># from https://github.com/uqichi/blog/blob/master/Makefile
@@ -388,9 +384,6 @@ FILE_DIR    := `date +&#39;%Y/%m/%d&#39;`
 GITHUB_DIR  := &#34;tmp/ken-aio.github.io&#34;
 
 .DEFAULT_GOAL := help
-
-list: ## List all posts
-	@$(foreach val, $(POSTS), echo $(notdir $(val));)
 
 new: ## Add new post
 	@read -p &#34;Enter post name: &#34; f; \
@@ -418,7 +411,6 @@ help:
 	@grep -E &#39;^[a-zA-Z_-]+:.*?## .*$$&#39; $(MAKEFILE_LIST) | sort | awk &#39;BEGIN {FS = &#34;:.*?## &#34;}; {printf &#34;\033[36m%-30s\033[0m %s\n&#34;, $$1, $$2}&#39;
 
 # Aliases
-ls: list
 n:  new
 e:  edit
 s:  server</pre></td></tr></table>
