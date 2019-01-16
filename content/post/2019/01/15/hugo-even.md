@@ -4,8 +4,8 @@ date: 2019-01-15T16:40:05+09:00
 draft: false
 keywords: ["ブログ","hugo","even"]
 description: ""
-tags: []
-categories: []
+tags: ["hugo"]
+categories: ["others"]
 author: "ken-aio"
 ---
 
