@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-01-16T16:44:14&#43;09:00" />
 <meta itemprop="dateModified" content="2019-01-16T16:44:14&#43;09:00" />
-<meta itemprop="wordCount" content="1478">
+<meta itemprop="wordCount" content="1572">
 
 
 
@@ -240,7 +240,13 @@ deployの部分だけを切り取ってます。</p>
 基本機能として、ブランチへのpushをトリガーにビルドパイプラインが動きます。</p>
 
 <p>↓が今回設定したyamlです。<br />
-※ hugoのコマンドをキャッシュしてキャッシュがなかったらインストール、にしたかったのですが、これはやれておらず&hellip;</p>
+<del>※ hugoのコマンドをキャッシュしてキャッシュがなかったらインストール、にしたかったのですが、これはやれておらず&hellip;</del><br />
+1/17追記:
+<blockquote class="twitter-tweet" data-lang="en"><p lang="ja" dir="ltr">CircleCI で使える Hugo の Docker image があります。<a href="https://t.co/Iu2H4s06kn">https://t.co/Iu2H4s06kn</a></p>&mdash; iris ʕ◔ϖ◔ʔ Hugo 布教中 (@piris314) <a href="https://twitter.com/piris314/status/1085573867928616960?ref_src=twsrc%5Etfw">January 16, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p>こちらのbase imageを使うように修正しました。<br />
+@piris314さん、ありがとうございます！</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt"> 1
@@ -268,10 +274,6 @@ deployの部分だけを切り取ってます。</p>
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">version: 2
@@ -279,7 +281,7 @@ jobs:
   deploy:
     working_directory: ~/workspace
     docker:
-      - image: circleci/golang:1.11
+      - image: cibuilds/hugo:0.53
     environment:
       - GOCACHE: &#34;/tmp/go/cache&#34;
     steps:
@@ -287,10 +289,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - &#34;ae:a5:cb:56:aa:65:2a:f8:38:c4:2a:62:c1:0e:22:2a&#34;
-      - run:
-          name: install hugo
-          command: |
-            go get -v github.com/spf13/hugo
       - run:
           name: deploy
           command: make deploy
