@@ -3,7 +3,7 @@ jobs:
   deploy:
     working_directory: ~/workspace
     docker:
-      - image: cibuilds/hugo
+      - image: cibuilds/hugo:0.53
     environment:
       - GOCACHE: "/tmp/go/cache"
     steps:
