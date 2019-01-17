@@ -68,7 +68,13 @@ CircleCIは設定にyamlを使います。
 基本機能として、ブランチへのpushをトリガーにビルドパイプラインが動きます。  
 
 ↓が今回設定したyamlです。  
-※ hugoのコマンドをキャッシュしてキャッシュがなかったらインストール、にしたかったのですが、これはやれておらず...
+~~※ hugoのコマンドをキャッシュしてキャッシュがなかったらインストール、にしたかったのですが、これはやれておらず...~~  
+1/17追記:
+<blockquote class="twitter-tweet" data-lang="en"><p lang="ja" dir="ltr">CircleCI で使える Hugo の Docker image があります。<a href="https://t.co/Iu2H4s06kn">https://t.co/Iu2H4s06kn</a></p>&mdash; iris ʕ◔ϖ◔ʔ Hugo 布教中 (@piris314) <a href="https://twitter.com/piris314/status/1085573867928616960?ref_src=twsrc%5Etfw">January 16, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+こちらのbase imageを使うように修正しました。  
+@piris314さん、ありがとうございます！  
 
 ```
 version: 2
@@ -76,7 +82,7 @@ jobs:
   deploy:
     working_directory: ~/workspace
     docker:
-      - image: circleci/golang:1.11
+      - image: cibuilds/hugo:0.53
     environment:
       - GOCACHE: "/tmp/go/cache"
     steps:
@@ -84,10 +90,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "ae:a5:cb:56:aa:65:2a:f8:38:c4:2a:62:c1:0e:22:2a"
-      - run:
-          name: install hugo
-          command: |
-            go get -v github.com/spf13/hugo
       - run:
           name: deploy
           command: make deploy
