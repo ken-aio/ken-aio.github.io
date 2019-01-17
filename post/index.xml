@@ -39,5 +39,14 @@
       <description>Tweet こんにちは。@ken-aioです。 以前、ブログをやっていたのですが、心機一転もう一度ブログをはじめました。 記事をもともとやっていたブログか</description>
     </item>
     
+    <item>
+      <title>Solrと検索のまとめ - 検索編</title>
+      <link>https://ken-aio.github.io/post/2017/08/18/solr-search-base/</link>
+      <pubDate>Fri, 18 Aug 2017 16:30:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2017/08/18/solr-search-base/</guid>
+      <description>Tweet はじめに 書籍を読んだので、自分なりにSolrを使った検索についてまとめます。 なお、この記事については以下の書籍を参考に書いています。 詳細に</description>
+    </item>
+    
   </channel>
 </rss>
