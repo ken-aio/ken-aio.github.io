@@ -16,6 +16,7 @@ author: "ken-aio"
 書籍を読んだので、自分なりにSolrを使った検索についてまとめます。  
 なお、この記事については以下の書籍を参考に書いています。  
 詳細についてはこちらの書籍に記載されているので、気になる方は読んでみてください。  
+入門と書かれていますが、検索全般が網羅されており、とても良書です。  
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=kenaio-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4774189308&linkId=94e5508b8a56fb5f48fb983a4897fa97"></iframe>
 
