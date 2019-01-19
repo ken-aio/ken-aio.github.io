@@ -14,14 +14,25 @@ author: "ken-aio"
 
 # はじめに
 今回はkubeadmというコマンドを使ってkurbernetesクラスターを立ち上げる方法をまとめます。  
+今回利用する環境は以下です。  
+
+| 項目   | 内容         |
+|--------|--------------|
+| 環境   | AWS          |
+| OS     | ubuntu 16.04 |
+| master | t3.medium    |
+| node   | t3.medium    |
+
+なお、master nodeのrequirementはメモリ2GB以上、CPU2コア以上となっています。  
 
 # kubeadmとは
+kubeadm はkubernetesの公式が出しているkubernetesクラスターを簡単に構築できるコマンドです。  
+2018/12/4にGAになりました。  
+https://kubernetes.io/blog/2018/12/04/production-ready-kubernetes-cluster-creation-with-kubeadm/
 
 # kubeadmのインストール
-
-## master nodeのrequirement
-
-## 今回試す環境
+まずはkubeadmをインストールします  
+※ 詳しくは [公式のドキュメント](https://kubernetes.io/docs/setup/independent/install-kubeadm/) を参照  
 
 # masterの構築
 
