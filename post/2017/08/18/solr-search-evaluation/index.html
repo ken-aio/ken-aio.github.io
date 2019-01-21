@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Solrと検索のまとめ - 評価編 - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="Tweet はじめに こちらの記事 の続編で検索における評価の方法についてまとめます。 同じく以下の書籍を参考資料にしています。 検索の評価 Solrの検索精度" /><meta name="keywords" content="solr" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2017/08/18/solr-search-evaluation/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Solrと検索のまとめ - 評価編" />
+<meta property="og:description" content="Tweet はじめに こちらの記事 の続編で検索における評価の方法についてまとめます。 同じく以下の書籍を参考資料にしています。 検索の評価 Solrの検索精度" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2017/08/18/solr-search-evaluation/" /><meta property="article:published_time" content="2017-08-18T19:30:00&#43;09:00"/>
+<meta property="article:modified_time" content="2017-08-18T19:30:00&#43;09:00"/>
+
+<meta itemprop="name" content="Solrと検索のまとめ - 評価編">
+<meta itemprop="description" content="Tweet はじめに こちらの記事 の続編で検索における評価の方法についてまとめます。 同じく以下の書籍を参考資料にしています。 検索の評価 Solrの検索精度">
+
+
+<meta itemprop="datePublished" content="2017-08-18T19:30:00&#43;09:00" />
+<meta itemprop="dateModified" content="2017-08-18T19:30:00&#43;09:00" />
+<meta itemprop="wordCount" content="2269">
+
+
+
+<meta itemprop="keywords" content="solr," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Solrと検索のまとめ - 評価編"/>
+<meta name="twitter:description" content="Tweet はじめに こちらの記事 の続編で検索における評価の方法についてまとめます。 同じく以下の書籍を参考資料にしています。 検索の評価 Solrの検索精度"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Solrと検索のまとめ - 評価編</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-08-18 </span>
+        <div class="post-category">
+            <a href="/categories/search/"> search </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#検索の評価">検索の評価</a>
+<ul>
+<li>
+<ul>
+<li><a href="#検索評価の方法">検索評価の方法</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#オフライン評価の前提">オフライン評価の前提</a></li>
+<li><a href="#11点補完平均適合率">11点補完平均適合率</a>
+<ul>
+<li><a href="#適合率-再現率曲線">適合率 - 再現率曲線</a></li>
+<li><a href="#11点補完平均適合率-1">11点補完平均適合率</a></li>
+<li><a href="#precision-at-k">Precision at K</a></li>
+<li><a href="#average-precision-ap-平均適合率">Average Precision（AP：平均適合率）</a></li>
+<li><a href="#mean-average-precision-map">Mean Average Precision（MAP）</a></li>
+<li><a href="#dcg-ndcg-discounted-cumulative-gain-normalized-dcg">DCG / nDCG（Discounted Cumulative Gain / Normalized DCG）</a></li>
+</ul></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p><a href="https://ken-aio.github.io/post/2017/08/18/solr-search-base/">こちらの記事</a> の続編で検索における評価の方法についてまとめます。<br />
+同じく以下の書籍を参考資料にしています。</p>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=kenaio-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4774189308&linkId=94e5508b8a56fb5f48fb983a4897fa97"></iframe>
+
+<h1 id="検索の評価">検索の評価</h1>
+
+<p>Solrの検索精度について色々と試してみてもそれがいいのか悪いのか感覚に頼ってしまうと人によっていい・悪いが異なってしまいます。<br />
+そのため、検索の評価も数値で表せる方法で行う必要があります。</p>
+
+<h3 id="検索評価の方法">検索評価の方法</h3>
+
+<p>検索の評価には2つの方法があります。</p>
+
+<ul>
+<li>オンライン評価
+
+<ul>
+<li>検索サービスが実際にユーザから利用されている状態で行う評価方法
+
+<ul>
+<li>いわゆるA/Bテスト</li>
+</ul></li>
+<li>実際のサービスを使って評価できるため、テストデータの用意がなく本番サービスに新手法を投入すればテストができるため、オフライン評価と比較するとテストがやりやすい</li>
+<li>反面、本番サービスの検索が劣化する可能性があり、試行錯誤をスピード感をもって行うことは難しい</li>
+</ul></li>
+<li>オフライン評価
+
+<ul>
+<li>検索サービスがエンドユーザに公開されていない状態で行う評価方法</li>
+<li>テスト環境をつかってテストができるため、試行錯誤をスピード感をもって行うことができる</li>
+<li>反面、テストデータを準備する必要がある、サービスで使う場合に入ってくる様々な要因が考慮できない
+
+<ul>
+<li>例えば検索ユーザのバックグラウンド（高校生が検索するのと社会人が検索する場合で結果に差異がでる、など）や検索する時期（夏だったら海水浴グッズが検索より多く検索され、冬だったらスノーボードグッズがより多く検索される、など）などの要因が検索精度に影響する可能性があるが、考慮できない（想定しかできない）</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>ここでは検索のオフライン評価の手法についてまとめます。</p>
+
+<h1 id="オフライン評価の前提">オフライン評価の前提</h1>
+
+<p>いずれのオフライン評価でもテストデータが重要になります。<br />
+テストデータが間違っているとそれを用いて行なった評価もすべて間違ってしまうことになります。<br />
+テストデータとしては以下のようなデータを用意します。</p>
+
+<ol>
+<li>テスト対象のドキュメント群</li>
+<li>テスト対象のクエリ群
+3-1. テスト対象クエリを実行した際の正解ドキュメントと不正解ドキュメントの分類（ラベル付け）※ DCG / nDCG以外
+3-2. テスト対象クエリを実行した際のドキュメントとの関連度にスコアをつけて分類（DCG / nDCG）</li>
+</ol>
+
+<h1 id="11点補完平均適合率">11点補完平均適合率</h1>
+
+<h2 id="適合率-再現率曲線">適合率 - 再現率曲線</h2>
+
+<p>適合率・再現率・ランキングを加味した評価手法です。<br />
+再現率が0.0 〜 1.0までの間を0.1刻みに適合率の値をだします。<br />
+それらの値を2次元グラフのy軸に適合率を、x軸に再現率をプロットしたグラフを作ります。
+このグラフのことを「適合率 - 再現率曲線」と呼びます。<br />
+以下のPDFが参考になります。<br />
+<a href="http://compsci.world.coocan.jp/OUJ/2012PR/pr_14_a.pdf">検索システムの評価</a></p>
+
+<h2 id="11点補完平均適合率-1">11点補完平均適合率</h2>
+
+<p>「再現率 - 適合率曲線」は1つのクエリに対してのグラフでしたが、11点補完平均適合率では全クエリのグラフの各ポイントについての平均をとったグラフです。<br />
+このグラフが右上にある（=再現率をあげても適合率が下がらない）ものほど検索精度が高い、と言えます。<br />
+昔から存在する評価手法のようです。</p>
+
+<h2 id="precision-at-k">Precision at K</h2>
+
+<p>検索結果の上位k件の適合率を計算した結果で評価を行う手法です。<br />
+例えば、上位10件以内に適合ドキュメントが5件ヒットする場合、Precision at 10は 5 / 10 = 0.5となります。<br />
+直感的でわかりやすい数字ですがクエリ固有の特性に結果が左右されやすいです。</p>
+
+<h2 id="average-precision-ap-平均適合率">Average Precision（AP：平均適合率）</h2>
+
+<p>期待する検索結果k件の適合ドキュメントがヒットするまでに上位何件までの検索結果が存在するかに着目した評価手法です。<br />
+検索結果に適合する対象たびに適合率を出し、その算術平均をとった値です。<br />
+詳しくは以下の記事が参考になります。<br />
+<a href="http://skellington.blog.so-net.ne.jp/2012-04-10">Average Precision（平均適合率）とは</a><br />
+<a href="https://datahotel.io/archives/4778">推薦システムの基本的な評価指標について整理してみた</a></p>
+
+<h2 id="mean-average-precision-map">Mean Average Precision（MAP）</h2>
+
+<p>APの値は1つのクエリに対する結果についての結果ですが、それを全てのクエリに対して評価を行い、その算術平均をとった値です。<br />
+詳しくはAPと同じく以下の記事が参考になります。<br />
+<a href="https://datahotel.io/archives/4778">推薦システムの基本的な評価指標について整理してみた</a></p>
+
+<p>以下は2002年のものですが、わかりやすい文章です。<br />
+<a href="https://www.google.co.jp/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=5&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwi8zsL9sODVAhVExLwKHSfLCBEQFghEMAQ&amp;url=https%3A%2F%2Fipsj.ixsq.nii.ac.jp%2Fej%2Findex.php%3Faction%3Dpages_view_main%26active_action%3Drepository_action_common_download%26item_id%3D17649%26item_no%3D1%26attribute_id%3D1%26file_no%3D1%26page_id%3D13%26block_id%3D8&amp;usg=AFQjCNHJyXilU-lm8rP5zg1vXZySuEmrbw">検索実験における評価指標としての平均精度の性質</a></p>
+
+<h2 id="dcg-ndcg-discounted-cumulative-gain-normalized-dcg">DCG / nDCG（Discounted Cumulative Gain / Normalized DCG）</h2>
+
+<p>検索の評価手法で近年着目されているもののようです。<br />
+DCGは大雑把に書くとランキングi番目までの関連度のスコアを計算する手法です。<br />
+nDCGには2種類の手法が提案されているようです。どのような検索結果を出したいか、によって使い分ける必要がありそうです。<br />
+<a href="http://szdr.hatenablog.com/entry/2017/02/24/235539">予測ランキング評価指標：NDCGの2つの定義と特徴の比較</a></p>
+
+<p>DCGについては以下の記事が参考になります。<br />
+<a href="http://qiita.com/nnahito/items/af4a677bee4e3f5d66d4">【アルゴリズム】Discounted Cumulative Gain（DCG）の理論</a></p>
+
+<p>DCGは1つのクエリに対する評価手法です。  nDCGはDCGに対して全クエリを適用して正規化した評価手法です。<br />
+理想のDCG（Ideal DCG）の並び順を定義した結果を用いて計算します。</p>
+
+<p>nDCG = DCG / IDCG</p>
+
+<p>DCG / nDCGについては以下の記事が参考になります。<br />
+<a href="http://www.atmarkit.co.jp/ait/articles/1507/29/news010_3.html">ElasticsearchとKuromojiを使った形態素解析とN-Gramによる検索の適合率と再現率の向上 (<sup>3</sup>&frasl;<sub>3</sub>)</a>
+[](<a href="http://szdr.hatenablog.com/entry/2017/02/24/235539">http://szdr.hatenablog.com/entry/2017/02/24/235539</a>)</p>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>今回はSolrの検索の評価についてまとめました。<br />
+やはり奥が深いですね。<br />
+ただ、サービスをやってる身としてはいくらオフライン評価でいい結果が出ても、本番のサービスをやってみるまでは本当の結果はわからないので、やはり本番サービスに適用して、A/Bテストで良くしていくのが一番いいのかな、という感想です。<br />
+オンライン評価についてもいつかまとめたい気持ちです。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2017-08-18</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/solr/">solr</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2019/01/15/helloworld/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Hello World</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/2017/08/18/solr-search-base/">
+            <span class="next-text nav-default">Solrと検索のまとめ - 検索編</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>

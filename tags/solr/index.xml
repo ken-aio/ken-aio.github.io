@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Fri, 18 Aug 2017 16:30:00 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 18 Aug 2017 19:30:00 +0900</lastBuildDate>
     
 	<atom:link href="https://ken-aio.github.io/tags/solr/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Solrと検索のまとめ - 評価編</title>
+      <link>https://ken-aio.github.io/post/2017/08/18/solr-search-evaluation/</link>
+      <pubDate>Fri, 18 Aug 2017 19:30:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2017/08/18/solr-search-evaluation/</guid>
+      <description>Tweet はじめに こちらの記事 の続編で検索における評価の方法についてまとめます。 同じく以下の書籍を参考資料にしています。 検索の評価 Solrの検索精度</description>
+    </item>
     
     <item>
       <title>Solrと検索のまとめ - 検索編</title>
