@@ -1,7 +1,7 @@
 ---
 title: "Solrと検索のまとめ - 評価編"
 date: 2017-08-18T19:30:00+09:00
-draft: true
+draft: false
 keywords: ["solr"]
 description: ""
 tags: ["solr"]
