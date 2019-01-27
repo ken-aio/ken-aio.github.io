@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>golang on ken-aio&#39;s blog</title>
-    <link>https://ken-aio.github.io/categories/golang/</link>
-    <description>Recent content in golang on ken-aio&#39;s blog</description>
+    <title>cobra on ken-aio&#39;s blog</title>
+    <link>https://ken-aio.github.io/tags/cobra/</link>
+    <description>Recent content in cobra on ken-aio&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
     <lastBuildDate>Sun, 27 Jan 2019 22:00:00 +0900</lastBuildDate>
     
-	<atom:link href="https://ken-aio.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ken-aio.github.io/tags/cobra/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       
       <guid>https://ken-aio.github.io/post/2019/01/27/golang-cobra/</guid>
       <description>Tweet はじめに GolangでCLIツールを作りたくて、ググった結果、cobraを使うことに決めました。 使ってみた結果、非常によかったです。 本格的</description>
-    </item>
-    
-    <item>
-      <title>GolangでEnumを作る</title>
-      <link>https://ken-aio.github.io/post/2019/01/21/golang-enum/</link>
-      <pubDate>Mon, 21 Jan 2019 23:29:51 +0900</pubDate>
-      
-      <guid>https://ken-aio.github.io/post/2019/01/21/golang-enum/</guid>
-      <description>Tweet はじめに GolangでJavaのEnumっぽい機能が欲しいなと思って調べた結果を残しておきます。 今回やりたかったことは Enum自体はGol</description>
     </item>
     
   </channel>
