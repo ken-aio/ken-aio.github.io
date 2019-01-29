@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ken-aio.github.io/post/2019/01/27/cassandra-execql/</loc>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/01/27/golang-cobra/</loc>
     <lastmod>2019-01-27T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -59,13 +66,27 @@
   
   <url>
     <loc>https://ken-aio.github.io/post/</loc>
-    <lastmod>2019-01-27T22:00:00+09:00</lastmod>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/tags/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/cassandra/</loc>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/cassandra/</loc>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -79,7 +100,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/tags/cobra/</loc>
-    <lastmod>2019-01-27T22:00:00+09:00</lastmod>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -93,14 +114,14 @@
   
   <url>
     <loc>https://ken-aio.github.io/tags/golang/</loc>
-    <lastmod>2019-01-27T22:00:00+09:00</lastmod>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/categories/golang/</loc>
-    <lastmod>2019-01-27T22:00:00+09:00</lastmod>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -114,7 +135,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/</loc>
-    <lastmod>2019-01-27T22:00:00+09:00</lastmod>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
