@@ -167,3 +167,6 @@ $ go run main.go world ken
 # まとめ
 このようにcobraを使えばこれまで使っていたようなコマンドラインツールが簡単に出来てしまいます。  
 CLI使ったことない人も是非、試してみて下さい。  
+今回作ったサンプルはこちらのリポジトリに入れてます。  
+
+https://github.com/ken-aio/cobra-sample
