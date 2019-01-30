@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Tue, 29 Jan 2019 22:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 31 Jan 2019 00:20:00 +0900</lastBuildDate>
     
 	<atom:link href="https://ken-aio.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GolangとEchoでお手軽にAPIサーバを立てる</title>
+      <link>https://ken-aio.github.io/post/2019/01/30/golang-echo/</link>
+      <pubDate>Thu, 31 Jan 2019 00:20:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2019/01/30/golang-echo/</guid>
+      <description>Tweet はじめに golangとechoを使って簡単にAPIサーバを作る方法をまとめます。 動機 golangでAPIサーバを作りたい場合、どんな選択を</description>
+    </item>
     
     <item>
       <title>Cassandraにマルチスレッドでバッチ形式にCQLを実行するコマンドexecqlを作った</title>
