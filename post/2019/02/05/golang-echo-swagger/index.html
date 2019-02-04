@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[Golang]Echoで簡単にSwaggerを利用する - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="[Golang]Echoで簡単にSwaggerを利用する" /><meta name="keywords" content="golang, echo, swagger" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2019/02/05/golang-echo-swagger/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[Golang]Echoで簡単にSwaggerを利用する" />
+<meta property="og:description" content="[Golang]Echoで簡単にSwaggerを利用する" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/02/05/golang-echo-swagger/" /><meta property="article:published_time" content="2019-02-05T00:00:00&#43;09:00"/>
+<meta property="article:modified_time" content="2019-02-05T00:00:00&#43;09:00"/>
+
+<meta itemprop="name" content="[Golang]Echoで簡単にSwaggerを利用する">
+<meta itemprop="description" content="[Golang]Echoで簡単にSwaggerを利用する">
+
+
+<meta itemprop="datePublished" content="2019-02-05T00:00:00&#43;09:00" />
+<meta itemprop="dateModified" content="2019-02-05T00:00:00&#43;09:00" />
+<meta itemprop="wordCount" content="1369">
+
+
+
+<meta itemprop="keywords" content="golang,echo,swagger," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Golang]Echoで簡単にSwaggerを利用する"/>
+<meta name="twitter:description" content="[Golang]Echoで簡単にSwaggerを利用する"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[Golang]Echoで簡単にSwaggerを利用する</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-02-05 </span>
+        <div class="post-category">
+            <a href="/categories/golang/"> golang </a>
+            <a href="/categories/echo/"> echo </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#今回作ったサンプル置き場">今回作ったサンプル置き場</a></li>
+<li><a href="#流れ">流れ</a>
+<ul>
+<li><a href="#1-コメントを書く">1. コメントを書く</a>
+<ul>
+<li><a href="#api全体の設定">API全体の設定</a></li>
+<li><a href="#各エンドポイントの設定">各エンドポイントの設定</a></li>
+</ul></li>
+<li><a href="#2-自動生成する">2. 自動生成する</a></li>
+<li><a href="#3-swagger-uiのhandlerを設定する">3. swagger uiのhandlerを設定する</a></li>
+<li><a href="#4-swaggerを開く">4. swaggerを開く</a></li>
+</ul></li>
+<li><a href="#echo-v4対応">echo v4対応</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p>golangとechoを使ってJSON APIのswaggerを生成する方法について書きます。<br />
+<a href="https://github.com/swaggo/swag">swag</a> というツールが提供されているので、基本的にはこのツールを使っていきます。</p>
+
+<h1 id="今回作ったサンプル置き場">今回作ったサンプル置き場</h1>
+
+<p>使い方だけ見たい方はgithubのコードを見るのがいいと思います。</p>
+
+<p><a href="https://github.com/ken-aio/go-echo-sample/tree/v2">https://github.com/ken-aio/go-echo-sample/tree/v2</a></p>
+
+<h1 id="流れ">流れ</h1>
+
+<p>swagを使ったswaggerドキュメントの生成は↓の流れで行います。</p>
+
+<ol>
+<li>コメントを書く</li>
+<li>自動生成する</li>
+<li>swagger uiのhandlerを設定する</li>
+<li>swaggerを開く</li>
+</ol>
+
+<p>実際にサンプルプロジェクトを使ってswaggerを作ってみます。</p>
+
+<h2 id="1-コメントを書く">1. コメントを書く</h2>
+
+<h3 id="api全体の設定">API全体の設定</h3>
+
+<p>まずは全体の設定を <code>main</code> の中に書いていきます。<br />
+中身は利用に関する規約のURL、ライセンス情報、認証用のhttp header情報などの設定が出来ます。<br />
+今回は内部で使うだけの場合を想定して、最低限の設定だけをしてみます。<br />
+※ <a href="https://github.com/swaggo/swag#general-api-info">詳細の設定内容はこちら</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">// @title Swagger Example API
+// @version 1.0
+// @description This is a sample swagger server.
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:1313
+// @BasePath /api/v1
+func main() {
+...</pre></td></tr></table>
+</div>
+</div>
+<h3 id="各エンドポイントの設定">各エンドポイントの設定</h3>
+
+<p>グループに所属しているユーザの一覧を取得するAPIのswagger docを設定します。<br />
+group_idをpathパラメータに受け取って、性別（gender）をqueryパラメータで受け取ります。<br />
+※ <a href="https://github.com/swaggo/swag#api-operation">詳細の設定パラメータはこちら</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">// getUsers is getting users.
+// @Summary get users
+// @Description get users in a group
+// @Accept  json
+// @Produce  json
+// @Param group_id path int true &#34;Group ID&#34;
+// @Param gender query string false &#34;Gender&#34; Enum(man, woman)
+// @Success 200 {array} main.User
+// @Failure 500 {object} main.HTTPError
+// @Router /groups/{group_id}/users [get]
+func getUsers(c echo.Context) error {</pre></td></tr></table>
+</div>
+</div>
+<h2 id="2-自動生成する">2. 自動生成する</h2>
+
+<p>設定した内容に従ってswagger uiのもととなるyamlを自動生成します。<br />
+まずはswagのコマンドをインストールします。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go get -u github.com/swaggo/swag/cmd/swag</pre></td></tr></table>
+</div>
+</div>
+<p>自動生成します。<br />
+生成すると、docsというdirが出来て、この中にswaggerのjsonとyamlが生成されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ swag i</pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-swagger-uiのhandlerを設定する">3. swagger uiのhandlerを設定する</h2>
+
+<p>次にechoからswagger uiを呼び出せるようにhandlerの設定を行います。<br />
+<a href="https://github.com/swaggo/echo-swagger">echo-swagger</a> というライブラリがあるので、こちらを使ってechoからswagger uiを呼び出せるようにします。<br />
+routerを初期化するタイミングでswagger uiの設定をします。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">	// swagger
+	e.GET(&#34;/swagger/*&#34;, echoSwagger.WrapHandler)</pre></td></tr></table>
+</div>
+</div>
+<p>また、docsをimportする必要があるので、以下のようにmainにdocsをimportしておきます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">import (
+	_ &#34;github.com/ken-aio/go-echo-sample/docs&#34;
+)</pre></td></tr></table>
+</div>
+</div>
+<h2 id="4-swaggerを開く">4. swaggerを開く</h2>
+
+<p>ここまで出来たらあとはサーバを立ち上げてswagger uiにアクセスするだけです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.0.0
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:1314</pre></td></tr></table>
+</div>
+</div>
+<p>この状態でブラウザで以下のURLにアクセスすると、swagger uiが表示されると思います。</p>
+
+<p><a href="http://localhost:1314/swagger/index.html">http://localhost:1314/swagger/index.html</a></p>
+
+<p>Try it outから実際にAPIを叩いてみると、APIがたたけることを確認できます。</p>
+
+<h1 id="echo-v4対応">echo v4対応</h1>
+
+<p>現時点ではecho v4が出たばかりということもあって、echo-swaggerがv4では使えませんでした。<br />
+echo-swaggerをforkして、echoのバージョンをv4にあげたものが以下のリポジトリにあるので、これを使えばecho v4の環境でもecho-swaggerを使うことが出来ます。</p>
+
+<p><a href="https://github.com/ken-aio/echo-swagger">https://github.com/ken-aio/echo-swagger</a></p>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>go docを書くだけでswaggerが出来てしまう超便利なswagをechoで使う方法でした。<br />
+APIドキュメントを書くのが面倒な人にはおすすめです。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-02-05</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/echo/">echo</a>
+          <a href="/tags/swagger/">swagger</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/01/30/golang-echo/">
+            <span class="next-text nav-default">GolangとEchoでお手軽にAPIサーバを立てる</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>

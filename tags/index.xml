@@ -41,7 +41,7 @@
     <item>
       <title>echo</title>
       <link>https://ken-aio.github.io/tags/echo/</link>
-      <pubDate>Thu, 31 Jan 2019 00:20:00 +0900</pubDate>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/tags/echo/</guid>
       <description></description>
@@ -59,7 +59,7 @@
     <item>
       <title>golang</title>
       <link>https://ken-aio.github.io/tags/golang/</link>
-      <pubDate>Thu, 31 Jan 2019 00:20:00 +0900</pubDate>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/tags/golang/</guid>
       <description></description>
@@ -80,6 +80,15 @@
       <pubDate>Fri, 18 Aug 2017 19:30:00 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/tags/solr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>swagger</title>
+      <link>https://ken-aio.github.io/tags/swagger/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/tags/swagger/</guid>
       <description></description>
     </item>
     
