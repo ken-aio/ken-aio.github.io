@@ -43,7 +43,7 @@ golangのWeb FWです。
 
 今回のサンプルは↓のリポジトリにおいてあります。  
 
-https://github.com/ken-aio/go-echo-sample
+https://github.com/ken-aio/go-echo-sample/tree/v1
 
 ## インストール
 Go Modulesを使ってechoをインストールします。  
