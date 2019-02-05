@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ken-aio.github.io/post/2019/02/06/golang-echo-middleware/</loc>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/02/05/golang-echo-swagger/</loc>
     <lastmod>2019-02-05T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -80,7 +87,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/post/</loc>
-    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -121,14 +128,14 @@
   
   <url>
     <loc>https://ken-aio.github.io/tags/echo/</loc>
-    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/categories/echo/</loc>
-    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -142,14 +149,14 @@
   
   <url>
     <loc>https://ken-aio.github.io/tags/golang/</loc>
-    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/categories/golang/</loc>
-    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -163,7 +170,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/</loc>
-    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

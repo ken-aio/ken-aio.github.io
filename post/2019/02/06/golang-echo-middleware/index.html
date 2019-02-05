@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[Golang]EchoのMiddlewareを実装する - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="[Golang]EchoのMiddlewareを実装する" /><meta name="keywords" content="golang, echo, middleware" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2019/02/06/golang-echo-middleware/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[Golang]EchoのMiddlewareを実装する" />
+<meta property="og:description" content="[Golang]EchoのMiddlewareを実装する" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/02/06/golang-echo-middleware/" /><meta property="article:published_time" content="2019-02-06T00:00:00&#43;09:00"/>
+<meta property="article:modified_time" content="2019-02-06T00:00:00&#43;09:00"/>
+
+<meta itemprop="name" content="[Golang]EchoのMiddlewareを実装する">
+<meta itemprop="description" content="[Golang]EchoのMiddlewareを実装する">
+
+
+<meta itemprop="datePublished" content="2019-02-06T00:00:00&#43;09:00" />
+<meta itemprop="dateModified" content="2019-02-06T00:00:00&#43;09:00" />
+<meta itemprop="wordCount" content="1963">
+
+
+
+<meta itemprop="keywords" content="golang,echo," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Golang]EchoのMiddlewareを実装する"/>
+<meta name="twitter:description" content="[Golang]EchoのMiddlewareを実装する"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[Golang]EchoのMiddlewareを実装する</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-02-06 </span>
+        <div class="post-category">
+            <a href="/categories/golang/"> golang </a>
+            <a href="/categories/echo/"> echo </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#echoが用意してるmiddleware">echoが用意してるmiddleware</a>
+<ul>
+<li><a href="#logger">Logger</a></li>
+<li><a href="#recover">Recover</a></li>
+</ul></li>
+<li><a href="#middlewareを実装する">middlewareを実装する</a></li>
+<li><a href="#loggerミドルウェアをカスタマイズする">Loggerミドルウェアをカスタマイズする</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p>golangのWeb  FWのechoを使って独自のmiddle wareを作る方法について書きます。</p>
+
+<h1 id="echoが用意してるmiddleware">echoが用意してるmiddleware</h1>
+
+<p>echoは標準で様々なmiddlewareを用意してくれています。<br />
+詳しくは <a href="https://echo.labstack.com/middleware">echoの公式サイト</a> を見てみてください<br />
+代表的なものとしては</p>
+
+<ul>
+<li><a href="https://echo.labstack.com/middleware/logger">Logger</a></li>
+<li><a href="https://echo.labstack.com/middleware/recover">Recover</a></li>
+</ul>
+
+<p>あたりで、echoを使うならとりあえず入れておいて損はないmiddlewareかと思います。<br />
+使い方は、アプリケーションを起動する際にechoのUseを呼ぶだけ、です。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">e := echo.New()
+e.Use(middleware.Recover())
+e.Use(middleware.Logger())</pre></td></tr></table>
+</div>
+</div>
+<p>以下、LoggerとRecoverについて簡単に紹介します。</p>
+
+<h2 id="logger">Logger</h2>
+
+<p>いわゆるアクセスログのようなリクエスト単位のログを出力してくれます。<br />
+フォーマットもいじれて便利です。<br />
+デフォルトのフォーマットは以下のように設定されています。<br />
+<a href="https://github.com/labstack/echo/blob/master/middleware/logger.go">ソースコード</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">Format: `{&#34;time&#34;:&#34;${time_rfc3339_nano}&#34;,&#34;id&#34;:&#34;${id}&#34;,&#34;remote_ip&#34;:&#34;${remote_ip}&#34;,` +
+	`&#34;host&#34;:&#34;${host}&#34;,&#34;method&#34;:&#34;${method}&#34;,&#34;uri&#34;:&#34;${uri}&#34;,&#34;user_agent&#34;:&#34;${user_agent}&#34;,` +
+	`&#34;status&#34;:${status},&#34;error&#34;:&#34;${error}&#34;,&#34;latency&#34;:${latency},&#34;latency_human&#34;:&#34;${latency_human}&#34;`</pre></td></tr></table>
+</div>
+</div>
+<p>これ以外にもログ項目を追加する方法が提供されています。詳細は <a href="https://github.com/labstack/echo/blob/master/middleware/logger.go#L23">ソースコードのコメント</a> を参照するのが良いかと思います。<br />
+この中でも特に便利だなと思ったのが、http headerやquery、formのデータをログに出力できることです。<br />
+ログ出力の実装は↓のようになっているので、それに合わせてフォーマット定義すればその通りにログが出力されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">switch {
+case strings.HasPrefix(tag, &#34;header:&#34;):
+	return buf.Write([]byte(c.Request().Header.Get(tag[7:])))
+case strings.HasPrefix(tag, &#34;query:&#34;):
+	return buf.Write([]byte(c.QueryParam(tag[6:])))
+case strings.HasPrefix(tag, &#34;form:&#34;):
+	return buf.Write([]byte(c.FormValue(tag[5:])))
+case strings.HasPrefix(tag, &#34;cookie:&#34;):
+	cookie, err := c.Cookie(tag[7:])
+	if err == nil {
+		return buf.Write([]byte(cookie.Value))
+	}
+}</pre></td></tr></table>
+</div>
+</div>
+<h2 id="recover">Recover</h2>
+
+<p>アプリケーションのどこかで予期せずにpanicを起こしてしまっても、サーバは落とさずにエラーレスポンスを返せるようにリカバリーするmiddlewareです。<br />
+nil pointerなどのRuntimeエラーはどうしても発生してしまうので、APIサーバとして使うのであれば必須なmiddlewareかなと思います。<br />
+<a href="https://echo.labstack.com/middleware/recover">詳細はこちら</a></p>
+
+<h1 id="middlewareを実装する">middlewareを実装する</h1>
+
+<p><a href="https://echo.labstack.com/cookbook/middleware">公式ドキュメント</a> を参照すると丁寧にmiddlewareの作り方が書かれています。<br />
+こちらを参考にmiddlewareを作ってみます。<br />
+middlewareは <code>echo.HandlerFunc</code> を返す関数を作ればよいだけ、です。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func myMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		log.Println(&#34;before action&#34;)
+		if err := next(c); err != nil {
+			c.Error(err)
+		}
+		log.Println(&#34;after action&#34;)
+		return nil
+	}
+}</pre></td></tr></table>
+</div>
+</div>
+<p><code>next(c)</code> で実際のアプリの処理が実行されるアプリの処理の前後に処理をはさみたいときには <code>next(c)</code> の前後に処理を書けばよいです。<br />
+これを定義した上で、echoを初期化する際に Use してあげれば自分で作ったmiddlewareが有効になります。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">e.Use(myMiddleware)</pre></td></tr></table>
+</div>
+</div>
+<p>処理にもログを仕込みます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">	e.GET(&#34;/&#34;, hello)
+...
+func hello(c echo.Context) error {
+	log.Println(&#34;hello action&#34;)
+	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;world&#34;})
+}</pre></td></tr></table>
+</div>
+</div>
+<p>echoを起動して、curlコマンドを実行してみると、以下のログが出力されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ curl localhost:1314</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">2019/02/05 23:31:38 before action
+2019/02/05 23:31:38 hello action
+2019/02/05 23:31:38 after action
+{&#34;time&#34;:&#34;2019-02-05T23:31:38.618186+09:00&#34;,&#34;id&#34;:&#34;&#34;,&#34;remote_ip&#34;:&#34;::1&#34;,&#34;host&#34;:&#34;localhost:1314&#34;,&#34;method&#34;:&#34;GET&#34;,&#34;uri&#34;:&#34;/&#34;,&#34;user_agent&#34;:&#34;curl/7.54.0&#34;,&#34;status&#34;:200,&#34;error&#34;:&#34;&#34;,&#34;latency&#34;:416885,&#34;latency_human&#34;:&#34;416.885µs&#34;,&#34;bytes_in&#34;:0,&#34;bytes_out&#34;:18}</pre></td></tr></table>
+</div>
+</div>
+<p>これでアプリの処理の前後に処理を挟み込むことが出来ました。<br />
+Loggerミドルウェアを使っているのでアクセスログも出力されています。</p>
+
+<h1 id="loggerミドルウェアをカスタマイズする">Loggerミドルウェアをカスタマイズする</h1>
+
+<p>最後にLoggerミドルウェアを少しカスタマイズしてみます。<br />
+<code>e.Use(middleware.Logger())</code> としていた部分を以下のように書き換えます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+	Format: `${time_rfc3339_nano} ${host} ${method} ${uri} ${status} ${header:my-header}` + &#34;\n&#34;,
+}))</pre></td></tr></table>
+</div>
+</div>
+<p>この状態でアプリを起動してcurlを打ってみます。そしたらログには以下のように出力されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">2019/02/05 23:43:17 before action
+2019/02/05 23:43:17 hello action
+2019/02/05 23:43:17 after action
+2019-02-05T23:43:17.211349+09:00 localhost:1314 GET / 200</pre></td></tr></table>
+</div>
+</div>
+<p>また、独自のheaderを指定すると、それがログに出力されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ curl localhost:1314 -H &#34;my-header:echo sample header&#34;</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">2019-02-05T23:45:24.95393+09:00 localhost:1314 GET / 200 echo sample header</pre></td></tr></table>
+</div>
+</div>
+<p>このように、システム全体としてログとして出力したいheader/query/formなどがあればそれをアクセスログ内に残すことが出来ます。<br />
+使いようによってはとても便利に使うことが出来るかと思います。</p>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>今回はechoのmiddlewareを実装してみました。<br />
+色々と便利な使い方が出来るので、echoを使う場合は使ってみると良いかと思います。<br />
+作ったサンプルは以下のリポジトリにおいています。</p>
+
+<p><a href="https://github.com/ken-aio/go-echo-sample/tree/v3">https://github.com/ken-aio/go-echo-sample/tree/v3</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-02-06</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/echo/">echo</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/02/05/golang-echo-swagger/">
+            <span class="next-text nav-default">[Golang]Echoで簡単にSwaggerを利用する</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>

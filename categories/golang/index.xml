@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 06 Feb 2019 00:00:00 +0900</lastBuildDate>
     
 	<atom:link href="https://ken-aio.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[Golang]EchoのMiddlewareを実装する</title>
+      <link>https://ken-aio.github.io/post/2019/02/06/golang-echo-middleware/</link>
+      <pubDate>Wed, 06 Feb 2019 00:00:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2019/02/06/golang-echo-middleware/</guid>
+      <description>Tweet はじめに golangのWeb FWのechoを使って独自のmiddle wareを作る方法について書きます。 echoが用意してるmiddlew</description>
+    </item>
     
     <item>
       <title>[Golang]Echoで簡単にSwaggerを利用する</title>
