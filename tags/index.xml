@@ -41,7 +41,7 @@
     <item>
       <title>echo</title>
       <link>https://ken-aio.github.io/tags/echo/</link>
-      <pubDate>Wed, 06 Feb 2019 00:00:00 +0900</pubDate>
+      <pubDate>Thu, 07 Feb 2019 23:00:00 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/tags/echo/</guid>
       <description></description>
@@ -59,7 +59,7 @@
     <item>
       <title>golang</title>
       <link>https://ken-aio.github.io/tags/golang/</link>
-      <pubDate>Wed, 06 Feb 2019 00:00:00 +0900</pubDate>
+      <pubDate>Thu, 07 Feb 2019 23:00:00 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/tags/golang/</guid>
       <description></description>
@@ -71,6 +71,15 @@
       <pubDate>Wed, 16 Jan 2019 16:44:14 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>resty</title>
+      <link>https://ken-aio.github.io/tags/resty/</link>
+      <pubDate>Thu, 07 Feb 2019 23:00:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/tags/resty/</guid>
       <description></description>
     </item>
     

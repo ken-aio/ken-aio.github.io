@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ken-aio.github.io/post/2019/02/07/golang-resty/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/02/06/golang-echo-middleware/</loc>
     <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -80,14 +87,22 @@
   </url>
   
   <url>
+    <loc>https://ken-aio.github.io/categories/api/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/categories/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/post/</loc>
-    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -128,7 +143,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/tags/echo/</loc>
-    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -149,14 +164,14 @@
   
   <url>
     <loc>https://ken-aio.github.io/tags/golang/</loc>
-    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/categories/golang/</loc>
-    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -170,7 +185,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/</loc>
-    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -178,6 +193,13 @@
   <url>
     <loc>https://ken-aio.github.io/categories/others/</loc>
     <lastmod>2019-01-16T16:44:14+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/resty/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

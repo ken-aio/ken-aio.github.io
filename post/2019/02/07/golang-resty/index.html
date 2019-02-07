@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[Golang]Restyで手軽にAPIリクエストを送る - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="[Golang]Restyで手軽にAPIリクエストを送る" /><meta name="keywords" content="golang, resty" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2019/02/07/golang-resty/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[Golang]Restyで手軽にAPIリクエストを送る" />
+<meta property="og:description" content="[Golang]Restyで手軽にAPIリクエストを送る" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/02/07/golang-resty/" /><meta property="article:published_time" content="2019-02-07T23:00:00&#43;09:00"/>
+<meta property="article:modified_time" content="2019-02-07T23:00:00&#43;09:00"/>
+
+<meta itemprop="name" content="[Golang]Restyで手軽にAPIリクエストを送る">
+<meta itemprop="description" content="[Golang]Restyで手軽にAPIリクエストを送る">
+
+
+<meta itemprop="datePublished" content="2019-02-07T23:00:00&#43;09:00" />
+<meta itemprop="dateModified" content="2019-02-07T23:00:00&#43;09:00" />
+<meta itemprop="wordCount" content="1834">
+
+
+
+<meta itemprop="keywords" content="golang,resty,echo," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Golang]Restyで手軽にAPIリクエストを送る"/>
+<meta name="twitter:description" content="[Golang]Restyで手軽にAPIリクエストを送る"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[Golang]Restyで手軽にAPIリクエストを送る</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-02-07 </span>
+        <div class="post-category">
+            <a href="/categories/golang/"> golang </a>
+            <a href="/categories/api/"> API </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#resty">Resty</a></li>
+<li><a href="#使ってみる">使ってみる</a>
+<ul>
+<li><a href="#簡単なapiを叩いてみる">簡単なAPIを叩いてみる</a>
+<ul>
+<li><a href="#サーバ">サーバ</a></li>
+<li><a href="#クライアント">クライアント</a></li>
+</ul></li>
+<li><a href="#高度な機能を試す">高度な機能を試す</a>
+<ul>
+<li><a href="#サーバ-1">サーバ</a></li>
+<li><a href="#クライアント-1">クライアント</a></li>
+<li><a href="#backoff確認">Backoff確認</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p>今はマイクロサービスアーキテクチャでシステムを作るのが定石になってきている時代です。<br />
+最近はJSONのAPIだけではなく、GraphQLやgRPCなどの連携方法が登場していますが、JSONのREST APIを使っているシステムもまだまだ多いかと思います。</p>
+
+<p>GolangでJSON形式のAPIリクエストを送ってレスポンスを受け取る場合、 <code>net/http</code> の <code>http.Client</code> あたりを使うのが定石かと思います。<br />
+これをラップしてより使いやすくしてくれているライブラリが <code>Resty</code> です。</p>
+
+<h1 id="resty">Resty</h1>
+
+<p>Restyの機能は <a href="https://github.com/go-resty/resty#features">githubのREADME</a> を見ると一覧化されています。<br />
+この中でもより有用と思うのは</p>
+
+<ul>
+<li>APIに失敗した場合のリトライが非常に簡単にかける(Exponential Backoffアルゴリズム)</li>
+<li>request / responseのパラメータがmapやstructで行える</li>
+<li>requestの前後にhookを仕掛けることができる</li>
+<li>テストが簡単に出来る</li>
+</ul>
+
+<p>あたりかと思います。<br />
+これらの機能があるのでAPI呼び出しを非常に簡単に行うことができます。</p>
+
+<h1 id="使ってみる">使ってみる</h1>
+
+<p>早速使ってみます。<br />
+サンプルコードとしてサーバとRestyを使ったクライアントを実装します。</p>
+
+<h2 id="簡単なapiを叩いてみる">簡単なAPIを叩いてみる</h2>
+
+<h3 id="サーバ">サーバ</h3>
+
+<p>サンプルのサーバは <code>Echo</code> を使って実装します。<br />
+Echoについては <a href="https://ken-aio.github.io/tags/echo/">過去の記事</a> あたりを参照してみてください。</p>
+
+<p>まずはとても簡単なServerAPIを実装します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">	e.GET(&#34;/&#34;, hello)
+	e.POST(&#34;/&#34;, postHello)
+	e.PUT(&#34;/&#34;, putHello)
+	e.DELETE(&#34;/&#34;, deleteHello)
+...
+func hello(c echo.Context) error {
+	log.Println(&#34;hello action&#34;)
+	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;world&#34;})
+}
+
+func postHello(c echo.Context) error {
+	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;post&#34;})
+}
+
+func putHello(c echo.Context) error {
+	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;put&#34;})
+}
+
+func deleteHello(c echo.Context) error {
+	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;delete&#34;})
+}</pre></td></tr></table>
+</div>
+</div>
+<p>起動してcurlを実行してみると以下のような結果が得られます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ curl -X GET localhost:1314
+{&#34;hello&#34;:&#34;world&#34;}
+$ curl -X POST localhost:1314
+{&#34;hello&#34;:&#34;post&#34;}
+$ curl -X PUT localhost:1314
+{&#34;hello&#34;:&#34;put&#34;}
+$ curl -X DELETE localhost:1314
+{&#34;hello&#34;:&#34;delete&#34;}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="クライアント">クライアント</h3>
+
+<p>簡単に実装してみます。<br />
+以下のコードだけで、上の <code>curl</code> と同じことが実現出来ます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func main() {
+	resp, _ := resty.R().Get(&#34;http://localhost:1314&#34;)
+	fmt.Printf(&#34;Get resp = %+v\n&#34;, resp)
+	resp, _ = resty.R().Post(&#34;http://localhost:1314&#34;)
+	fmt.Printf(&#34;Post resp = %+v\n&#34;, resp)
+	resp, _ = resty.R().Put(&#34;http://localhost:1314&#34;)
+	fmt.Printf(&#34;Put resp = %+v\n&#34;, resp)
+	resp, _ = resty.R().Delete(&#34;http://localhost:1314&#34;)
+	fmt.Printf(&#34;Delete resp = %+v\n&#34;, resp)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>実行結果は</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run client/main.go
+Get resp = {&#34;hello&#34;:&#34;world&#34;}
+Post resp = {&#34;hello&#34;:&#34;post&#34;}
+Put resp = {&#34;hello&#34;:&#34;put&#34;}
+Delete resp = {&#34;hello&#34;:&#34;delete&#34;}</pre></td></tr></table>
+</div>
+</div>
+<p>です。ばっちりAPIを叩けていますね。</p>
+
+<h2 id="高度な機能を試す">高度な機能を試す</h2>
+
+<p>これだけだとつまらないので、もう少し高度な機能を試してみます。<br />
+今回試すのは</p>
+
+<ul>
+<li>structへのbind</li>
+<li>リトライ</li>
+</ul>
+
+<p>をやってみます。</p>
+
+<h3 id="サーバ-1">サーバ</h3>
+
+<p>まずはstructのbindの確認のため、テストサーバを実装します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">// Req is request body
+type Req struct {
+	Query string `json:&#34;query&#34;`
+}
+...
+	e.GET(&#34;/param&#34;, getParam)
+	e.POST(&#34;/param&#34;, postParam)
+...
+func getParam(c echo.Context) error {
+	r := &amp;Req{}
+	if err := c.Bind(r); err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{&#34;success&#34;: true, &#34;message&#34;: &#34;good get&#34;, &#34;param&#34;: r.Query})
+}
+
+func postParam(c echo.Context) error {
+	r := &amp;Req{}
+	if err := c.Bind(r); err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{&#34;success&#34;: true, &#34;message&#34;: &#34;good post&#34;, &#34;param&#34;: r.Query})
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="クライアント-1">クライアント</h3>
+
+<p>queryパラメータとbodyはmapやstructを渡すとそのままqueryパラメータやbodyとしてrequestを渡してくれます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func structBindTest() {
+	resp, err := resty.
+		R().
+		SetQueryParam(&#34;query&#34;, &#34;this is query param&#34;).
+		Get(&#34;http://localhost:1314/param&#34;)
+	if err != nil {
+		log.Printf(&#34;get err: %+v&#34;, err)
+	}
+	fmt.Printf(&#34;Get resp = %+v\n&#34;, resp)
+
+	resp, err = resty.
+		R().
+		SetBody(&amp;Req{Query: &#34;this is body param&#34;}).
+		Post(&#34;http://localhost:1314/param&#34;)
+	if err != nil {
+		log.Printf(&#34;get err: %+v&#34;, err)
+	}
+	fmt.Printf(&#34;Get resp = %+v\n&#34;, resp)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>実行して見ると以下の結果が得られます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run client/main.go
+Get resp = {&#34;message&#34;:&#34;good get&#34;,&#34;param&#34;:&#34;this is query param&#34;,&#34;success&#34;:true}
+Get resp = {&#34;message&#34;:&#34;good post&#34;,&#34;param&#34;:&#34;this is body param&#34;,&#34;success&#34;:true}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="backoff確認">Backoff確認</h3>
+
+<p>Restyは <a href="https://en.wikipedia.org/wiki/Exponential_backoff">Exponential Backoffアルゴリズム</a> でretryを行うことが出来ます。</p>
+
+<p>Exponential Backoffアルゴリズムは要するにリトライ間隔を少しずつ伸ばしていって、最後に諦める、というようなアルゴリズムです。<br />
+詳しくは以下のブログが参考になります。</p>
+
+<ul>
+<li><a href="https://yoshidashingo.hatenablog.com/entry/2014/08/17/135017">AWSユーザーは必ず覚えておきたいExponential Backoffアルゴリズムとは何か</a></li>
+</ul>
+
+<p>ここではクライアントだけを実装します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func retryTest() {
+	log.Println(&#34;start&#34;)
+	retryNum := 5
+	resty.
+		SetRetryCount(retryNum).
+		SetRetryWaitTime(1 * time.Second).
+		SetRetryMaxWaitTime(5 * time.Second).
+		R().
+		Get(&#34;http://dummyurl&#34;)
+	log.Println(&#34;end&#34;)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>実行してみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run client/main.go
+2019/02/07 23:26:42 start
+RESTY 2019/02/07 23:26:42 ERROR Get http://dummyurl: dial tcp: lookup dummyurl: no such host, Attempt 1
+RESTY 2019/02/07 23:26:43 ERROR Get http://dummyurl: dial tcp: lookup dummyurl: no such host, Attempt 2
+RESTY 2019/02/07 23:26:44 ERROR Get http://dummyurl: dial tcp: lookup dummyurl: no such host, Attempt 3
+RESTY 2019/02/07 23:26:47 ERROR Get http://dummyurl: dial tcp: lookup dummyurl: no such host, Attempt 4
+RESTY 2019/02/07 23:26:51 ERROR Get http://dummyurl: dial tcp: lookup dummyurl: no such host, Attempt 5
+2019/02/07 23:26:56 end</pre></td></tr></table>
+</div>
+</div>
+<p>ログを見てみると、リトライ間隔が少しずつ伸びていって、最後は5秒のタイムアウトで終わっていることが確認できます。</p>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>Restyを使うとただリクエストを送ってレスポンスを受け取るだけではなく、様々な付加要素を得ることが出来ます。<br />
+今回は記載していないですが、hook機能もなかなか便利です。<br />
+例えば、共通の認証をhookさせて認証が有効な場合はビジネスロジックに関係なく認証機構をhookにいれる、などで使えます。</p>
+
+<p>マイクロサービスでJSON APIを使う場合はRestyの利用を検討してみてください。</p>
+
+<p>今回のサンプルは以下においています。</p>
+
+<p><a href="https://github.com/ken-aio/go-echo-sample/releases/tag/v4">https://github.com/ken-aio/go-echo-sample/releases/tag/v4</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-02-07</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/resty/">resty</a>
+          <a href="/tags/echo/">echo</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/02/06/golang-echo-middleware/">
+            <span class="next-text nav-default">[Golang]EchoのMiddlewareを実装する</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>
