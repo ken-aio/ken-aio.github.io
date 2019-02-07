@@ -10,7 +10,7 @@ new: ## Add new post
 	if [ -z $${f} ]; then echo "file name is empty. so exit"; exit 1; \
 	else FILE="post/$(FILE_DIR)/$${f}.md"; \
 	fi; \
-	hugo new $${FILE}
+	git checkout -b post/$${f} && hugo new $${FILE}
 
 edit: ## Edit specific post
 	@nvim `find $(POST_DIR) -name *.md | peco`
