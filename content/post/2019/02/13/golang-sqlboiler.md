@@ -1,7 +1,7 @@
 ---
 title: "GolangのORM SQLBoilerを使ってみる - セットアップ編"
 date: 2019-02-13T23:00:00+09:00
-draft: true
+draft: false
 keywords: ["golang", "sqlboiler"]
 description: ""
 tags: ["golang", "sqlboiler"]
