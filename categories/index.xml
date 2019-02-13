@@ -22,6 +22,15 @@
     </item>
     
     <item>
+      <title>ORM</title>
+      <link>https://ken-aio.github.io/categories/orm/</link>
+      <pubDate>Wed, 13 Feb 2019 23:00:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/categories/orm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>cassandra</title>
       <link>https://ken-aio.github.io/categories/cassandra/</link>
       <pubDate>Tue, 29 Jan 2019 22:00:00 +0900</pubDate>
@@ -42,7 +51,7 @@
     <item>
       <title>golang</title>
       <link>https://ken-aio.github.io/categories/golang/</link>
-      <pubDate>Thu, 07 Feb 2019 23:00:00 +0900</pubDate>
+      <pubDate>Wed, 13 Feb 2019 23:00:00 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/categories/golang/</guid>
       <description></description>
