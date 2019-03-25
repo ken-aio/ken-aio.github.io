@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Wed, 13 Feb 2019 23:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 25 Mar 2019 23:00:00 +0900</lastBuildDate>
     
 	<atom:link href="https://ken-aio.github.io/categories/orm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)</title>
+      <link>https://ken-aio.github.io/post/2019/03/25/golang-sqlboiler-cud/</link>
+      <pubDate>Mon, 25 Mar 2019 23:00:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2019/03/25/golang-sqlboiler-cud/</guid>
+      <description>Tweet はじめに GolangのORM SQLBoilerを使ってみる - セットアップ編 でセットアップ完了したので、実際にSQLBoilerを使って実装</description>
+    </item>
     
     <item>
       <title>GolangのORM SQLBoilerを使ってみる - セットアップ編</title>

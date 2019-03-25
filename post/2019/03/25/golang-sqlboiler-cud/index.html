@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete) - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)" /><meta name="keywords" content="golang, ORM, sqlboiler" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2019/03/25/golang-sqlboiler-cud/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)" />
+<meta property="og:description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/03/25/golang-sqlboiler-cud/" /><meta property="article:published_time" content="2019-03-25T23:00:00&#43;09:00"/>
+<meta property="article:modified_time" content="2019-03-25T23:00:00&#43;09:00"/>
+
+<meta itemprop="name" content="GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)">
+<meta itemprop="description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)">
+
+
+<meta itemprop="datePublished" content="2019-03-25T23:00:00&#43;09:00" />
+<meta itemprop="dateModified" content="2019-03-25T23:00:00&#43;09:00" />
+<meta itemprop="wordCount" content="1156">
+
+
+
+<meta itemprop="keywords" content="golang,ORM,sqlboiler," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)"/>
+<meta name="twitter:description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-03-25 </span>
+        <div class="post-category">
+            <a href="/categories/golang/"> golang </a>
+            <a href="/categories/orm/"> ORM </a>
+            <a href="/categories/sqlboiler/"> sqlboiler </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#初期化">初期化</a></li>
+<li><a href="#insert">insert</a></li>
+<li><a href="#update">update</a></li>
+<li><a href="#delete">delete</a></li>
+<li><a href="#トランザクション処理">トランザクション処理</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p><a href="https://ken-aio.github.io/post/2019/02/13/golang-sqlboiler/">GolangのORM SQLBoilerを使ってみる - セットアップ編</a> でセットアップ完了したので、実際にSQLBoilerを使って実装してみたいと思います。</p>
+
+<h1 id="初期化">初期化</h1>
+
+<p>まずは初期化を行います。<br />
+初期化ではコネクションプールを作ったり、SQLBoiler自体の設定をしたりします。<br />
+今回は発行されたSQLを見てみたいので、debugモードにします。<br />
+なお、簡単化のため、エラーが出たら全てpanicを起こしています。(良い子は真似しないように)</p>
+
+<p>以下のコードで初期化出来ます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func initDB() {
+	dns := &#34;user=postgres dbname=sampledb host=localhost sslmode=disable connect_timeout=10&#34;
+	con, err := sql.Open(&#34;postgres&#34;, dns)
+	if err != nil {
+		panic(err)
+	}
+	// connection pool settings
+	con.SetMaxIdleConns(10)
+	con.SetMaxOpenConns(10)
+	con.SetConnMaxLifetime(300 * time.Second)
+
+	// global connection setting
+	boil.SetDB(con)
+	boil.DebugMode = true
+}</pre></td></tr></table>
+</div>
+</div>
+<h1 id="insert">insert</h1>
+
+<p>まずはinsertをしてみます。insertは非常に簡単に出来ます。<br />
+insertしたいテーブルのStructインスタンスを作って、Insertの関数を呼ぶだけです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func insert() {
+	user := db.User{Email: null.StringFrom(&#34;test@example.com&#34;), PasswordDigest: null.StringFrom(&#34;digested-password&#34;)}
+	fmt.Printf(&#34;before user = %+v\n&#34;, user)
+	user.InsertGP(context.Background(), boil.Infer())
+	fmt.Printf(&#34;after user = %+v\n&#34;, user)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>ここで出てくる <code>null.String</code> はnot null制約がついていないカラムについてnullで覆うことでnull safeな状態になっています。<br />
+<a href="https://github.com/volatiletech/null">https://github.com/volatiletech/null</a><br />
+これを実行すると、以下のようなログが出力されます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+before user = {ID:0 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:0001-01-01 00:00:00 +0000 UTC UpdatedAt:0001-01-01 00:00:00 +0000 UTC R:&lt;nil&gt; L:{}}
+INSERT INTO &#34;users&#34; (&#34;email&#34;,&#34;password_digest&#34;,&#34;created_at&#34;,&#34;updated_at&#34;) VALUES ($1,$2,$3,$4) RETURNING &#34;id&#34;
+[{test@example.com true} {digested-password true} 2019-02-14 14:43:41.253731 +0000 UTC 2019-02-14 14:43:41.253731 +0000 UTC]
+after user = {ID:3 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-02-14 14:43:41.253731 +0000 UTC UpdatedAt:2019-02-14 14:43:41.253731 +0000 UTC R:&lt;nil&gt; L:{}}</pre></td></tr></table>
+</div>
+</div>
+<p>デフォルトで <code>created_at</code> と <code>updated_at</code> に現在時刻を入れてくれます。<br />
+もちろん、updateの時は <code>updated_at</code> だけが更新されます。</p>
+
+<h1 id="update">update</h1>
+
+<p>次にupdateしてみます。<br />
+updateも簡単で、entity structのupdateを呼ぶのみです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func update() {
+	user := db.User{ID: 1}
+	user.Email = null.StringFrom(&#34;update@example.com&#34;)
+	user.UpdateGP(context.Background(), boil.Infer())
+}</pre></td></tr></table>
+</div>
+</div>
+<p>実行してみるとupdateが発行されているログが確認できます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+UPDATE &#34;users&#34; SET &#34;email&#34;=$1,&#34;password_digest&#34;=$2,&#34;updated_at&#34;=$3 WHERE &#34;id&#34;=$4
+[{update@example.com true} { false} 2019-02-21 14:13:19.8155 +0000 UTC 1]</pre></td></tr></table>
+</div>
+</div>
+<h1 id="delete">delete</h1>
+
+<p>続いてdeleteしてみます。<br />
+deleteもupdateのようにentity structのdeleteを呼びます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func delete() {
+	user := db.User{ID: 1}
+	user.DeleteGP(context.Background())
+}</pre></td></tr></table>
+</div>
+</div>
+<p>実行するとdeleteが発行されています。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+DELETE FROM &#34;users&#34; WHERE &#34;id&#34;=$1
+1</pre></td></tr></table>
+</div>
+</div>
+<h1 id="トランザクション処理">トランザクション処理</h1>
+
+<p>トランザクション処理も簡単にできます。<br />
+以下がサンプルコードです。(簡単のためにエラーは無視しています)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func insertTx() {
+	ctx := context.Background()
+	tx, err := boil.BeginTx(ctx, nil)
+	if err != nil {
+		panic(err)
+	}
+	user := db.User{Email: null.StringFrom(&#34;test@example.com&#34;), PasswordDigest: null.StringFrom(&#34;digested-password&#34;)}
+	fmt.Printf(&#34;before user = %+v\n&#34;, user)
+	err = user.Insert(ctx, tx, boil.Infer())
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
+	tx.Commit()
+	fmt.Printf(&#34;after user = %+v\n&#34;, user)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>実行すると以下のログが確認できます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+before user = {ID:0 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:0001-01-01 00:00:00 +0000 UTC UpdatedAt:0001-01-01 00:00:00 +0000 UTC R:&lt;nil&gt; L:{}}
+INSERT INTO &#34;users&#34; (&#34;email&#34;,&#34;password_digest&#34;,&#34;created_at&#34;,&#34;updated_at&#34;) VALUES ($1,$2,$3,$4) RETURNING &#34;id&#34;
+[{test@example.com true} {digested-password true} 2019-03-25 13:52:29.148263 +0000 UTC 2019-03-25 13:52:29.148263 +0000 UTC]
+after user = {ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 UTC UpdatedAt:2019-03-25 13:52:29.148263 +0000 UTC R:&lt;nil&gt; L:{}}</pre></td></tr></table>
+</div>
+</div>
+<h1 id="まとめ">まとめ</h1>
+
+<p>これでSQLBoilerを使って更新系の処理を行うことができました。<br />
+自動生成機能があるので、色々と楽にできる部分が多いですね。<br />
+次回は多彩なselectをやってみようと思います。<br />
+今回作ったサンプルは以下のリポジトリに入れてあります。<br />
+<a href="https://github.com/ken-aio/go-sqlboiler-sample">https://github.com/ken-aio/go-sqlboiler-sample</a></p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-03-25</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/orm/">ORM</a>
+          <a href="/tags/sqlboiler/">sqlboiler</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/02/13/golang-sqlboiler/">
+            <span class="next-text nav-default">GolangのORM SQLBoilerを使ってみる - セットアップ編</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>
