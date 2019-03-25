@@ -1,9 +1,9 @@
 ---
-title: "GolangのORM SQLBoilerを使ってみる - 実装編"
-date: 2019-02-14T23:09:03+09:00
-draft: true
+title: "GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)"
+date: 2019-03-25T23:00:00+09:00
+draft: false
 keywords: ["golang", "ORM", "sqlboiler"]
-description: "GolangのORM SQLBoilerを使ってみる - 実装編"
+description: "GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)"
 tags: ["golang", "ORM", "sqlboiler"]
 categories: ["golang", "ORM", "sqlboiler"]
 author: "ken-aio"
@@ -53,6 +53,8 @@ func insert() {
 }
 ```
 
+ここで出てくる `null.String` はnot null制約がついていないカラムについてnullで覆うことでnull safeな状態になっています。  
+https://github.com/volatiletech/null  
 これを実行すると、以下のようなログが出力されます。  
 ```
 $ go run main.go
@@ -65,14 +67,74 @@ after user = {ID:3 Email:{String:test@example.com Valid:true} PasswordDigest:{St
 もちろん、updateの時は `updated_at` だけが更新されます。  
 
 # update
+次にupdateしてみます。  
+updateも簡単で、entity structのupdateを呼ぶのみです。  
+```
+func update() {
+	user := db.User{ID: 1}
+	user.Email = null.StringFrom("update@example.com")
+	user.UpdateGP(context.Background(), boil.Infer())
+}
+```
+
+実行してみるとupdateが発行されているログが確認できます。  
+```
+$ go run main.go
+UPDATE "users" SET "email"=$1,"password_digest"=$2,"updated_at"=$3 WHERE "id"=$4
+[{update@example.com true} { false} 2019-02-21 14:13:19.8155 +0000 UTC 1]
+```
 
 # delete
+続いてdeleteしてみます。  
+deleteもupdateのようにentity structのdeleteを呼びます。  
+```
+func delete() {
+	user := db.User{ID: 1}
+	user.DeleteGP(context.Background())
+}
+```
 
-# select
-## query mod
-## 単一テーブル
-## join
-## load
-## 特定の条件をつける
+実行するとdeleteが発行されています。  
+```
+$ go run main.go
+DELETE FROM "users" WHERE "id"=$1
+1
+```
+
+# トランザクション処理
+トランザクション処理も簡単にできます。  
+以下がサンプルコードです。(簡単のためにエラーは無視しています)  
+```
+func insertTx() {
+	ctx := context.Background()
+	tx, err := boil.BeginTx(ctx, nil)
+	if err != nil {
+		panic(err)
+	}
+	user := db.User{Email: null.StringFrom("test@example.com"), PasswordDigest: null.StringFrom("digested-password")}
+	fmt.Printf("before user = %+v\n", user)
+	err = user.Insert(ctx, tx, boil.Infer())
+	if err != nil {
+		tx.Rollback()
+		panic(err)
+	}
+	tx.Commit()
+	fmt.Printf("after user = %+v\n", user)
+}
+```
+
+実行すると以下のログが確認できます。  
+```
+$ go run main.go
+before user = {ID:0 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:0001-01-01 00:00:00 +0000 UTC UpdatedAt:0001-01-01 00:00:00 +0000 UTC R:<nil> L:{}}
+INSERT INTO "users" ("email","password_digest","created_at","updated_at") VALUES ($1,$2,$3,$4) RETURNING "id"
+[{test@example.com true} {digested-password true} 2019-03-25 13:52:29.148263 +0000 UTC 2019-03-25 13:52:29.148263 +0000 UTC]
+after user = {ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 UTC UpdatedAt:2019-03-25 13:52:29.148263 +0000 UTC R:<nil> L:{}}
+```
 
 # まとめ
+これでSQLBoilerを使って更新系の処理を行うことができました。  
+自動生成機能があるので、色々と楽にできる部分が多いですね。  
+次回は多彩なselectをやってみようと思います。  
+今回作ったサンプルは以下のリポジトリに入れてあります。  
+https://github.com/ken-aio/go-sqlboiler-sample
