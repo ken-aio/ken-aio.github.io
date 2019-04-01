@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>GolangのORM SQLBoilerを使ってみる - 実装編(Select) - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Select)" /><meta name="keywords" content="golang, ORM, sqlboiler" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2019/04/01/golang-sqlboiler-select/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="GolangのORM SQLBoilerを使ってみる - 実装編(Select)" />
+<meta property="og:description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Select)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/04/01/golang-sqlboiler-select/" /><meta property="article:published_time" content="2019-04-01T23:50:00&#43;09:00"/>
+<meta property="article:modified_time" content="2019-04-01T23:50:00&#43;09:00"/>
+
+<meta itemprop="name" content="GolangのORM SQLBoilerを使ってみる - 実装編(Select)">
+<meta itemprop="description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Select)">
+
+
+<meta itemprop="datePublished" content="2019-04-01T23:50:00&#43;09:00" />
+<meta itemprop="dateModified" content="2019-04-01T23:50:00&#43;09:00" />
+<meta itemprop="wordCount" content="2385">
+
+
+
+<meta itemprop="keywords" content="golang,ORM,sqlboiler," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GolangのORM SQLBoilerを使ってみる - 実装編(Select)"/>
+<meta name="twitter:description" content="GolangのORM SQLBoilerを使ってみる - 実装編(Select)"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">GolangのORM SQLBoilerを使ってみる - 実装編(Select)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-04-01 </span>
+        <div class="post-category">
+            <a href="/categories/golang/"> golang </a>
+            <a href="/categories/orm/"> ORM </a>
+            <a href="/categories/sqlboiler/"> sqlboiler </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#query-mod">Query Mod</a></li>
+<li><a href="#単一テーブル">単一テーブル</a>
+<ul>
+<li><a href="#テーブル全件取得">テーブル全件取得</a></li>
+<li><a href="#1件取得">1件取得</a></li>
+</ul></li>
+<li><a href="#join">Join</a>
+<ul>
+<li><a href="#joinしたデータを取得">joinしたデータを取得</a></li>
+</ul></li>
+<li><a href="#eager-loading">Eager Loading</a></li>
+<li><a href="#特定の条件をつける">特定の条件をつける</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<ul>
+<li><a href="https://ken-aio.github.io/post/2019/02/13/golang-sqlboiler/">GolangのORM SQLBoilerを使ってみる - セットアップ編</a></li>
+<li><a href="https://ken-aio.github.io/post/2019/03/25/golang-sqlboiler-cud/">GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)</a></li>
+</ul>
+
+<p>でセットアップ完了と更新系ができしたので、続いてselect系について書いていこうと思います。<br />
+SQLBoilerのselect系はかなりのことを行うことができます。</p>
+
+<h1 id="query-mod">Query Mod</h1>
+
+<p>SQLBoilerを使うにあたってはQuery Modを理解することが大事です。<br />
+Query ModはSQLBoiler独自の概念で、SQLの条件をtype safeに定義できる仕組みです。<br />
+Query Modは <code>qm</code> パッケージに属しています。</p>
+
+<p>例えば、where区を書きたい場合は <code>qm.Where(&quot;user.id = ?&quot;, userID)</code> などのように定義できます。<br />
+そして、Query Modで条件を定義した上で最後にFinisherを使います。<br />
+FinisherがSQLの基本的な形を決定します。<br />
+Finisherにはいくつかの種類がありますが、よく使うのは <code>All</code> (select *) <code>One</code> (select * &hellip; limit 1) <code>Count</code> (select count(*)) あたりかと思います。<br />
+全容については以下をご参照ください。<br />
+<a href="https://github.com/volatiletech/sqlboiler#finishers">https://github.com/volatiletech/sqlboiler#finishers</a></p>
+
+<p>実際にSQLを発行してみますが、いずれも↓のDDLで作ったテーブルを使っています。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">CREATE TABLE groups
+(
+	id serial NOT NULL,
+	name text NOT NULL,
+	description text NOT NULL,
+	created_at timestamp NOT NULL,
+	updated_at timestamp NOT NULL,
+	PRIMARY KEY (id)
+) WITHOUT OIDS;
+
+
+CREATE TABLE group_members
+(
+	id bigserial NOT NULL,
+	user_id int NOT NULL,
+	group_id int NOT NULL,
+	role text NOT NULL,
+	created_at timestamp NOT NULL,
+	updated_at timestamp NOT NULL,
+	PRIMARY KEY (id),
+	CONSTRAINT UQ_group_members_user_group UNIQUE (user_id, group_id)
+) WITHOUT OIDS;
+
+CREATE TABLE users
+(
+	id serial NOT NULL,
+	email text UNIQUE,
+	password_digest text,
+	created_at timestamp NOT NULL,
+	updated_at timestamp NOT NULL,
+	PRIMARY KEY (id)
+) WITHOUT OIDS;
+
+ALTER TABLE group_members
+	ADD CONSTRAINT FK_group_members_groups FOREIGN KEY (group_id)
+	REFERENCES groups (id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+ALTER TABLE group_members
+	ADD CONSTRAINT FK_group_members_users FOREIGN KEY (user_id)
+	REFERENCES users (id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;</pre></td></tr></table>
+</div>
+</div>
+<h1 id="単一テーブル">単一テーブル</h1>
+
+<h2 id="テーブル全件取得">テーブル全件取得</h2>
+
+<p>まずは簡単な全件取得です。ユーザを全件取得してい見ます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">users := db.Users().AllGP(context.Background())
+fmt.Printf(&#34;users = %+v\n&#34;, users)</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+SELECT * FROM &#34;users&#34;;
+[]
+users = [0xc000164100]</pre></td></tr></table>
+</div>
+</div>
+<p>全件なので、Allを使っています。sliceで返ってきていることがわかりますね。<br />
+末尾のGとPはそれぞれ以下の意味となります。</p>
+
+<ul>
+<li>G ・・・ GlobalなDBコネクションを使う。トランザクション制御をしたい場合、Beginした時の <code>sql.Tx</code> を使います。<br /></li>
+<li>P ・・・ エラーが発生したら <code>err</code> を返すのではなく、panicを起こす。productionで使う場合は基本的にPは使わないほうがよいです。<br /></li>
+</ul>
+
+<h2 id="1件取得">1件取得</h2>
+
+<p>続いて1件取得してみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">user := db.Users().OneGP(context.Background())
+fmt.Printf(&#34;user = %+v\n&#34;, user)</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">SELECT * FROM &#34;users&#34; LIMIT 1;
+[]
+user = &amp;{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:2019-03-25 13:52:29.
+148263 +0000 +0000 R:&lt;nil&gt; L:{}}</pre></td></tr></table>
+</div>
+</div>
+<p>Allとの違いとしては、 <code>One</code> を指定するとSQLに <code>limit 1</code> が追加されています。<br />
+また、 <code>All</code> のときはsliceで返ってきていたのがOneだとstructで返ってきました。</p>
+
+<h1 id="join">Join</h1>
+
+<p>続いてjoinしてみます。memberに所属しているuserだけを取得します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">users := db.Users(qm.InnerJoin(&#34;group_members on group_members.user_id = users.id&#34;)).AllGP(context.Background())
+fmt.Printf(&#34;users = %+v\n&#34;, users)</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+SELECT &#34;users&#34;.* FROM &#34;users&#34; INNER JOIN group_members on group_members.user_id = users.id;
+[]
+users = [0xc000184100]</pre></td></tr></table>
+</div>
+</div>
+<p>ちゃんとJoinできました。</p>
+
+<h2 id="joinしたデータを取得">joinしたデータを取得</h2>
+
+<p>joinしたデータを取得するのは少し面倒です。取得したいentityを含んだstructを作る必要があります。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">type userMember struct {
+	db.User        `boil:&#34;,bind&#34;`
+	db.GroupMember `boil:&#34;,bind&#34;`
+}
+var mem userMember
+db.Users(qm.Select(&#34;users.*, group_members.*&#34;), qm.InnerJoin(&#34;group_members on group_members.user_id = users.id&#34;)).BindG(context.Background(), &amp;mem)
+fmt.Printf(&#34;mem = %+v\n&#34;, mem)</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+SELECT users.*, group_members.* FROM &#34;users&#34; INNER JOIN group_members on group_members.user_
+id = users.id;
+[]
+mem = {User:{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-28 23:41:47.305423 +0000 +0000 UpdatedAt:2019-03-2823:41:47.305423 +0000 +0000 R:&lt;nil&gt; L:{}} GroupMember:{ID:2 UserID:1 GroupID:1 Role:admin CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:0001-01-01 00:00:00 +0000 UTC R:&lt;nil&gt; L:{}}}</pre></td></tr></table>
+</div>
+</div>
+<p>joinして一括でデータをガツッと取得したい場合なんかは良さそうです。</p>
+
+<h1 id="eager-loading">Eager Loading</h1>
+
+<p>ユーザが所属するメンバーとグループをEagerLoadingで取得してみます。<br />
+QueryModに <code>Load</code> という関数があるので、これを利用します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">user := db.Users(qm.Load(&#34;GroupMembers.Group&#34;)).OneGP(context.Background())
+fmt.Printf(&#34;user = %+v\n&#34;, user)
+fmt.Printf(&#34;user.R.GroupMembers = %+v\n&#34;, user.R.GroupMembers)
+for _, mem := range user.R.GroupMembers {
+	fmt.Printf(&#34;mem = %+v\n&#34;, mem)
+	fmt.Printf(&#34;mem.R.Group = %+v\n&#34;, mem.R.Group)
+}</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+SELECT * FROM &#34;users&#34; LIMIT 1;
+[]
+SELECT * FROM &#34;group_members&#34; WHERE (&#34;user_id&#34; IN ($1));
+[1]
+SELECT * FROM &#34;groups&#34; WHERE (&#34;id&#34; IN ($1));
+[1]
+user = &amp;{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:2019-03-25 13:52:29.148263 +0000 +0000 R:0xc00008c800 L:{}}
+user.R.GroupMembers = [0xc00016c540]
+mem = &amp;{ID:2 UserID:1 GroupID:1 Role:admin CreatedAt:2019-03-28 23:41:47.305423 +0000 +0000 UpdatedAt:2019-03-28 23:41:47.305423 +0000 +0000 R:0xc000082520 L:{}}
+mem.R.Group = &amp;{ID:1 Name:test Description:test CreatedAt:2019-03-28 23:41:10.756431 +0000 +0000 UpdatedAt:2019-03-28 23:41:10.756431 +0000 +0000 R:0xc00008ca60 L:{}}</pre></td></tr></table>
+</div>
+</div>
+<p>これでuserに紐づくgroup_memberとgroupを一括で取得しに行くことができました。<br />
+データの取得は inner join ではなく、個々のSQLがそれぞれ発行されていることがわかります。<br />
+これでN+1 Queryを撲滅しましょう。</p>
+
+<h1 id="特定の条件をつける">特定の条件をつける</h1>
+
+<p>Loadingする際に、特性の条件のデータを取得することもできます。<br />
+今回はユーザに紐づくadmin権限を持ったメンバーとグループを取得してみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">user := db.Users(qm.Load(&#34;GroupMembers&#34;, qm.Where(&#34;group_members.role = ?&#34;, &#34;admin&#34;)), qm.Load(&#34;GroupMembers.Group&#34;)).OneGP(context.Background())
+fmt.Printf(&#34;user = %+v\n&#34;, user)
+fmt.Printf(&#34;user.R.GroupMembers = %+v\n&#34;, user.R.GroupMembers)
+for _, mem := range user.R.GroupMembers {
+	fmt.Printf(&#34;mem = %+v\n&#34;, mem)
+	fmt.Printf(&#34;mem.R.Group = %+v\n&#34;, mem.R.Group)
+}</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+SELECT * FROM &#34;users&#34; LIMIT 1;
+[]
+SELECT * FROM &#34;group_members&#34; WHERE (&#34;user_id&#34; IN ($1)) AND (group_members.role = $2);
+[1 admin]
+SELECT * FROM &#34;groups&#34; WHERE (&#34;id&#34; IN ($1));
+[1]
+user = &amp;{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:2019-03-25 13:52:29.148263 +0000 +0000 R:0xc00000eaa0 L:{}}
+user.R.GroupMembers = [0xc00012ca80]
+mem = &amp;{ID:2 UserID:1 GroupID:1 Role:admin CreatedAt:2019-03-28 23:41:47.305423 +0000 +0000 UpdatedAt:2019-03-28 23:41:47.305423 +0000 +0000 R:0xc000013030 L:{}}
+mem.R.Group = &amp;{ID:1 Name:test Description:test CreatedAt:2019-03-28 23:41:10.756431 +0000 +0000 UpdatedAt:2019-03-28 23:41:10.756431 +0000 +0000 R:0xc00000ed80 L:{}}</pre></td></tr></table>
+</div>
+</div>
+<p>2つ目のgroup_membersのselect SQLの条件にadminであることという条件が入っていることがわかります。<br />
+今回はgroup_membersが取得できたので、その先のgroupsまでselectしにいっています。<br />
+例えば、2つ目のSQLで結果が取れない場合、3つ目のgroupsのSQLは発行されないことが期待されます。<br />
+実際に試してみましょう。変更点は <code>admin</code> を条件にしている部分を <code>dummy</code> に変えて見ます。<br />
+以下は実行結果です。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+SELECT * FROM &#34;users&#34; LIMIT 1;
+[]
+SELECT * FROM &#34;group_members&#34; WHERE (&#34;user_id&#34; IN ($1)) AND (group_members.role = $2);
+[1 dummy]
+user = &amp;{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:2019-03-25 13:52:29.148263 +0000 +0000 R:0xc000154200 L:{}}
+user.R.GroupMembers = []</pre></td></tr></table>
+</div>
+</div>
+<p>結果は期待通りでした。group_membersが0件になっているので、groupsを取得するSQLは発行されていません。</p>
+
+<h1 id="まとめ">まとめ</h1>
+
+<p>今回はSQLBoilerのselect系のSQLの発行方法についてまとめてみました。<br />
+基本的には全て <a href="https://github.com/volatiletech/sqlboiler">SQLBoilerのREADME</a> にやり方は書いてあります。<br />
+ここで書いてあるとおり、SQLBoilerでは多くのSQLの形態がサポートされているので、やりたいことは大方できるかと思います。<br />
+今回は紹介していませんが、その他にも集約関数の <code>group by</code> も利用できます。<br />
+SQLBoiler便利なので是非是非使っていきましょう。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-04-01</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/orm/">ORM</a>
+          <a href="/tags/sqlboiler/">sqlboiler</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/03/25/golang-sqlboiler-cud/">
+            <span class="next-text nav-default">GolangのORM SQLBoilerを使ってみる - 実装編(Create/Update/Delete)</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>
