@@ -1,7 +1,7 @@
 ---
 title: "GolangのORM SQLBoilerを使ってみる - 実装編(Select)"
-date: 2019-03-25T23:07:18+09:00
-draft: true
+date: 2019-04-01T23:50:00+09:00
+draft: false
 keywords: ["golang", "ORM", "sqlboiler"]
 description: "GolangのORM SQLBoilerを使ってみる - 実装編(Select)"
 tags: ["golang", "ORM", "sqlboiler"]
@@ -149,9 +149,80 @@ mem = {User:{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{Str
 ```
 joinして一括でデータをガツッと取得したい場合なんかは良さそうです。
 
-# eager loading
+# Eager Loading
+ユーザが所属するメンバーとグループをEagerLoadingで取得してみます。  
+QueryModに `Load` という関数があるので、これを利用します。  
+```
+user := db.Users(qm.Load("GroupMembers.Group")).OneGP(context.Background())
+fmt.Printf("user = %+v\n", user)
+fmt.Printf("user.R.GroupMembers = %+v\n", user.R.GroupMembers)
+for _, mem := range user.R.GroupMembers {
+	fmt.Printf("mem = %+v\n", mem)
+	fmt.Printf("mem.R.Group = %+v\n", mem.R.Group)
+}
+```
+```
+$ go run main.go
+SELECT * FROM "users" LIMIT 1;
+[]
+SELECT * FROM "group_members" WHERE ("user_id" IN ($1));
+[1]
+SELECT * FROM "groups" WHERE ("id" IN ($1));
+[1]
+user = &{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:2019-03-25 13:52:29.148263 +0000 +0000 R:0xc00008c800 L:{}}
+user.R.GroupMembers = [0xc00016c540]
+mem = &{ID:2 UserID:1 GroupID:1 Role:admin CreatedAt:2019-03-28 23:41:47.305423 +0000 +0000 UpdatedAt:2019-03-28 23:41:47.305423 +0000 +0000 R:0xc000082520 L:{}}
+mem.R.Group = &{ID:1 Name:test Description:test CreatedAt:2019-03-28 23:41:10.756431 +0000 +0000 UpdatedAt:2019-03-28 23:41:10.756431 +0000 +0000 R:0xc00008ca60 L:{}}
+```
+これでuserに紐づくgroup_memberとgroupを一括で取得しに行くことができました。  
+データの取得は inner join ではなく、個々のSQLがそれぞれ発行されていることがわかります。  
+これでN+1 Queryを撲滅しましょう。  
 
 # 特定の条件をつける
+Loadingする際に、特性の条件のデータを取得することもできます。  
+今回はユーザに紐づくadmin権限を持ったメンバーとグループを取得してみます。  
+```
+user := db.Users(qm.Load("GroupMembers", qm.Where("group_members.role = ?", "admin")), qm.Load("GroupMembers.Group")).OneGP(context.Background())
+fmt.Printf("user = %+v\n", user)
+fmt.Printf("user.R.GroupMembers = %+v\n", user.R.GroupMembers)
+for _, mem := range user.R.GroupMembers {
+	fmt.Printf("mem = %+v\n", mem)
+	fmt.Printf("mem.R.Group = %+v\n", mem.R.Group)
+}
+```
+```
+$ go run main.go
+SELECT * FROM "users" LIMIT 1;
+[]
+SELECT * FROM "group_members" WHERE ("user_id" IN ($1)) AND (group_members.role = $2);
+[1 admin]
+SELECT * FROM "groups" WHERE ("id" IN ($1));
+[1]
+user = &{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:2019-03-25 13:52:29.148263 +0000 +0000 R:0xc00000eaa0 L:{}}
+user.R.GroupMembers = [0xc00012ca80]
+mem = &{ID:2 UserID:1 GroupID:1 Role:admin CreatedAt:2019-03-28 23:41:47.305423 +0000 +0000 UpdatedAt:2019-03-28 23:41:47.305423 +0000 +0000 R:0xc000013030 L:{}}
+mem.R.Group = &{ID:1 Name:test Description:test CreatedAt:2019-03-28 23:41:10.756431 +0000 +0000 UpdatedAt:2019-03-28 23:41:10.756431 +0000 +0000 R:0xc00000ed80 L:{}}
+```
+2つ目のgroup_membersのselect SQLの条件にadminであることという条件が入っていることがわかります。  
+今回はgroup_membersが取得できたので、その先のgroupsまでselectしにいっています。  
+例えば、2つ目のSQLで結果が取れない場合、3つ目のgroupsのSQLは発行されないことが期待されます。  
+実際に試してみましょう。変更点は `admin` を条件にしている部分を `dummy` に変えて見ます。  
+以下は実行結果です。  
+```
+$ go run main.go
+SELECT * FROM "users" LIMIT 1;
+[]
+SELECT * FROM "group_members" WHERE ("user_id" IN ($1)) AND (group_members.role = $2);
+[1 dummy]
+user = &{ID:1 Email:{String:test@example.com Valid:true} PasswordDigest:{String:digested-password Valid:true} CreatedAt:2019-03-25 13:52:29.148263 +0000 +0000 UpdatedAt:2019-03-25 13:52:29.148263 +0000 +0000 R:0xc000154200 L:{}}
+user.R.GroupMembers = []
+```
+結果は期待通りでした。group_membersが0件になっているので、groupsを取得するSQLは発行されていません。  
 
 # まとめ
+今回はSQLBoilerのselect系のSQLの発行方法についてまとめてみました。  
+基本的には全て [SQLBoilerのREADME](https://github.com/volatiletech/sqlboiler) にやり方は書いてあります。  
+ここで書いてあるとおり、SQLBoilerでは多くのSQLの形態がサポートされているので、やりたいことは大方できるかと思います。  
+今回は紹介していませんが、その他にも集約関数の `group by` も利用できます。  
+SQLBoiler便利なので是非是非使っていきましょう。
 
