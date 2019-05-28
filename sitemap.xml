@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ken-aio.github.io/post/2019/05/28/go-map-tips/</loc>
+    <lastmod>2019-05-28T23:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/04/01/golang-sqlboiler-select/</loc>
     <lastmod>2019-04-01T23:50:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -122,13 +129,6 @@
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/categories/orm/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://ken-aio.github.io/tags/orm/</loc>
     <lastmod>2019-04-01T23:50:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -136,8 +136,15 @@
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/post/</loc>
+    <loc>https://ken-aio.github.io/categories/orm/</loc>
     <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/post/</loc>
+    <lastmod>2019-05-28T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -150,14 +157,14 @@
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/categories/cassandra/</loc>
+    <loc>https://ken-aio.github.io/tags/cassandra/</loc>
     <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/tags/cassandra/</loc>
+    <loc>https://ken-aio.github.io/categories/cassandra/</loc>
     <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -178,15 +185,15 @@
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/categories/echo/</loc>
-    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <loc>https://ken-aio.github.io/tags/echo/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/tags/echo/</loc>
-    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
+    <loc>https://ken-aio.github.io/categories/echo/</loc>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -199,15 +206,15 @@
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/categories/golang/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <loc>https://ken-aio.github.io/tags/golang/</loc>
+    <lastmod>2019-05-28T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/tags/golang/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <loc>https://ken-aio.github.io/categories/golang/</loc>
+    <lastmod>2019-05-28T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -221,7 +228,7 @@
   
   <url>
     <loc>https://ken-aio.github.io/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <lastmod>2019-05-28T23:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -255,14 +262,14 @@
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/categories/sqlboiler/</loc>
+    <loc>https://ken-aio.github.io/tags/sqlboiler/</loc>
     <lastmod>2019-04-01T23:50:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/tags/sqlboiler/</loc>
+    <loc>https://ken-aio.github.io/categories/sqlboiler/</loc>
     <lastmod>2019-04-01T23:50:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Mon, 01 Apr 2019 23:50:00 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 May 2019 23:00:00 +0900</lastBuildDate>
     
 	<atom:link href="https://ken-aio.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[Golang]mapのkeyのちょっとした話</title>
+      <link>https://ken-aio.github.io/post/2019/05/28/go-map-tips/</link>
+      <pubDate>Tue, 28 May 2019 23:00:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2019/05/28/go-map-tips/</guid>
+      <description>Tweet はじめに Golangのmapのkeyは同一だと評価される場合、同一のkeyとしてみなされます。 このmapのkeyがどういった場合に同じとみ</description>
+    </item>
     
     <item>
       <title>GolangのORM SQLBoilerを使ってみる - 実装編(Select)</title>
