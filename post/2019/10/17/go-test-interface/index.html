@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方 - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方" /><meta name="keywords" content="golang, test, interface" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2019/10/17/go-test-interface/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方" />
+<meta property="og:description" content="[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/10/17/go-test-interface/" /><meta property="article:published_time" content="2019-10-17T13:31:57&#43;09:00"/>
+<meta property="article:modified_time" content="2019-10-17T13:31:57&#43;09:00"/>
+
+<meta itemprop="name" content="[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方">
+<meta itemprop="description" content="[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方">
+
+
+<meta itemprop="datePublished" content="2019-10-17T13:31:57&#43;09:00" />
+<meta itemprop="dateModified" content="2019-10-17T13:31:57&#43;09:00" />
+<meta itemprop="wordCount" content="3419">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方"/>
+<meta name="twitter:description" content="[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-10-17 </span>
+        <div class="post-category">
+            <a href="/categories/golang/"> golang </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#はじめに">はじめに</a></li>
+<li><a href="#結論">結論</a></li>
+<li><a href="#diとdiコンテナ">DIとDIコンテナ</a></li>
+<li><a href="#golangでのinterfaceの使い方">Golangでのinterfaceの使い方</a></li>
+<li><a href="#interfaceな変数にdiする">interfaceな変数にDIする</a></li>
+<li><a href="#プロダクションコードとテストコードで実装を切り替える">プロダクションコードとテストコードで実装を切り替える</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p>最近は会社でGolangの利用が少しずつ広がっています。<br />
+そんな中、一人の同僚から、「Golangでプロダクションコードでは期待通りの動きをさせて、テストだとモックにする場合のGolangのやり方を教えて欲しい。」という要望がありました。<br />
+せっかくなので、ブログにまとめてみます。<br />
+対象はオブジェクト思考な言語の経験はあるけどGolangの経験は浅いような方です。</p>
+
+<h1 id="結論">結論</h1>
+
+<p>簡単に書くと以下のことをやればプロダクションコードとテストコードで動作を分けることができます。</p>
+
+<ul>
+<li>動作を分けたい対象をinterfaceを使って抽象化する</li>
+<li>プロダクションコードでは対象のinterfaceにプロダクション用の実装をDIする</li>
+<li>テストコードでは対象のinterfaceにテスト用の実装をDIする</li>
+</ul>
+
+<p>ということです。<br />
+知っている人は「そんなの当たり前じゃん！」と思うかもしれませんが、この記事ではこれをGolangでやるにはどうしたらよいのか、具体的なコードを用いて紹介していこうと思います。</p>
+
+<h1 id="diとdiコンテナ">DIとDIコンテナ</h1>
+
+<p>まずはDIとDIコンテナについて整理します。<br />
+Java界隈の人がDIという単語を見ると、DIコンテナのことを思い浮かべてしまう人が多いかもしれません。（かく言う自分もDI = DIコンテナと思っていた時期はありました&hellip;）</p>
+
+<p>例えば、JavaのSpringを使うとDIしたい対象に特定のアノテーションをつけると、DIコンテナがよきに計らって特定のタイミングでDIしてくれます。<br />
+そのため、アプリケーションのコードでは対象のオブジェクトの初期化などを考えずに利用することが可能となります。<br />
+SpringのDIサンプル。 <code>@Autowired</code> というのがDIコンテナにDIしてね、という目印になります。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">@Component
+public class UserServiceImpl implements UserService {
+    @Autowired
+    private UserRepository userRepository;
+}</pre></td></tr></table>
+</div>
+</div>
+<p>このようにDIコンテナを使っていると、上記の <code>userRepository</code> はアプリケーションコード中ではどこでも初期化していないのに利用することが可能になります。<br />
+これを見るとDI(コンテナ)ってブラックボックスでよくわらかない&hellip;というイメージを持ってしまうのもしょうがないのかなと思ったりします。</p>
+
+<p>ちょっと前置きが長くなりましたが、DIとDIコンテナは以下のように分類できると理解しています。(もし間違ってたらご指摘ください)</p>
+
+<ul>
+<li>DI ・・・ 特定の変数に対して何かしらの具体的なオブジェクトを初期化された状態で渡すこと</li>
+<li>DIコンテナ ・・・ DIを自前（アプリケーションコード中で）行うことなく、DIコンテナから欲しいオブジェクトが初期化された状態で受け取ることを出来るようにする仕組み</li>
+</ul>
+
+<p>つまり、DIコンテナがなくてもDIをすることは出来ます。（面倒になるけど）</p>
+
+<h1 id="golangでのinterfaceの使い方">Golangでのinterfaceの使い方</h1>
+
+<p>次に簡単にinterfaceについて紹介しておこうかと思います。<br />
+知ってるよ！と言う人は読み飛ばしちゃってください。</p>
+
+<p>まずは超基礎、interfaceの定義の仕方です。<br />
+このようにメソッドと引数と返却値の形を決めるものです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">type MyInterface interface {
+	Method(args []string) (string, error)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>次にinterfaceについて具体的な実装をしてみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">type ImplA struct{}
+func (a *ImplA) Method(args []string) (string, error) {
+	return fmt.Sprintf(&#34;I am A&#34;), nil
+}
+
+type ImplB struct{}
+func (a *ImplB) Method(args []string) (string, error) {
+	return fmt.Sprintf(&#34;I am B&#34;), nil
+}</pre></td></tr></table>
+</div>
+</div>
+<p>このようにGolangではどのinterfaceの実装をするか、明示的に宣言することなくそのinterfaceを満たしていれば実装されているとみなされます。<br />
+これらのチェックはコンパイル時に行われるため実行は高速になります。</p>
+
+<p>さて、実際にこのinterfaceの実装を使ってみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func main() {
+	var a, b MyInterface
+	a = &amp;ImplA{}
+	b = &amp;ImplB{}
+	fmt.Println(a.Method([]string{}))
+	fmt.Println(b.Method([]string{}))
+}</pre></td></tr></table>
+</div>
+</div>
+<p>実行してみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">I am A &lt;nil&gt;
+I am B &lt;nil&gt;</pre></td></tr></table>
+</div>
+</div>
+<p>どちらも <code>MyInterface</code> 型ですが、結果はそれぞれ具体的な実装である A と B の結果が出力されましたね。</p>
+
+<h1 id="interfaceな変数にdiする">interfaceな変数にDIする</h1>
+
+<p>次に上記で作ったinterfaceに対してDIをしてみようと思います。<br />
+今回は簡単なサンプルにするため、関数の引数に対してDIしてみます。<br />
+まずはprintする簡単な関数を定義します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func PrintAny(any MyInterface) {
+	msg, err := any.Method([]string{})
+	if err != nil {
+		return
+	}
+	fmt.Println(&#34;any message is &#34;, msg)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>ポイントは引数を具体的なstructではなくinterfaceで受け取っているところです。<br />
+このinterfaceに対してDIしてみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">	var a, b MyInterface
+	a = &amp;ImplA{}
+	b = &amp;ImplB{}
+	PrintAny(a) // AをDI!!
+	PrintAny(b) // BをDI!!</pre></td></tr></table>
+</div>
+</div>
+<p>最初の <code>PrintAny</code> は A を DI しています。2番目は B を DI しています。<br />
+「え、これだけ？」と思うかもしれませんが、これも立派なDIになります。<br />
+このように実装すると何が嬉しいのかというと、 <code>PrintAny</code> 関数の <code>MyInterface</code> が関数内部でインスタンスを生成していないことで実装を入れ替えることができることです。<br />
+ただ、今回のサンプルでは実装を入れ替えることにあまりメリットを感じれないかと思います。<br />
+次にDIのメリットがあるようなサンプルを記載します。</p>
+
+<h1 id="プロダクションコードとテストコードで実装を切り替える">プロダクションコードとテストコードで実装を切り替える</h1>
+
+<p>ここでは以下のようなサンプルを考えます。</p>
+
+<ul>
+<li>現在時刻を取得</li>
+<li>Unix時間に変換</li>
+<li>Unix時間が偶数なら <code>Even</code> を、奇数なら <code>Odd</code> を返す関数を定義する</li>
+</ul>
+
+<p>この問題を単純に解くのであれば以下のようなコードになります。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func UnixTimeSample() string {
+	unixNow := time.Now().Unix()
+	if unixNow%2 != 0 { // !!
+		return &#34;Even&#34;
+	} else {
+		return &#34;Odd&#34;
+	}
+}</pre></td></tr></table>
+</div>
+</div>
+<p>簡単ですね。次にこの <code>UnixTimeSample</code> の関数をテストしてみましょう。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func TestUnixTimeSample(t *testing.T) {
+	expected := &#34;Odd&#34;
+	result := UnixTimeSample()
+	if result != expected {
+		t.Errorf(&#34;I am not %s&#34;, expected)
+	}
+	fmt.Println(&#34;result is&#34;, result)
+}</pre></td></tr></table>
+</div>
+</div>
+<p>しかし、このテストは <code>green</code> になったり <code>red</code> になったりします。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go test
+result is Even
+PASS
+ok      github.com/ken-aio/go-interface-sample  0.017s
+$ go test
+result is Odd
+--- FAIL: TestUnixTimeSample (0.00s)
+    main_test.go:12: I am not Odd
+FAIL
+exit status 1
+FAIL    github.com/ken-aio/go-interface-sample  0.010s</pre></td></tr></table>
+</div>
+</div>
+<p>まあ当たり前ですよね、現在時刻に依存しているので。<br />
+このように外部の要素に依存するものを関数内部で生成してしまうとユニットテストがうまくできなくなってしまいます。<br />
+そこで、DIパターンを使って外から外部依存する対象を注入してしまえばユニットテストでロジックのテストを行うことができるようになります。<br />
+リファクタリングしてみましょう。今回は対象が時間を扱っています。そこで、 <code>TimeManager</code> を導入してみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">type ITimeManager interface {
+	Now() time.Time
+}</pre></td></tr></table>
+</div>
+</div>
+<p>現在時刻を取得する <code>ITimeManager</code> というインターフェースを定義しました。<br />
+次にプロダクションコードを実装してみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">type TimeMenager struct {}
+func (t *TimeManager) Now() time.Time {
+	return time.Now()
+}</pre></td></tr></table>
+</div>
+</div>
+<p>プロダクションコードでは標準の現在時刻を取得する関数を呼び出しているだけです。<br />
+<code>UnixTimeSample</code> で使っている現在時刻取得を <code>TimeManager</code> 経由で行うようにしてみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func UnixTimeSample(timeManager ITimeManager) string {
+	unixNow := timeManager.Now().Unix()
+	if unixNow%2 != 0 { // !!
+		return &#34;Even&#34;
+	} else {
+		return &#34;Odd&#34;
+	}
+}</pre></td></tr></table>
+</div>
+</div>
+<p>メソッド引数で受け取るようにしました。<br />
+そして、最後にメイン関数で <code>TimeManager</code> をDIします。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func main() {
+	fmt.Println(UnixTimeSample(&amp;TimeManager{}))
+}</pre></td></tr></table>
+</div>
+</div>
+<p>試しに実行してみましょう。時間に依存するのでタイミングによってそれぞれ表示が変わりますね。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go run main.go
+Even
+$ go run main.go
+Odd</pre></td></tr></table>
+</div>
+</div>
+<p>これでプロダクションコードは挙動を変えることなく <code>TimeManager</code> の導入ができました。<br />
+次にテストコードでロジックのテストをしてみます。<br />
+まずは <code>TimeManager</code> のモックを導入します。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">type MockTimeManager struct {
+	MockTime *time.Time
+}
+
+func (t *MockTimeManager) Now() time.Time {
+	if t.MockTime == nil {
+		return time.Now()
+	}
+	return *t.MockTime
+}</pre></td></tr></table>
+</div>
+</div>
+<p>この <code>MockTimeManager</code> では外から好きな時間をNowとして取得可能なようにしています。<br />
+これを使ってテストを実行してみます。テストはテーブルドリブンテストの手法で作ってみます。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func TestUnixTimeSample(t *testing.T) {
+	cases := []struct {
+		t        time.Time
+		expected string
+	}{
+		{t: time.Unix(1419933531, 0), expected: &#34;Odd&#34;},
+		{t: time.Unix(1419933530, 0), expected: &#34;Even&#34;},
+	}
+	mockTimeManager := &amp;MockTimeManager{}
+
+	for _, c := range cases {
+		mockTimeManager.MockTime = &amp;c.t
+		result := UnixTimeSample(mockTimeManager)
+		if result != c.expected {
+			t.Errorf(&#34;expected is %s but I am %s&#34;, c.expected, result)
+		}
+	}
+}</pre></td></tr></table>
+</div>
+</div>
+<p>これを実行してみると、見事にfailしました。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ go test
+--- FAIL: TestUnixTimeSample (0.00s)
+    main_test.go:22: expected is Odd but I am Even
+    main_test.go:22: expected is Even but I am Odd
+FAIL
+exit status 1
+FAIL    github.com/ken-aio/go-interface-sample  0.010s</pre></td></tr></table>
+</div>
+</div>
+<h1 id="まとめ">まとめ</h1>
+
+<p>今回は対象としてわかりやすいと思う時間についてGolangのinterfaceを使ってプロダクションコードとテストコードで実装を入れ替えるDIのやり方を紹介しました。<br />
+DIについて理解できたでしょうか？<br />
+実際にやってみると意外と簡単だった思うのではないでしょうか。<br />
+今回のサンプルは以下のリポジトリにコードを置いています。<br />
+<a href="https://github.com/ken-aio/go-interface-sample">https://github.com/ken-aio/go-interface-sample</a></p>
+
+<p>もしDIの対象が増えて自前で管理するのが辛くなってきた時はDIコンテナの出番です。<br />
+GolangではDI管理についてはGoogleが作っている <code>wire</code> というライブラリを使っている例をよく見かけます。（自分では使ったことはありません&hellip;）<br />
+<a href="https://github.com/google/wire">https://github.com/google/wire</a><br />
+比較的大きなプロジェクトで色々な場面でDIを使う必要が出てきた場合は導入の検討をしてみると良いかもしれません。</p>
+
+<p>本記事が誰かしらの役に立てば幸いです。<br />
+ではまたいつか</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-10-17</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/05/28/go-map-tips/">
+            <span class="next-text nav-default">[Golang]mapのkeyのちょっとした話</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">@ken-aio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>

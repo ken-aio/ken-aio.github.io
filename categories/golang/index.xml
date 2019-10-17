@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Tue, 28 May 2019 23:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 17 Oct 2019 13:31:57 +0900</lastBuildDate>
     
 	<atom:link href="https://ken-aio.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方</title>
+      <link>https://ken-aio.github.io/post/2019/10/17/go-test-interface/</link>
+      <pubDate>Thu, 17 Oct 2019 13:31:57 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2019/10/17/go-test-interface/</guid>
+      <description>Tweet はじめに 最近は会社でGolangの利用が少しずつ広がっています。 そんな中、一人の同僚から、「Golangでプロダクションコードでは期待通り</description>
+    </item>
     
     <item>
       <title>[Golang]mapのkeyのちょっとした話</title>
