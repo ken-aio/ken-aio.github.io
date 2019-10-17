@@ -1,7 +1,7 @@
 ---
 title: "[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方"
 date: 2019-10-17T13:31:57+09:00
-draft: true
+draft: false
 keywords: [golang, test, interface]
 description: "[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方"
 tags: [golang]
@@ -57,11 +57,216 @@ public class UserServiceImpl implements UserService {
 知ってるよ！と言う人は読み飛ばしちゃってください。  
 
 まずは超基礎、interfaceの定義の仕方です。  
+このようにメソッドと引数と返却値の形を決めるものです。  
 ```
+type MyInterface interface {
+	Method(args []string) (string, error)
+}
 ```
+
+次にinterfaceについて具体的な実装をしてみます。  
+```
+type ImplA struct{}
+func (a *ImplA) Method(args []string) (string, error) {
+	return fmt.Sprintf("I am A"), nil
+}
+
+type ImplB struct{}
+func (a *ImplB) Method(args []string) (string, error) {
+	return fmt.Sprintf("I am B"), nil
+}
+```
+このようにGolangではどのinterfaceの実装をするか、明示的に宣言することなくそのinterfaceを満たしていれば実装されているとみなされます。  
+これらのチェックはコンパイル時に行われるため実行は高速になります。  
+
+さて、実際にこのinterfaceの実装を使ってみます。
+```
+func main() {
+	var a, b MyInterface
+	a = &ImplA{}
+	b = &ImplB{}
+	fmt.Println(a.Method([]string{}))
+	fmt.Println(b.Method([]string{}))
+}
+```
+実行してみます。  
+```
+I am A <nil>
+I am B <nil>
+```
+どちらも `MyInterface` 型ですが、結果はそれぞれ具体的な実装である A と B の結果が出力されましたね。  
 
 # interfaceな変数にDIする
+次に上記で作ったinterfaceに対してDIをしてみようと思います。  
+今回は簡単なサンプルにするため、関数の引数に対してDIしてみます。  
+まずはprintする簡単な関数を定義します。  
+```
+func PrintAny(any MyInterface) {
+	msg, err := any.Method([]string{})
+	if err != nil {
+		return
+	}
+	fmt.Println("any message is ", msg)
+}
+```
+ポイントは引数を具体的なstructではなくinterfaceで受け取っているところです。  
+このinterfaceに対してDIしてみます。  
+```
+	var a, b MyInterface
+	a = &ImplA{}
+	b = &ImplB{}
+	PrintAny(a) // AをDI!!
+	PrintAny(b) // BをDI!!
+```
+最初の `PrintAny` は A を DI しています。2番目は B を DI しています。  
+「え、これだけ？」と思うかもしれませんが、これも立派なDIになります。  
+このように実装すると何が嬉しいのかというと、 `PrintAny` 関数の `MyInterface` が関数内部でインスタンスを生成していないことで実装を入れ替えることができることです。  
+ただ、今回のサンプルでは実装を入れ替えることにあまりメリットを感じれないかと思います。  
+次にDIのメリットがあるようなサンプルを記載します。  
 
 # プロダクションコードとテストコードで実装を切り替える
+ここでは以下のようなサンプルを考えます。  
+
+* 現在時刻を取得
+* Unix時間に変換
+* Unix時間が偶数なら `Even` を、奇数なら `Odd` を返す関数を定義する
+
+この問題を単純に解くのであれば以下のようなコードになります。  
+```
+func UnixTimeSample() string {
+	unixNow := time.Now().Unix()
+	if unixNow%2 != 0 { // !!
+		return "Even"
+	} else {
+		return "Odd"
+	}
+}
+```
+簡単ですね。次にこの `UnixTimeSample` の関数をテストしてみましょう。  
+```
+func TestUnixTimeSample(t *testing.T) {
+	expected := "Odd"
+	result := UnixTimeSample()
+	if result != expected {
+		t.Errorf("I am not %s", expected)
+	}
+	fmt.Println("result is", result)
+}
+```
+しかし、このテストは `green` になったり `red` になったりします。  
+```
+$ go test
+result is Even
+PASS
+ok      github.com/ken-aio/go-interface-sample  0.017s
+$ go test
+result is Odd
+--- FAIL: TestUnixTimeSample (0.00s)
+    main_test.go:12: I am not Odd
+FAIL
+exit status 1
+FAIL    github.com/ken-aio/go-interface-sample  0.010s
+```
+まあ当たり前ですよね、現在時刻に依存しているので。  
+このように外部の要素に依存するものを関数内部で生成してしまうとユニットテストがうまくできなくなってしまいます。  
+そこで、DIパターンを使って外から外部依存する対象を注入してしまえばユニットテストでロジックのテストを行うことができるようになります。  
+リファクタリングしてみましょう。今回は対象が時間を扱っています。そこで、 `TimeManager` を導入してみます。  
+```
+type ITimeManager interface {
+	Now() time.Time
+}
+```
+現在時刻を取得する `ITimeManager` というインターフェースを定義しました。  
+次にプロダクションコードを実装してみます。  
+```
+type TimeMenager struct {}
+func (t *TimeManager) Now() time.Time {
+	return time.Now()
+}
+```
+プロダクションコードでは標準の現在時刻を取得する関数を呼び出しているだけです。  
+`UnixTimeSample` で使っている現在時刻取得を `TimeManager` 経由で行うようにしてみます。  
+```
+func UnixTimeSample(timeManager ITimeManager) string {
+	unixNow := timeManager.Now().Unix()
+	if unixNow%2 != 0 { // !!
+		return "Even"
+	} else {
+		return "Odd"
+	}
+}
+```
+メソッド引数で受け取るようにしました。  
+そして、最後にメイン関数で `TimeManager` をDIします。  
+```
+func main() {
+	fmt.Println(UnixTimeSample(&TimeManager{}))
+}
+```
+試しに実行してみましょう。時間に依存するのでタイミングによってそれぞれ表示が変わりますね。  
+```
+$ go run main.go
+Even
+$ go run main.go
+Odd
+```
+これでプロダクションコードは挙動を変えることなく `TimeManager` の導入ができました。  
+次にテストコードでロジックのテストをしてみます。  
+まずは `TimeManager` のモックを導入します。  
+```
+type MockTimeManager struct {
+	MockTime *time.Time
+}
+
+func (t *MockTimeManager) Now() time.Time {
+	if t.MockTime == nil {
+		return time.Now()
+	}
+	return *t.MockTime
+}
+```
+この `MockTimeManager` では外から好きな時間をNowとして取得可能なようにしています。  
+これを使ってテストを実行してみます。テストはテーブルドリブンテストの手法で作ってみます。  
+```
+func TestUnixTimeSample(t *testing.T) {
+	cases := []struct {
+		t        time.Time
+		expected string
+	}{
+		{t: time.Unix(1419933531, 0), expected: "Odd"},
+		{t: time.Unix(1419933530, 0), expected: "Even"},
+	}
+	mockTimeManager := &MockTimeManager{}
+
+	for _, c := range cases {
+		mockTimeManager.MockTime = &c.t
+		result := UnixTimeSample(mockTimeManager)
+		if result != c.expected {
+			t.Errorf("expected is %s but I am %s", c.expected, result)
+		}
+	}
+}
+```
+これを実行してみると、見事にfailしました。  
+```
+$ go test
+--- FAIL: TestUnixTimeSample (0.00s)
+    main_test.go:22: expected is Odd but I am Even
+    main_test.go:22: expected is Even but I am Odd
+FAIL
+exit status 1
+FAIL    github.com/ken-aio/go-interface-sample  0.010s
+```
 
 # まとめ
+今回は対象としてわかりやすいと思う時間についてGolangのinterfaceを使ってプロダクションコードとテストコードで実装を入れ替えるDIのやり方を紹介しました。  
+DIについて理解できたでしょうか？  
+実際にやってみると意外と簡単だった思うのではないでしょうか。  
+
+もしDIの対象が増えて自前で管理するのが辛くなってきた時はDIコンテナの出番です。  
+GolangではDI管理についてはGoogleが作っている `wire` というライブラリを使っている例をよく見かけます。（自分では使ったことはありません...）  
+https://github.com/google/wire  
+比較的大きなプロジェクトで色々な場面でDIを使う必要が出てきた場合は導入の検討をしてみると良いかもしれません。  
+
+本記事が誰かしらの役に立てば幸いです。  
+ではまたいつか  
