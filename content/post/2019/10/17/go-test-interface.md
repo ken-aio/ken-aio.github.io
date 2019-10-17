@@ -56,6 +56,10 @@ public class UserServiceImpl implements UserService {
 次に簡単にinterfaceについて紹介しておこうかと思います。  
 知ってるよ！と言う人は読み飛ばしちゃってください。  
 
+まずは超基礎、interfaceの定義の仕方です。  
+```
+```
+
 # interfaceな変数にDIする
 
 # プロダクションコードとテストコードで実装を切り替える
