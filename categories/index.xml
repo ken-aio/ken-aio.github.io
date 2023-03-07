@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on ken-aio&#39;s blog</title>
@@ -7,17 +7,13 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Thu, 07 Feb 2019 23:00:00 +0900</lastBuildDate>
-    
-	<atom:link href="https://ken-aio.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 06 Mar 2023 10:30:00 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>API</title>
-      <link>https://ken-aio.github.io/categories/api/</link>
-      <pubDate>Thu, 07 Feb 2019 23:00:00 +0900</pubDate>
+      <title>golang</title>
+      <link>https://ken-aio.github.io/categories/golang/</link>
+      <pubDate>Mon, 06 Mar 2023 10:30:00 +0900</pubDate>
       
-      <guid>https://ken-aio.github.io/categories/api/</guid>
+      <guid>https://ken-aio.github.io/categories/golang/</guid>
       <description></description>
     </item>
     
@@ -31,11 +27,20 @@
     </item>
     
     <item>
-      <title>cassandra</title>
-      <link>https://ken-aio.github.io/categories/cassandra/</link>
-      <pubDate>Tue, 29 Jan 2019 22:00:00 +0900</pubDate>
+      <title>sqlboiler</title>
+      <link>https://ken-aio.github.io/categories/sqlboiler/</link>
+      <pubDate>Mon, 01 Apr 2019 23:50:00 +0900</pubDate>
       
-      <guid>https://ken-aio.github.io/categories/cassandra/</guid>
+      <guid>https://ken-aio.github.io/categories/sqlboiler/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>API</title>
+      <link>https://ken-aio.github.io/categories/api/</link>
+      <pubDate>Thu, 07 Feb 2019 23:00:00 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/categories/api/</guid>
       <description></description>
     </item>
     
@@ -49,11 +54,11 @@
     </item>
     
     <item>
-      <title>golang</title>
-      <link>https://ken-aio.github.io/categories/golang/</link>
-      <pubDate>Thu, 17 Oct 2019 13:31:57 +0900</pubDate>
+      <title>cassandra</title>
+      <link>https://ken-aio.github.io/categories/cassandra/</link>
+      <pubDate>Tue, 29 Jan 2019 22:00:00 +0900</pubDate>
       
-      <guid>https://ken-aio.github.io/categories/golang/</guid>
+      <guid>https://ken-aio.github.io/categories/cassandra/</guid>
       <description></description>
     </item>
     
@@ -72,15 +77,6 @@
       <pubDate>Fri, 18 Aug 2017 19:30:00 +0900</pubDate>
       
       <guid>https://ken-aio.github.io/categories/search/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sqlboiler</title>
-      <link>https://ken-aio.github.io/categories/sqlboiler/</link>
-      <pubDate>Mon, 01 Apr 2019 23:50:00 +0900</pubDate>
-      
-      <guid>https://ken-aio.github.io/categories/sqlboiler/</guid>
       <description></description>
     </item>
     

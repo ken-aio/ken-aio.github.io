@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cobra on ken-aio&#39;s blog</title>
@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Tue, 29 Jan 2019 22:00:00 +0900</lastBuildDate>
-    
-	<atom:link href="https://ken-aio.github.io/tags/cobra/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 29 Jan 2019 22:00:00 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/tags/cobra/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cassandraにマルチスレッドでバッチ形式にCQLを実行するコマンドexecqlを作った</title>
       <link>https://ken-aio.github.io/post/2019/01/27/cassandra-execql/</link>

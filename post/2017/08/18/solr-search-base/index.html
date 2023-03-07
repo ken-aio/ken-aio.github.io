@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
 
 
 <link rel="canonical" href="https://ken-aio.github.io/post/2017/08/18/solr-search-base/" />
@@ -34,28 +34,22 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="Solrと検索のまとめ - 検索編" />
 <meta property="og:description" content="Tweet はじめに 書籍を読んだので、自分なりにSolrを使った検索についてまとめます。 なお、この記事については以下の書籍を参考に書いています。 詳細に" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ken-aio.github.io/post/2017/08/18/solr-search-base/" /><meta property="article:published_time" content="2017-08-18T16:30:00&#43;09:00"/>
-<meta property="article:modified_time" content="2017-08-18T16:30:00&#43;09:00"/>
-
+<meta property="og:url" content="https://ken-aio.github.io/post/2017/08/18/solr-search-base/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-08-18T16:30:00+09:00" />
+<meta property="article:modified_time" content="2017-08-18T16:30:00+09:00" />
 <meta itemprop="name" content="Solrと検索のまとめ - 検索編">
-<meta itemprop="description" content="Tweet はじめに 書籍を読んだので、自分なりにSolrを使った検索についてまとめます。 なお、この記事については以下の書籍を参考に書いています。 詳細に">
-
-
-<meta itemprop="datePublished" content="2017-08-18T16:30:00&#43;09:00" />
-<meta itemprop="dateModified" content="2017-08-18T16:30:00&#43;09:00" />
-<meta itemprop="wordCount" content="2524">
-
-
-
-<meta itemprop="keywords" content="solr," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="description" content="Tweet はじめに 書籍を読んだので、自分なりにSolrを使った検索についてまとめます。 なお、この記事については以下の書籍を参考に書いています。 詳細に"><meta itemprop="datePublished" content="2017-08-18T16:30:00+09:00" />
+<meta itemprop="dateModified" content="2017-08-18T16:30:00+09:00" />
+<meta itemprop="wordCount" content="2522">
+<meta itemprop="keywords" content="solr," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Solrと検索のまとめ - 検索編"/>
 <meta name="twitter:description" content="Tweet はじめに 書籍を読んだので、自分なりにSolrを使った検索についてまとめます。 なお、この記事については以下の書籍を参考に書いています。 詳細に"/>
 
@@ -92,12 +86,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">ken-aio&#39;s blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -112,6 +115,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -135,70 +139,63 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#はじめに">はじめに</a></li>
-<li><a href="#検索の基本的な考え方">検索の基本的な考え方</a>
-<ul>
-<li><a href="#検索精度とは">検索精度とは</a></li>
-<li><a href="#f-measure-f値">F-measure（F値）</a></li>
-</ul></li>
-<li><a href="#検索ランキング">検索ランキング</a></li>
-<li><a href="#solrにおける再現率と適合率">Solrにおける再現率と適合率</a>
-<ul>
-<li><a href="#日本語トークナイザ">日本語トークナイザ</a></li>
-<li><a href="#n-gram-トークナイザ">N-gram トークナイザ</a></li>
-</ul></li>
-<li><a href="#solrにおける検索ランキング">Solrにおける検索ランキング</a>
-<ul>
-<li><a href="#solrのランキングのコア">Solrのランキングのコア</a></li>
-<li><a href="#ランキング調整">ランキング調整</a>
-<ul>
-<li><a href="#function-query">Function Query</a></li>
-<li><a href="#re-rank-query">Re Rank Query</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#まとめ">まとめ</a></li>
-</ul>
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#検索の基本的な考え方">検索の基本的な考え方</a>
+      <ul>
+        <li><a href="#検索精度とは">検索精度とは</a></li>
+        <li><a href="#f-measuref値">F-measure（F値）</a></li>
+      </ul>
+    </li>
+    <li><a href="#検索ランキング">検索ランキング</a></li>
+    <li><a href="#solrにおける再現率と適合率">Solrにおける再現率と適合率</a>
+      <ul>
+        <li><a href="#日本語トークナイザ">日本語トークナイザ</a></li>
+        <li><a href="#n-gram-トークナイザ">N-gram トークナイザ</a></li>
+      </ul>
+    </li>
+    <li><a href="#solrにおける検索ランキング">Solrにおける検索ランキング</a>
+      <ul>
+        <li><a href="#solrのランキングのコア">Solrのランキングのコア</a></li>
+        <li><a href="#ランキング調整">ランキング調整</a>
+          <ul>
+            <li><a href="#function-query">Function Query</a></li>
+            <li><a href="#re-rank-query">Re Rank Query</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#まとめ">まとめ</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
 <h1 id="はじめに">はじめに</h1>
-
-<p>書籍を読んだので、自分なりにSolrを使った検索についてまとめます。<br />
-なお、この記事については以下の書籍を参考に書いています。<br />
-詳細についてはこちらの書籍に記載されているので、気になる方は読んでみてください。<br />
+<p>書籍を読んだので、自分なりにSolrを使った検索についてまとめます。<br>
+なお、この記事については以下の書籍を参考に書いています。<br>
+詳細についてはこちらの書籍に記載されているので、気になる方は読んでみてください。<br>
 入門と書かれていますが、検索全般が網羅されており、とても良書です。</p>
-
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=kenaio-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4774189308&linkId=94e5508b8a56fb5f48fb983a4897fa97"></iframe>
-
 <h1 id="検索の基本的な考え方">検索の基本的な考え方</h1>
-
 <h2 id="検索精度とは">検索精度とは</h2>
-
 <p>検索の精度とは「再現率」と「適合率」を用いて表現されます。</p>
-
 <ul>
 <li>適合率(P)
-
 <ul>
 <li>PrecisionのP. 検索結果の内、期待したドキュメント数 / 検索結果の期待するドキュメント数</li>
-</ul></li>
-<li>再現率&reg;
-
+</ul>
+</li>
+<li>再現率(R)
 <ul>
 <li>RecallのR. 検索結果の内、期待したドキュメント数 / ドキュメント全体の期待するドキュメント数</li>
-</ul></li>
 </ul>
-
-<p>日本語だけではわかりづらいので、例を書きます。<br />
+</li>
+</ul>
+<p>日本語だけではわかりづらいので、例を書きます。<br>
 以下のような検索対象のドキュメントがあったとります。</p>
-
 <ol>
 <li>よくわかるSolr</li>
 <li>Solrを使った検索入門</li>
@@ -206,193 +203,153 @@
 <li>ElasticsearchとKibanaを使ったBI入門</li>
 <li>ElasticsearchとSolrの違い</li>
 </ol>
-
 <p>この時、キーワード「Solr 検索」で検索した場合に検索結果にヒットする文章は以下と期待すると定めたとします。</p>
-
-<ol>
-<li>Solrを使った検索入門<br /></li>
-<li>よくわかるSolr<br /></li>
+<ol start="2">
+<li>Solrを使った検索入門</li>
+<li>よくわかるSolr</li>
 </ol>
-
 <table>
 <thead>
 <tr>
 <th>ランキング</th>
-<th align="center">検索ヒットドキュメント</th>
-<th align="right">適合有無</th>
+<th style="text-align:center">検索ヒットドキュメント</th>
+<th style="text-align:right">適合有無</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>1</td>
-<td align="center">Solrを使った検索入門</td>
-<td align="right">○</td>
+<td style="text-align:center">Solrを使った検索入門</td>
+<td style="text-align:right">○</td>
 </tr>
-
 <tr>
 <td>2</td>
-<td align="center">Elasticsearchを使った検索入門</td>
-<td align="right">×</td>
+<td style="text-align:center">Elasticsearchを使った検索入門</td>
+<td style="text-align:right">×</td>
 </tr>
-
 <tr>
 <td>3</td>
-<td align="center">ElasticsearchとSolrの違い</td>
-<td align="right">×</td>
+<td style="text-align:center">ElasticsearchとSolrの違い</td>
+<td style="text-align:right">×</td>
 </tr>
-
 <tr>
 <td>4</td>
-<td align="center">よくわかるSolr</td>
-<td align="right">○</td>
+<td style="text-align:center">よくわかるSolr</td>
+<td style="text-align:right">○</td>
 </tr>
 </tbody>
 </table>
-
 <p>この時、再現率と適合率は以下のようになります。</p>
-
 <ul>
 <li>上位1件
-
 <ul>
 <li>適合率：P = 1 / 1 = 1.0</li>
 <li>再現率： R = 1 / 2 = 0.5</li>
-</ul></li>
+</ul>
+</li>
 <li>上位2件
-
 <ul>
 <li>適合率：P = 1 / 2 = 0.5</li>
 <li>再現率： R = 1 / 2 = 0.5</li>
-</ul></li>
+</ul>
+</li>
 <li>上位3件
-
 <ul>
 <li>適合率：P = 1 / 3 = 0.33</li>
 <li>再現率： R = 1 / 2 = 0.5</li>
-</ul></li>
+</ul>
+</li>
 <li>上位4件
-
 <ul>
 <li>適合率：P = 2 / 4 = 0.5</li>
 <li>再現率： R = 2 / 2 = 1.0</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>このように、適合率と再現率はトレードオフの関係にあります。</p>
-
-<p><img src="https://upload.wikimedia.org/wikipedia/ja/5/5a/Precision_and_recall.png" alt="適合率と再現率" title="適合率と再現率" /><br />
+<p><img src="https://upload.wikimedia.org/wikipedia/ja/5/5a/Precision_and_recall.png" alt="適合率と再現率" title="適合率と再現率"><br>
 ※ 画像はwikipediaから引用しました
 <a href="https://ja.wikipedia.org/wiki/%E6%83%85%E5%A0%B1%E6%A4%9C%E7%B4%A2">情報検索</a></p>
-
-<h2 id="f-measure-f値">F-measure（F値）</h2>
-
+<h2 id="f-measuref値">F-measure（F値）</h2>
 <p>適合率と再現率の調和平均をとって単一の指標で表すことができる値です。</p>
-
-<p>F-measure = 1 / ( <sup>1</sup>&frasl;<sub>2</sub> * (1/P + 1/R) ) = 2PR / (P + R)</p>
-
+<p>F-measure = 1 / ( 1/2 * (1/P + 1/R) ) = 2PR / (P + R)</p>
 <p>上記検索で再現率100%の場合（上位4件）のF値は以下となります。</p>
-
 <p>F-measure = 2 * 0.5 * 1.0 / (0.5 + 1.0) = 0.666&hellip;..</p>
-
 <p>このF値が大きいほど性能の良い検索システムといえます。</p>
-
 <h1 id="検索ランキング">検索ランキング</h1>
-
-<p>再現率と適合率には順序の話は出てきません。<br />
-検索においては再現率と適合率だけでなく、それをどういう順序で並べるか、ということが重要になってきます。<br />
-例えば、Googleで検索した結果が10ページ目以降に存在する場合、それは検索にヒットしなかったとほぼ同然の意味になるでしょう。<br />
+<p>再現率と適合率には順序の話は出てきません。<br>
+検索においては再現率と適合率だけでなく、それをどういう順序で並べるか、ということが重要になってきます。<br>
+例えば、Googleで検索した結果が10ページ目以降に存在する場合、それは検索にヒットしなかったとほぼ同然の意味になるでしょう。<br>
 ユーザが求める文章がより上位のランキングに出てくるようにすることは検索において非常に重要です。</p>
-
 <h1 id="solrにおける再現率と適合率">Solrにおける再現率と適合率</h1>
-
-<p>Solrでは検索をフィルタとトークナイザーを用いて実現します。<br />
+<p>Solrでは検索をフィルタとトークナイザーを用いて実現します。<br>
 これらの設定でSolrにおける再現率と適合率・検索ランキングを調整していきます。</p>
-
 <p>日本語検索のトークナイザには主に以下の2種類を組み合わせて使うことが多いようです。</p>
-
 <h2 id="日本語トークナイザ">日本語トークナイザ</h2>
-
 <ul>
 <li>JapaneseTokenizerFactory
-
 <ul>
 <li>形態素解析の技術を用いて単語分割を行うトークナイザ。意味のある単位で単語を分割します</li>
 <li>これをSolrで使うことで適合率の改善が期待されます</li>
 <li>例：今日の天気は雨です =&gt; 今日 / の / 天気 / は / 雨 / です</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h2 id="n-gram-トークナイザ">N-gram トークナイザ</h2>
-
 <ul>
 <li>NgramTokenizerFactory
-
 <ul>
 <li>ある指定された文字数区切りで単語を分割します。よく用いられるのは2文字ずつに分割するBigramです。</li>
 <li>これをSolrで使うことで再現率の改善が期待されます</li>
 <li>例：今日の天気は雨です =&gt; 今日 / 日の / の天 / 天気 / 気は / は雨 / 雨で / です</li>
-</ul></li>
 </ul>
-
-<p>こちらについては以下の記事が非常によくまとまっているため、参考になります。<br />
+</li>
+</ul>
+<p>こちらについては以下の記事が非常によくまとまっているため、参考になります。<br>
 <a href="http://tech.vasily.jp/entry/solr_hybrid_search">形態素解析とNgramを併用したハイブリッド検索をSolrで実現する方法</a></p>
-
 <h1 id="solrにおける検索ランキング">Solrにおける検索ランキング</h1>
-
 <h2 id="solrのランキングのコア">Solrのランキングのコア</h2>
-
-<p>Solrでは検索にヒットした文章のランキング（並び順）にはscoreを用います。<br />
-Solr6ではscoreの計算はBM25Similarityが用いられます。（正確にはLuceneレベルで変更されたみたい）solr5まではTFIDFSimilarityが用いられていました。<br />
-TFIDFについては以下のブログ記事が参考になります<br />
-<a href="http://qiita.com/ynakayama/items/300460aa718363abc85c">特徴抽出と TF-IDF</a><br />
-TFIDFとBM25の違いについては以下のブログ記事が参考になります。<br />
-<a href="http://sonickun.hatenablog.com/entry/2014/11/12/122806">確率的情報検索 Okapi BM25 についてまとめた</a><br />
+<p>Solrでは検索にヒットした文章のランキング（並び順）にはscoreを用います。<br>
+Solr6ではscoreの計算はBM25Similarityが用いられます。（正確にはLuceneレベルで変更されたみたい）solr5まではTFIDFSimilarityが用いられていました。<br>
+TFIDFについては以下のブログ記事が参考になります<br>
+<a href="http://qiita.com/ynakayama/items/300460aa718363abc85c">特徴抽出と TF-IDF</a><br>
+TFIDFとBM25の違いについては以下のブログ記事が参考になります。<br>
+<a href="http://sonickun.hatenablog.com/entry/2014/11/12/122806">確率的情報検索 Okapi BM25 についてまとめた</a><br>
 <a href="http://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/">BM25 The Next Generation of Lucene Relevance</a></p>
-
 <p>以下に簡単にまとめます。</p>
-
 <ul>
 <li>TF
-
 <ul>
 <li>Term Frequency. 特定のドキュメントでの単語の出現頻度のこと</li>
-</ul></li>
+</ul>
+</li>
 <li>DF
-
 <ul>
 <li>Document Frequency. ドキュメント全体での単語の出現頻度のこと</li>
-</ul></li>
+</ul>
+</li>
 <li>IDF
-
 <ul>
 <li>Inverse Document Frequency. DFの逆数の対数をとったもの.全ドキュメントの中で珍しい単語はより重要であるという考え方</li>
-</ul></li>
 </ul>
-
-<p>TFIDFからBM25に変わったのはなぜでしょうか？<br />
+</li>
+</ul>
+<p>TFIDFからBM25に変わったのはなぜでしょうか？<br>
 これは個人的な考察ですが、SolrのTFIDFはもともと独自の補正が入っていたようで、近年話題になっている機械学習を用いた検索ランキング手法であるLTRでのブースト値がより有用になるように切り替わったのではないかと考えます。</p>
-
 <h2 id="ランキング調整">ランキング調整</h2>
-
 <h3 id="function-query">Function Query</h3>
-
-<p>Solrのランキングアルゴリズムに対してファンクションクエリを使うことでブーストさせることができます。<br />
-例えばECサイトで新着商品をより検索の上位に表示したい、といった場合にはファンクションクエリが有用です。<br />
-これをFreshness Boostと呼びます。具体的には以下の記事が参考になります。<br />
+<p>Solrのランキングアルゴリズムに対してファンクションクエリを使うことでブーストさせることができます。<br>
+例えばECサイトで新着商品をより検索の上位に表示したい、といった場合にはファンクションクエリが有用です。<br>
+これをFreshness Boostと呼びます。具体的には以下の記事が参考になります。<br>
 <a href="http://www.solrtutorial.com/boost-documents-by-age.html">Boost Solr documents by age</a></p>
-
 <h3 id="re-rank-query">Re Rank Query</h3>
-
-<p>Function Queryを用いることで検索クエリに対して複雑な計算式を用いてBoostしてランキングを出すことが可能です。<br />
-しかし、複雑な計算式を用いるということはそれだけ計算量がかかり、パフォーマンスの面でデメリットが発生してしまう可能性があります。<br />
-SolrのReRankの機能を用いれば複雑な計算式を適用するドキュメント数を限定することが可能です。<br />
-ReRankでは一度オリジナルの式で検索を行なったのち、上位指定件数に対して再度、ReRankQueryを適用し、ランキングを変更します。<br />
+<p>Function Queryを用いることで検索クエリに対して複雑な計算式を用いてBoostしてランキングを出すことが可能です。<br>
+しかし、複雑な計算式を用いるということはそれだけ計算量がかかり、パフォーマンスの面でデメリットが発生してしまう可能性があります。<br>
+SolrのReRankの機能を用いれば複雑な計算式を適用するドキュメント数を限定することが可能です。<br>
+ReRankでは一度オリジナルの式で検索を行なったのち、上位指定件数に対して再度、ReRankQueryを適用し、ランキングを変更します。<br>
 例えば、上位200件に対してfreshness boostの式を適用する、といったことが可能です。</p>
-
 <h1 id="まとめ">まとめ</h1>
-
-<p>以上、Solrの検索について色々と調べたことをまとめました。<br />
+<p>以上、Solrの検索について色々と調べたことをまとめました。<br>
 検索は奥が深いですね。</p>
 
     </div>
@@ -404,11 +361,15 @@ ReRankでは一度オリジナルの式で検索を行なったのち、上位�
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2017-08-18</span>
+    <span class="item-content">
+        2017-08-18
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/solr/">solr</a>
           </div>
@@ -424,6 +385,10 @@ ReRankでは一度オリジナルの式で検索を行なったのち、上位�
   </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
@@ -451,24 +416,25 @@ ReRankでは一度オリジナルの式で検索を行なったのち、上位�
 
   <span class="copyright-year">
     &copy; 
-    2019
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">@ken-aio</span>
+    2019 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

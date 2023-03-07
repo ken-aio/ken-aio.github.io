@@ -1,6 +1,54 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <?xml-stylesheet type="text/xsl" href="https://ken-aio.github.io/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://ken-aio.github.io/post/2023/03/07/golang-pubsub/</loc>
+    <lastmod>2023-03-06T10:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/</loc>
+    <lastmod>2023-03-06T10:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/golang/</loc>
+    <lastmod>2023-03-06T10:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/golang/</loc>
+    <lastmod>2023-03-06T10:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/</loc>
+    <lastmod>2023-03-06T10:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/post/</loc>
+    <lastmod>2023-03-06T10:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/</loc>
+    <lastmod>2023-03-06T10:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
   
   <url>
     <loc>https://ken-aio.github.io/post/2019/10/17/go-test-interface/</loc>
@@ -18,6 +66,34 @@
   
   <url>
     <loc>https://ken-aio.github.io/post/2019/04/01/golang-sqlboiler-select/</loc>
+    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/orm/</loc>
+    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/orm/</loc>
+    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/sqlboiler/</loc>
+    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/sqlboiler/</loc>
     <lastmod>2019-04-01T23:50:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -45,7 +121,35 @@
   </url>
   
   <url>
+    <loc>https://ken-aio.github.io/categories/api/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/echo/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/resty/</loc>
+    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/02/06/golang-echo-middleware/</loc>
+    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/echo/</loc>
     <lastmod>2019-02-06T00:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -59,6 +163,13 @@
   </url>
   
   <url>
+    <loc>https://ken-aio.github.io/tags/swagger/</loc>
+    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/01/30/golang-echo/</loc>
     <lastmod>2019-01-31T00:20:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -66,7 +177,28 @@
   </url>
   
   <url>
+    <loc>https://ken-aio.github.io/tags/cassandra/</loc>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/cassandra/</loc>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/01/27/cassandra-execql/</loc>
+    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/cobra/</loc>
     <lastmod>2019-01-29T22:00:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -80,6 +212,20 @@
   </url>
   
   <url>
+    <loc>https://ken-aio.github.io/tags/cli/</loc>
+    <lastmod>2019-01-27T22:00:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/enum/</loc>
+    <lastmod>2019-01-21T23:29:51+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2019/01/21/golang-enum/</loc>
     <lastmod>2019-01-21T23:29:51+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -88,6 +234,20 @@
   
   <url>
     <loc>https://ken-aio.github.io/post/2019/01/16/hugo-circleci/</loc>
+    <lastmod>2019-01-16T16:44:14+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/hugo/</loc>
+    <lastmod>2019-01-16T16:44:14+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/others/</loc>
     <lastmod>2019-01-16T16:44:14+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -108,6 +268,20 @@
   </url>
   
   <url>
+    <loc>https://ken-aio.github.io/categories/search/</loc>
+    <lastmod>2017-08-18T19:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/tags/solr/</loc>
+    <lastmod>2017-08-18T19:30:00+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://ken-aio.github.io/post/2017/08/18/solr-search-evaluation/</loc>
     <lastmod>2017-08-18T19:30:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -119,174 +293,6 @@
     <lastmod>2017-08-18T16:30:00+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/api/</loc>
-    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/</loc>
-    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/orm/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/orm/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/post/</loc>
-    <lastmod>2019-10-17T13:31:57+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/cassandra/</loc>
-    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/cassandra/</loc>
-    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/cli/</loc>
-    <lastmod>2019-01-27T22:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/cobra/</loc>
-    <lastmod>2019-01-29T22:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/echo/</loc>
-    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/echo/</loc>
-    <lastmod>2019-02-06T00:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/enum/</loc>
-    <lastmod>2019-01-21T23:29:51+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/golang/</loc>
-    <lastmod>2019-10-17T13:31:57+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/golang/</loc>
-    <lastmod>2019-10-17T13:31:57+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/hugo/</loc>
-    <lastmod>2019-01-16T16:44:14+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/</loc>
-    <lastmod>2019-10-17T13:31:57+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/others/</loc>
-    <lastmod>2019-01-16T16:44:14+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/resty/</loc>
-    <lastmod>2019-02-07T23:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/search/</loc>
-    <lastmod>2017-08-18T19:30:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/solr/</loc>
-    <lastmod>2017-08-18T19:30:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/sqlboiler/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/categories/sqlboiler/</loc>
-    <lastmod>2019-04-01T23:50:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ken-aio.github.io/tags/swagger/</loc>
-    <lastmod>2019-02-05T00:00:00+09:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
   </url>
   
 </urlset>

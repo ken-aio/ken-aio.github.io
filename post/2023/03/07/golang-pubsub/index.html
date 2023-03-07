@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法 - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法" /><meta name="keywords" content="golang, pubsub, gcp" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2023/03/07/golang-pubsub/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法" />
+<meta property="og:description" content="[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2023/03/07/golang-pubsub/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-03-06T10:30:00+09:00" />
+<meta property="article:modified_time" content="2023-03-06T10:30:00+09:00" />
+<meta itemprop="name" content="[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法">
+<meta itemprop="description" content="[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法"><meta itemprop="datePublished" content="2023-03-06T10:30:00+09:00" />
+<meta itemprop="dateModified" content="2023-03-06T10:30:00+09:00" />
+<meta itemprop="wordCount" content="912">
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法"/>
+<meta name="twitter:description" content="[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-03-06 </span>
+        <div class="post-category">
+            <a href="/categories/golang/"> golang </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#結論">結論</a></li>
+    <li><a href="#発生した現象">発生した現象</a></li>
+    <li><a href="#解決">解決</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<h1 id="はじめに">はじめに</h1>
+<p>GolangでCloud pubsubのsubscriberを実装した時のことです。<br>
+ローカルでgo runコマンドで実行すると正常にsubするのですが、docker container上だとどうやってもsubしてくれない現象が発生しました。</p>
+<p>なお、subscriberはstreaming pull方式です。<br>
+（詳細は <a href="https://cloud.google.com/pubsub/docs/subscriber?hl=ja">サブスクリプション タイプを選択する</a> を参照）</p>
+<p>Googleで調べてもジャストな記事がヒットしなかったのでここにメモしておきます。</p>
+<h1 id="結論">結論</h1>
+<p>docker containerで ca-certificates をちゃんとアップデートしましょう。</p>
+<h1 id="発生した現象">発生した現象</h1>
+<p>サンプルコードをそのまま動かすようなコードをdocker container上で起動しました。<br>
+以下は記事執筆時点の <a href="https://cloud.google.com/pubsub/docs/pull?hl=ja#go_2">こちら</a> のドキュメントのコードそのままです。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="nf">import</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;context&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;io&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;sync/atomic&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;time&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;cloud.google.com/go/pubsub&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">func</span><span class="w"> </span><span class="nf">pullMsgs</span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="n">io</span><span class="p">.</span><span class="n">Writer</span><span class="p">,</span><span class="w"> </span><span class="n">projectID</span><span class="p">,</span><span class="w"> </span><span class="n">subID</span><span class="w"> </span><span class="n">string</span><span class="p">)</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="err">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">//</span><span class="w"> </span><span class="n">projectID</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&#34;my-project-id&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">//</span><span class="w"> </span><span class="n">subID</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s2">&#34;my-sub&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ctx</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">pubsub</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">projectID</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="err">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s2">&#34;pubsub.NewClient: %v&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">defer</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">sub</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">client</span><span class="p">.</span><span class="nf">Subscription</span><span class="p">(</span><span class="n">subID</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">//</span><span class="w"> </span><span class="n">Receive</span><span class="w"> </span><span class="n">messages</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">seconds</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">simplifies</span><span class="w"> </span><span class="n">testing</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">//</span><span class="w"> </span><span class="n">Comment</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">production</span><span class="p">,</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="o">`</span><span class="n">Receive</span><span class="o">`</span><span class="w"> </span><span class="n">should</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">//</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">used</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">long</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="n">operation</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">cancel</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="nf">WithTimeout</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="o">*</span><span class="kt">time</span><span class="p">.</span><span class="n">Second</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">defer</span><span class="w"> </span><span class="nf">cancel</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">var</span><span class="w"> </span><span class="n">received</span><span class="w"> </span><span class="n">int32</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sub</span><span class="p">.</span><span class="nf">Receive</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">_</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Context</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">*</span><span class="n">pubsub</span><span class="p">.</span><span class="n">Message</span><span class="p">)</span><span class="w"> </span><span class="err">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;Got message: %q\n&#34;</span><span class="p">,</span><span class="w"> </span><span class="nf">string</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Data</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">atomic</span><span class="p">.</span><span class="nf">AddInt32</span><span class="p">(</span><span class="o">&amp;</span><span class="n">received</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">msg</span><span class="p">.</span><span class="nf">Ack</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="err">}</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="err">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s2">&#34;sub.Receive: %v&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="err">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;Received %d messages\n&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">nil</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="err">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>これを以下のようなDockerfileでビルドしてdocker runしてもpullされませんでした。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">FROM    golang:1.20 AS build
+</span></span><span class="line"><span class="cl">WORKDIR /go/src/github.com/ken-aio/pubsub-subscriber
+</span></span><span class="line"><span class="cl">COPY    go.mod go.sum /go/src/github.com/ken-aio/pubsub-subscriber/
+</span></span><span class="line"><span class="cl">RUN     go mod download
+</span></span><span class="line"><span class="cl">ADD     . /go/src/github.com/ken-aio/lcms-pubsub-subscriber
+</span></span><span class="line"><span class="cl">RUN     go build
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">FROM debian:bullseye
+</span></span><span class="line"><span class="cl">RUN cp /usr/share/zoneinfo/Japan /etc/localtime
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">COPY --from=build /go/src/github.com/ken-aio/pubsub-subscriber/dist/pubsub-subscriber /pubsub-subscriber
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">CMD /pubsub-subscriber
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="解決">解決</h1>
+<p>golangのcloud pubsubのstreaming pullにはgRPCのstreamingが使われています。<br>
+調査したところ、以下の環境変数を設定してから起動するとgRPCのログが出力されることがわかりました。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">export GRPC_GO_LOG_SEVERITY_LEVEL=&#34;INFO&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>この設定をしてからsubscriberを起動すると、以下のエラーが確認できました。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2023/03/03 12:30:26 WARNING: [core] [Channel #11 SubChannel #12] grpc: addrConn.createTransport failed to connect to {
+</span></span><span class="line"><span class="cl">  &#34;Addr&#34;: &#34;pubsub.googleapis.com:443&#34;,
+</span></span><span class="line"><span class="cl">  &#34;ServerName&#34;: &#34;pubsub.googleapis.com:443&#34;,
+</span></span><span class="line"><span class="cl">  &#34;Attributes&#34;: null,
+</span></span><span class="line"><span class="cl">  &#34;BalancerAttributes&#34;: null,
+</span></span><span class="line"><span class="cl">  &#34;Type&#34;: 0,
+</span></span><span class="line"><span class="cl">  &#34;Metadata&#34;: null
+</span></span><span class="line"><span class="cl">}. Err: connection error: desc = &#34;transport: authentication handshake failed: tls: failed to verify certificate: x509: certificate signed by unknown authority&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ということで、TLSの接続でエラーが出ていました。</p>
+<p><code>debian:bullseye</code> のCA証明書が足りなかったのが原因でした。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">RUN apt update &amp;&amp; apt -y upgrade &amp;&amp; apt install -y ca-certificates
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>こちらをDockerfileに追記してビルドし直したところ、無事にsubscribeできるようになりました。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2023-03-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2019/10/17/go-test-interface/">
+            <span class="next-text nav-default">[Golang]テストで特定の処理をモックにしたい場合のインターフェースの使い方</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>

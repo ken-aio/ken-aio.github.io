@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
 
 
 <link rel="canonical" href="https://ken-aio.github.io/post/2019/01/16/hugo-circleci/" />
@@ -34,28 +34,22 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="CircleCIでHugoのブログを自動公開する" />
 <meta property="og:description" content="Tweet はじめに こちら の記事でhugoを使ってこのブログを開設した記事を書きました。 今回はその続きで、記事を書いたらCircleCIで自動ビルドを" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ken-aio.github.io/post/2019/01/16/hugo-circleci/" /><meta property="article:published_time" content="2019-01-16T16:44:14&#43;09:00"/>
-<meta property="article:modified_time" content="2019-01-16T16:44:14&#43;09:00"/>
-
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/01/16/hugo-circleci/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-01-16T16:44:14+09:00" />
+<meta property="article:modified_time" content="2019-01-16T16:44:14+09:00" />
 <meta itemprop="name" content="CircleCIでHugoのブログを自動公開する">
-<meta itemprop="description" content="Tweet はじめに こちら の記事でhugoを使ってこのブログを開設した記事を書きました。 今回はその続きで、記事を書いたらCircleCIで自動ビルドを">
-
-
-<meta itemprop="datePublished" content="2019-01-16T16:44:14&#43;09:00" />
-<meta itemprop="dateModified" content="2019-01-16T16:44:14&#43;09:00" />
+<meta itemprop="description" content="Tweet はじめに こちら の記事でhugoを使ってこのブログを開設した記事を書きました。 今回はその続きで、記事を書いたらCircleCIで自動ビルドを"><meta itemprop="datePublished" content="2019-01-16T16:44:14+09:00" />
+<meta itemprop="dateModified" content="2019-01-16T16:44:14+09:00" />
 <meta itemprop="wordCount" content="1572">
-
-
-
-<meta itemprop="keywords" content="hugo," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="hugo," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CircleCIでHugoのブログを自動公開する"/>
 <meta name="twitter:description" content="Tweet はじめに こちら の記事でhugoを使ってこのブログを開設した記事を書きました。 今回はその続きで、記事を書いたらCircleCIで自動ビルドを"/>
 
@@ -92,12 +86,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">ken-aio&#39;s blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -112,6 +115,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -135,71 +139,60 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#はじめに">はじめに</a></li>
-<li><a href="#構成">構成</a></li>
-<li><a href="#circleciの設定">CircleCIの設定</a>
-<ul>
-<li><a href="#makefile">Makefile</a></li>
-<li><a href="#yaml">yaml</a></li>
-<li><a href="#git-push用の鍵設定">git push用の鍵設定</a></li>
-</ul></li>
-<li><a href="#まとめ">まとめ</a></li>
-</ul>
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#構成">構成</a></li>
+    <li><a href="#circleciの設定">CircleCIの設定</a>
+      <ul>
+        <li><a href="#makefile">Makefile</a></li>
+        <li><a href="#yaml">yaml</a></li>
+        <li><a href="#git-push用の鍵設定">git push用の鍵設定</a></li>
+      </ul>
+    </li>
+    <li><a href="#まとめ">まとめ</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
 <h1 id="はじめに">はじめに</h1>
-
-<p><a href="https://ken-aio.github.io/post/2019/01/15/hugo-even/">こちら</a> の記事でhugoを使ってこのブログを開設した記事を書きました。<br />
+<p><a href="https://ken-aio.github.io/post/2019/01/15/hugo-even/">こちら</a> の記事でhugoを使ってこのブログを開設した記事を書きました。<br>
 今回はその続きで、記事を書いたらCircleCIで自動ビルドを行なって新しい記事が公開される仕組みを作ったので、そのやり方を記載します。</p>
-
 <h1 id="構成">構成</h1>
-
 <p>運用的には1つのgitリポジトリで構成していて、いくつかのブランチとプルリクで運用します。</p>
-
 <ul>
 <li>masterブランチ
-
 <ul>
 <li>公開用の記事を置くブランチ</li>
-</ul></li>
+</ul>
+</li>
 <li>blogブランチ
-
 <ul>
 <li>作業のベースブランチ</li>
 <li>このブランチに新しいコミットが入ったら自動で記事をビルドしてmasterに入れる</li>
-</ul></li>
+</ul>
+</li>
 <li>post/xxxxブランチ
-
 <ul>
 <li>記事毎のブランチ</li>
 <li>書き終わったらこのブランチからblogブランチにプルリク投げてマージする</li>
-</ul></li>
 </ul>
-
-<p>という感じです。<br />
+</li>
+</ul>
+<p>という感じです。<br>
 このうち、blogブランチへのマージを検知してビルドしてmasterに入れる仕組みをCircleCIを使って作りました。</p>
-
 <h1 id="circleciの設定">CircleCIの設定</h1>
-
-<p>言わずもがな、有名なSaaSのCIサービスです。<br />
-2.0になってdockerが使えるようになってからはますます便利になりました。<br />
+<p>言わずもがな、有名なSaaSのCIサービスです。 <br>
+2.0になってdockerが使えるようになってからはますます便利になりました。<br>
 基本的には Makefile を使うのですが、git pushする設定に少し時間がかかりました。</p>
-
 <h2 id="makefile">Makefile</h2>
-
-<p>CircleCIの設定ではないのですが、今回の要なので先に書いておきます。<br />
+<p>CircleCIの設定ではないのですが、今回の要なので先に書いておきます。<br>
 deployの部分だけを切り取ってます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -208,48 +201,42 @@ deployの部分だけを切り取ってます。</p>
 </span><span class="lnt">7
 </span><span class="lnt">8
 </span><span class="lnt">9
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">deploy: ## Deploy posts
-	git submodule update -i
-	hugo
-	mkdir -p tmp &amp;&amp; cd tmp &amp;&amp; git clone git@github.com:ken-aio/ken-aio.github.io.git
-	rm -fr $(GITHUB_DIR)/*
-	cp -fr public/* $(GITHUB_DIR)/
-	cd $(GITHUB_DIR)/ &amp;&amp; git config --local user.name ken-aio &amp;&amp; git config --local user.email suguru.akiho@gmail.com
-	cd $(GITHUB_DIR)/ &amp;&amp; git add . &amp;&amp; git commit -m &#34;publish&#34; &amp;&amp; git push origin master
-	rm -fr $(GITHUB_DIR)</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-v" data-lang="v"><span class="line"><span class="cl"><span class="nv">deploy</span><span class="p">:</span> <span class="o">##</span> <span class="nc">Deploy</span> <span class="nv">posts</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">git</span> <span class="nv">submodule</span> <span class="nv">update</span> <span class="o">-</span><span class="nv">i</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">hugo</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">mkdir</span> <span class="o">-</span><span class="nv">p</span> <span class="nv">tmp</span> <span class="o">&amp;&amp;</span> <span class="nv">cd</span> <span class="nv">tmp</span> <span class="o">&amp;&amp;</span> <span class="nv">git</span> <span class="nv">clone</span> <span class="nv">git</span><span class="o">@</span><span class="nv">github</span><span class="p">.</span><span class="nv">com</span><span class="p">:</span><span class="nv">ken</span><span class="o">-</span><span class="nv">aio</span><span class="o">/</span><span class="nv">ken</span><span class="o">-</span><span class="nv">aio</span><span class="p">.</span><span class="nv">github</span><span class="p">.</span><span class="nv">io</span><span class="p">.</span><span class="nv">git</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">rm</span> <span class="o">-</span><span class="nv">fr</span> <span class="err">$</span><span class="p">(</span><span class="nc">GITHUB_DIR</span><span class="p">)</span><span class="o">/*</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">cp</span> <span class="o">-</span><span class="nv">fr</span> <span class="nv">public</span><span class="o">/*</span> <span class="err">$</span><span class="p">(</span><span class="nc">GITHUB_DIR</span><span class="p">)</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">cd</span> <span class="err">$</span><span class="p">(</span><span class="nc">GITHUB_DIR</span><span class="p">)</span><span class="o">/</span> <span class="o">&amp;&amp;</span> <span class="nv">git</span> <span class="nv">config</span> <span class="o">--</span><span class="nv">local</span> <span class="nv">user</span><span class="p">.</span><span class="nv">name</span> <span class="nv">ken</span><span class="o">-</span><span class="nv">aio</span> <span class="o">&amp;&amp;</span> <span class="nv">git</span> <span class="nv">config</span> <span class="o">--</span><span class="nv">local</span> <span class="nv">user</span><span class="p">.</span><span class="nv">email</span> <span class="nv">suguru</span><span class="p">.</span><span class="nv">akiho</span><span class="o">@</span><span class="nv">gmail</span><span class="p">.</span><span class="nv">com</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">cd</span> <span class="err">$</span><span class="p">(</span><span class="nc">GITHUB_DIR</span><span class="p">)</span><span class="o">/</span> <span class="o">&amp;&amp;</span> <span class="nv">git</span> <span class="nv">add</span> <span class="p">.</span> <span class="o">&amp;&amp;</span> <span class="nv">git</span> <span class="nv">commit</span> <span class="o">-</span><span class="nv">m</span> <span class="s2">&#34;publish&#34;</span> <span class="o">&amp;&amp;</span> <span class="nv">git</span> <span class="nv">push</span> <span class="nv">origin</span> <span class="nv">master</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">rm</span> <span class="o">-</span><span class="nv">fr</span> <span class="err">$</span><span class="p">(</span><span class="nc">GITHUB_DIR</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>ポイントとしては、CircleCIとGithubのSSHキーの設定をするので、pushするためのリポジトリはhttpじゃなくてsshで設定しておくことですね。<br />
+</div><p>ポイントとしては、CircleCIとGithubのSSHキーの設定をするので、pushするためのリポジトリはhttpじゃなくてsshで設定しておくことですね。<br>
 それ以外はビルドしてpushしているだけです。</p>
-
 <h2 id="yaml">yaml</h2>
-
-<p>CircleCIは設定にyamlを使います。<br />
+<p>CircleCIは設定にyamlを使います。<br>
 今回の内容はとてもシンプルで</p>
-
 <ul>
 <li>git checkout</li>
 <li>hugoインストール</li>
 <li>ビルド</li>
 <li>成果物をmasterにpush</li>
 </ul>
-
-<p>だけをCircleCIにやってもらってます。<br />
+<p>だけをCircleCIにやってもらってます。<br>
 基本機能として、ブランチへのpushをトリガーにビルドパイプラインが動きます。</p>
-
-<p>↓が今回設定したyamlです。<br />
-<del>※ hugoのコマンドをキャッシュしてキャッシュがなかったらインストール、にしたかったのですが、これはやれておらず&hellip;</del><br />
-1/17追記:
+<p>↓が今回設定したyamlです。<br>
+<del>※ hugoのコマンドをキャッシュしてキャッシュがなかったらインストール、にしたかったのですが、これはやれておらず&hellip;</del><br>
+1/17追記:</p>
 <blockquote class="twitter-tweet" data-lang="en"><p lang="ja" dir="ltr">CircleCI で使える Hugo の Docker image があります。<a href="https://t.co/Iu2H4s06kn">https://t.co/Iu2H4s06kn</a></p>&mdash; iris ʕ◔ϖ◔ʔ Hugo 布教中 (@piris314) <a href="https://twitter.com/piris314/status/1085573867928616960?ref_src=twsrc%5Etfw">January 16, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
-<p>こちらのbase imageを使うように修正しました。<br />
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>こちらのbase imageを使うように修正しました。<br>
 @piris314さん、ありがとうございます！</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -274,60 +261,51 @@ deployの部分だけを切り取ってます。</p>
 </span><span class="lnt">23
 </span><span class="lnt">24
 </span><span class="lnt">25
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">version: 2
-jobs:
-  deploy:
-    working_directory: ~/workspace
-    docker:
-      - image: cibuilds/hugo:0.53
-    environment:
-      - GOCACHE: &#34;/tmp/go/cache&#34;
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - &#34;ae:a5:cb:56:aa:65:2a:f8:38:c4:2a:62:c1:0e:22:2a&#34;
-      - run:
-          name: deploy
-          command: make deploy
-
-workflows:
-  version: 2
-  build:
-    jobs:
-      - deploy:
-          filters:
-            branches:
-              only: blog</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">version: 2
+</span></span><span class="line"><span class="cl">jobs:
+</span></span><span class="line"><span class="cl">  deploy:
+</span></span><span class="line"><span class="cl">    working_directory: ~/workspace
+</span></span><span class="line"><span class="cl">    docker:
+</span></span><span class="line"><span class="cl">      - image: cibuilds/hugo:0.53
+</span></span><span class="line"><span class="cl">    environment:
+</span></span><span class="line"><span class="cl">      - GOCACHE: &#34;/tmp/go/cache&#34;
+</span></span><span class="line"><span class="cl">    steps:
+</span></span><span class="line"><span class="cl">      - checkout
+</span></span><span class="line"><span class="cl">      - add_ssh_keys:
+</span></span><span class="line"><span class="cl">          fingerprints:
+</span></span><span class="line"><span class="cl">            - &#34;ae:a5:cb:56:aa:65:2a:f8:38:c4:2a:62:c1:0e:22:2a&#34;
+</span></span><span class="line"><span class="cl">      - run:
+</span></span><span class="line"><span class="cl">          name: deploy
+</span></span><span class="line"><span class="cl">          command: make deploy
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">workflows:
+</span></span><span class="line"><span class="cl">  version: 2
+</span></span><span class="line"><span class="cl">  build:
+</span></span><span class="line"><span class="cl">    jobs:
+</span></span><span class="line"><span class="cl">      - deploy:
+</span></span><span class="line"><span class="cl">          filters:
+</span></span><span class="line"><span class="cl">            branches:
+</span></span><span class="line"><span class="cl">              only: blog
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>ポイントは <code>fingerprints</code> の部分です。</p>
-
+</div><p>ポイントは <code>fingerprints</code> の部分です。</p>
 <h2 id="git-push用の鍵設定">git push用の鍵設定</h2>
-
-<p>cloneするためのdeployキーはボタン一発とても簡単に作れたのですが、push用の鍵はちょっとだけ設定が必要でした。<br />
-まずはCircleCIのページにて、ビルド設定するリポジトリの設定画面に移動します。<br />
-そこに <code>SSH Permissions</code> という項目があるので、この画面を開きます。<br />
+<p>cloneするためのdeployキーはボタン一発とても簡単に作れたのですが、push用の鍵はちょっとだけ設定が必要でした。<br>
+まずはCircleCIのページにて、ビルド設定するリポジトリの設定画面に移動します。<br>
+そこに <code>SSH Permissions</code> という項目があるので、この画面を開きます。<br>
 ※ <code>Checkout SSH Keys</code> ではないので注意</p>
-
-<p>その画面の右上の <code>Add SSH Key</code> でGithubに設定しているSSHのprivate keyを入力します。<br />
+<p>その画面の右上の <code>Add SSH Key</code> でGithubに設定しているSSHのprivate keyを入力します。<br>
 Hostは <code>github.com</code> です。</p>
-
-<p>これで設定は完了です。<br />
-この設定をすると、fingerprintsが表示されるので、それをCircleCIの設定ファイルの fingerprints に設定します。<br />
+<p>これで設定は完了です。<br>
+この設定をすると、fingerprintsが表示されるので、それをCircleCIの設定ファイルの fingerprints に設定します。<br>
 ※ この設定をするまで、CircleCIのビルドでデプロイする際に権限がないと言われてpushできなくてちょっとハマりました&hellip;</p>
-
 <p>これでblogブランチにpushされるとCircleCIで自動ビルドが走ってブログ記事が公開されるようになりました。</p>
-
 <p>やったね！</p>
-
 <h1 id="まとめ">まとめ</h1>
-
-<p>CircleCIで自動ブログ公開環境が出来ました。<br />
+<p>CircleCIで自動ブログ公開環境が出来ました。<br>
 こんな素晴らしいサービスが利用出来て、ホントに感謝です！</p>
-
 <p>それではまたナニカ書いていきます。</p>
 
     </div>
@@ -339,11 +317,15 @@ Hostは <code>github.com</code> です。</p>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2019-01-16</span>
+    <span class="item-content">
+        2019-01-16
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/hugo/">hugo</a>
           </div>
@@ -363,6 +345,10 @@ Hostは <code>github.com</code> です。</p>
   </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
@@ -390,24 +376,25 @@ Hostは <code>github.com</code> です。</p>
 
   <span class="copyright-year">
     &copy; 
-    2019
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">@ken-aio</span>
+    2019 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

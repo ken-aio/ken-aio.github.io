@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
 
 
 <link rel="canonical" href="https://ken-aio.github.io/post/2019/01/30/golang-echo/" />
@@ -34,28 +34,22 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="GolangとEchoでお手軽にAPIサーバを立てる" />
 <meta property="og:description" content="GolangとEchoでお手軽にAPIサーバを作ってみます" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ken-aio.github.io/post/2019/01/30/golang-echo/" /><meta property="article:published_time" content="2019-01-31T00:20:00&#43;09:00"/>
-<meta property="article:modified_time" content="2019-01-31T00:20:00&#43;09:00"/>
-
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/01/30/golang-echo/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-01-31T00:20:00+09:00" />
+<meta property="article:modified_time" content="2019-01-31T00:20:00+09:00" />
 <meta itemprop="name" content="GolangとEchoでお手軽にAPIサーバを立てる">
-<meta itemprop="description" content="GolangとEchoでお手軽にAPIサーバを作ってみます">
-
-
-<meta itemprop="datePublished" content="2019-01-31T00:20:00&#43;09:00" />
-<meta itemprop="dateModified" content="2019-01-31T00:20:00&#43;09:00" />
+<meta itemprop="description" content="GolangとEchoでお手軽にAPIサーバを作ってみます"><meta itemprop="datePublished" content="2019-01-31T00:20:00+09:00" />
+<meta itemprop="dateModified" content="2019-01-31T00:20:00+09:00" />
 <meta itemprop="wordCount" content="1786">
-
-
-
-<meta itemprop="keywords" content="golang,echo," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang,echo," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GolangとEchoでお手軽にAPIサーバを立てる"/>
 <meta name="twitter:description" content="GolangとEchoでお手軽にAPIサーバを作ってみます"/>
 
@@ -92,12 +86,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">ken-aio&#39;s blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -112,6 +115,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -135,115 +139,96 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#はじめに">はじめに</a></li>
-<li><a href="#動機">動機</a></li>
-<li><a href="#echoとは">Echoとは</a></li>
-<li><a href="#api作ってみる">API作ってみる</a>
-<ul>
-<li><a href="#インストール">インストール</a></li>
-<li><a href="#hello-world">hello world</a></li>
-<li><a href="#ロジックを分割">ロジックを分割</a></li>
-<li><a href="#routingを分割">routingを分割</a></li>
-<li><a href="#path-parameterとquery-parameter">path parameterとquery parameter</a></li>
-</ul></li>
-<li><a href="#まとめ">まとめ</a></li>
-</ul>
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#動機">動機</a></li>
+    <li><a href="#echoとは">Echoとは</a></li>
+    <li><a href="#api作ってみる">API作ってみる</a>
+      <ul>
+        <li><a href="#インストール">インストール</a></li>
+        <li><a href="#hello-world">hello world</a></li>
+        <li><a href="#ロジックを分割">ロジックを分割</a></li>
+        <li><a href="#routingを分割">routingを分割</a></li>
+        <li><a href="#path-parameterとquery-parameter">path parameterとquery parameter</a></li>
+      </ul>
+    </li>
+    <li><a href="#まとめ">まとめ</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
 <h1 id="はじめに">はじめに</h1>
-
 <p>golangとechoを使って簡単にAPIサーバを作る方法をまとめます。</p>
-
 <h1 id="動機">動機</h1>
-
-<p>golangでAPIサーバを作りたい場合、どんな選択をするでしょうか<br />
-golangは標準のnet/httpがしっかりしているので、そもそもFWが不要、という議論もよく見かけます。<br />
+<p>golangでAPIサーバを作りたい場合、どんな選択をするでしょうか<br>
+golangは標準のnet/httpがしっかりしているので、そもそもFWが不要、という議論もよく見かけます。<br>
 しかし、net/httpを触ってみてやっぱりFW使った方がいいなと感じました。</p>
-
 <ul>
 <li>リクエストのパースが面倒</li>
 <li>ミドルウェアの組み込みが面倒</li>
 <li>http methodを意識したroutingの設定が面倒</li>
 </ul>
-
-<p>など、net/httpも便利ですがやっぱりある程度は自分で書かないといけないと感じました。<br />
-その結果、結局オレオレFWが出来てしまう予感がして、FWを探しました。<br />
+<p>など、net/httpも便利ですがやっぱりある程度は自分で書かないといけないと感じました。<br>
+その結果、結局オレオレFWが出来てしまう予感がして、FWを探しました。<br>
 その中でechoに出会いました。</p>
-
 <h1 id="echoとは">Echoとは</h1>
-
-<p>golangのWeb FWです。<br />
-一応HTMLも出力できるのですが、APIサーバとしてのユースケースが多いんじゃないかなと感じてます。<br />
+<p>golangのWeb FWです。<br>
+一応HTMLも出力できるのですが、APIサーバとしてのユースケースが多いんじゃないかなと感じてます。<br>
 公式によると、有名なFWのginよりもパフォーマンスがよいとのこと。</p>
-
 <ul>
 <li><a href="https://echo.labstack.com/">echo official site</a></li>
 <li><a href="https://github.com/labstack/echo">echo github</a></li>
 </ul>
-
 <p>（オフィシャルサイトがきれいに作られていますね^^）</p>
-
 <h1 id="api作ってみる">API作ってみる</h1>
-
 <p>まずはhello worldを返すAPIを実装してみます。</p>
-
 <p>今回のサンプルは↓のリポジトリにおいてあります。</p>
-
 <p><a href="https://github.com/ken-aio/go-echo-sample/tree/v1">https://github.com/ken-aio/go-echo-sample/tree/v1</a></p>
-
 <h2 id="インストール">インストール</h2>
-
-<p>Go Modulesを使ってechoをインストールします。<br />
-現時点ではgo modulesを使うには環境変数を設定する必要があります。<br />
-※ なんと、echoにgo modulesが入ったのはこの記事を書く2日前でした（!!）<br />
+<p>Go Modulesを使ってechoをインストールします。<br>
+現時点ではgo modulesを使うには環境変数を設定する必要があります。<br>
+※ なんと、echoにgo modulesが入ったのはこの記事を書く2日前でした（!!）<br>
 ※ さらに、echo v4が出たのがこの記事を書いている間に行われました&hellip;w</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ echo &#39;export GO111MODULE=on&#39; &gt;&gt; .env
-$ . .env</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ echo &#39;export GO111MODULE=on&#39; &gt;&gt; .env
+</span></span><span class="line"><span class="cl">$ . .env
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>まずはgo modulesを初期化します。</p>
+</div><p>まずはgo modulesを初期化します。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ go mod init</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ go mod init
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>そしてechoをインストールします。<br />
-go modulesがonの状態でgo getをすると依存関係含めて諸々をダウンロードしてくれます。<br />
+</div><p>そしてechoをインストールします。<br>
+go modulesがonの状態でgo getをすると依存関係含めて諸々をダウンロードしてくれます。<br>
 go modules、便利ですね。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ go get github.com/labstack/echo/v4</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ go get github.com/labstack/echo/v4
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>これでインストールは完了です。</p>
-
+</div><p>これでインストールは完了です。</p>
 <h2 id="hello-world">hello world</h2>
-
-<p>早速hello worldを作ってみます。<br />
+<p>早速hello worldを作ってみます。<br>
 やり方はとても簡単、echo作って、routingとfunction書いて、startするだけ、です。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -260,31 +245,31 @@ go modules、便利ですね。</p>
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-        <span class="s">&#34;net/http&#34;</span>
-
-        <span class="s">&#34;github.com/labstack/echo/v4&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">e</span> <span class="o">:=</span> <span class="nx">echo</span><span class="p">.</span><span class="nf">New</span><span class="p">()</span>
-
-        <span class="nx">e</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="nx">echo</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;hello&#34;</span><span class="p">:</span> <span class="s">&#34;world&#34;</span><span class="p">})</span>
-        <span class="p">})</span>
-
-        <span class="nx">e</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="s">&#34;:1313&#34;</span><span class="p">))</span>
-<span class="p">}</span></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s">&#34;net/http&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="s">&#34;github.com/labstack/echo/v4&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">e</span> <span class="o">:=</span> <span class="nx">echo</span><span class="p">.</span><span class="nf">New</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nx">e</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="nx">echo</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nf">JSON</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;hello&#34;</span><span class="p">:</span> <span class="s">&#34;world&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nx">e</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nf">Start</span><span class="p">(</span><span class="s">&#34;:1313&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>実行してみる。</p>
+</div><p>実行してみる。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -295,39 +280,38 @@ go modules、便利ですね。</p>
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ go run main.go
-
-   ____    __
-  / __/___/ /  ___
- / _// __/ _ \/ _ \
-/___/\__/_//_/\___/ v4.0.0
-High performance, minimalist Go web framework
-https://echo.labstack.com
-____________________________________O/_______
-                                    O\
-⇨ http server started on [::]:1313</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ go run main.go
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   ____    __
+</span></span><span class="line"><span class="cl">  / __/___/ /  ___
+</span></span><span class="line"><span class="cl"> / _// __/ _ \/ _ \
+</span></span><span class="line"><span class="cl">/___/\__/_//_/\___/ v4.0.0
+</span></span><span class="line"><span class="cl">High performance, minimalist Go web framework
+</span></span><span class="line"><span class="cl">https://echo.labstack.com
+</span></span><span class="line"><span class="cl">____________________________________O/_______
+</span></span><span class="line"><span class="cl">                                    O\
+</span></span><span class="line"><span class="cl">⇨ http server started on [::]:1313
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ curl localhost:1313
-{&#34;hello&#34;:&#34;world&#34;}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ curl localhost:1313
+</span></span><span class="line"><span class="cl">{&#34;hello&#34;:&#34;world&#34;}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>とても簡単ですね。</p>
-
+</div><p>とても簡単ですね。</p>
 <h2 id="ロジックを分割">ロジックを分割</h2>
-
-<p>これだけでは流石につまらないので、ロジックを分離してみます。<br />
+<p>これだけでは流石につまらないので、ロジックを分離してみます。<br>
 &hellip;といってもfuncに切り出しただけですが;;</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -338,28 +322,27 @@ ____________________________________O/_______
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func main() {
-	e := echo.New()
-
-	e.GET(&#34;/&#34;, hello)
-
-	e.Logger.Fatal(e.Start(&#34;:1313&#34;))
-}
-
-func hello(c echo.Context) error {
-	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;world&#34;})
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func main() {
+</span></span><span class="line"><span class="cl">	e := echo.New()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	e.GET(&#34;/&#34;, hello)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	e.Logger.Fatal(e.Start(&#34;:1313&#34;))
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func hello(c echo.Context) error {
+</span></span><span class="line"><span class="cl">	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;world&#34;})
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="routingを分割">routingを分割</h2>
-
-<p>routingも分離してみましょう。<br />
+</div><h2 id="routingを分割">routingを分割</h2>
+<p>routingも分離してみましょう。<br>
 &hellip;簡単ですね</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -374,68 +357,66 @@ func hello(c echo.Context) error {
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func main() {
-	e := echo.New()
-
-	initRouting(e)
-
-	e.Logger.Fatal(e.Start(&#34;:1313&#34;))
-}
-
-func initRouting(e *echo.Echo) {
-	e.GET(&#34;/&#34;, hello)
-}
-
-func hello(c echo.Context) error {
-	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;world&#34;})
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func main() {
+</span></span><span class="line"><span class="cl">	e := echo.New()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	initRouting(e)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	e.Logger.Fatal(e.Start(&#34;:1313&#34;))
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func initRouting(e *echo.Echo) {
+</span></span><span class="line"><span class="cl">	e.GET(&#34;/&#34;, hello)
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func hello(c echo.Context) error {
+</span></span><span class="line"><span class="cl">	return c.JSON(http.StatusOK, map[string]string{&#34;hello&#34;: &#34;world&#34;})
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="path-parameterとquery-parameter">path parameterとquery parameter</h2>
-
-<p>最後にpath parameterとquery parameterを受け取ってみます。<br />
+</div><h2 id="path-parameterとquery-parameter">path parameterとquery parameter</h2>
+<p>最後にpath parameterとquery parameterを受け取ってみます。<br>
 responseはユーザのリストを返します。</p>
-
 <p>まず、userのstructを定義します。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">type User struct {
-	ID      int    `json:&#34;id&#34;`
-	GroupID int    `json:&#34;group_id&#34;`
-	Name    string `json:&#34;name&#34;`
-	Gender  string `json:&#34;gender&#34;`
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type User struct {
+</span></span><span class="line"><span class="cl">	ID      int    `json:&#34;id&#34;`
+</span></span><span class="line"><span class="cl">	GroupID int    `json:&#34;group_id&#34;`
+</span></span><span class="line"><span class="cl">	Name    string `json:&#34;name&#34;`
+</span></span><span class="line"><span class="cl">	Gender  string `json:&#34;gender&#34;`
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>Routingに今回定義したAPIを追加します。</p>
+</div><p>Routingに今回定義したAPIを追加します。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func initRouting(e *echo.Echo) {
-	e.GET(&#34;/&#34;, hello)
-	e.GET(&#34;/api/v1/groups/:group_id/users&#34;, getUsers)
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func initRouting(e *echo.Echo) {
+</span></span><span class="line"><span class="cl">	e.GET(&#34;/&#34;, hello)
+</span></span><span class="line"><span class="cl">	e.GET(&#34;/api/v1/groups/:group_id/users&#34;, getUsers)
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>処理を書きます。</p>
+</div><p>処理を書きます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -453,36 +434,35 @@ responseはユーザのリストを返します。</p>
 </span><span class="lnt">16
 </span><span class="lnt">17
 </span><span class="lnt">18
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func getUsers(c echo.Context) error {
-	groupIDStr := c.Param(&#34;group_id&#34;)
-	groupID, err := strconv.Atoi(groupIDStr)
-	if err != nil {
-		return errors.Wrapf(err, &#34;errors when group id convert to int: %s&#34;, groupIDStr)
-	}
-	gender := c.QueryParam(&#34;gender&#34;)
-	users := []*User{}
-	if gender == &#34;&#34; || gender == &#34;man&#34; {
-		users = append(users, &amp;User{ID: 1, GroupID: groupID, Name: &#34;Taro&#34;, Gender: &#34;man&#34;})
-		users = append(users, &amp;User{ID: 2, GroupID: groupID, Name: &#34;Jiro&#34;, Gender: &#34;man&#34;})
-	}
-	if gender == &#34;&#34; || gender == &#34;woman&#34; {
-		users = append(users, &amp;User{ID: 3, GroupID: groupID, Name: &#34;Hanako&#34;, Gender: &#34;woman&#34;})
-		users = append(users, &amp;User{ID: 4, GroupID: groupID, Name: &#34;Yoshiko&#34;, Gender: &#34;woman&#34;})
-	}
-	return c.JSON(http.StatusOK, users)
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func getUsers(c echo.Context) error {
+</span></span><span class="line"><span class="cl">	groupIDStr := c.Param(&#34;group_id&#34;)
+</span></span><span class="line"><span class="cl">	groupID, err := strconv.Atoi(groupIDStr)
+</span></span><span class="line"><span class="cl">	if err != nil {
+</span></span><span class="line"><span class="cl">		return errors.Wrapf(err, &#34;errors when group id convert to int: %s&#34;, groupIDStr)
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	gender := c.QueryParam(&#34;gender&#34;)
+</span></span><span class="line"><span class="cl">	users := []*User{}
+</span></span><span class="line"><span class="cl">	if gender == &#34;&#34; || gender == &#34;man&#34; {
+</span></span><span class="line"><span class="cl">		users = append(users, &amp;User{ID: 1, GroupID: groupID, Name: &#34;Taro&#34;, Gender: &#34;man&#34;})
+</span></span><span class="line"><span class="cl">		users = append(users, &amp;User{ID: 2, GroupID: groupID, Name: &#34;Jiro&#34;, Gender: &#34;man&#34;})
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	if gender == &#34;&#34; || gender == &#34;woman&#34; {
+</span></span><span class="line"><span class="cl">		users = append(users, &amp;User{ID: 3, GroupID: groupID, Name: &#34;Hanako&#34;, Gender: &#34;woman&#34;})
+</span></span><span class="line"><span class="cl">		users = append(users, &amp;User{ID: 4, GroupID: groupID, Name: &#34;Yoshiko&#34;, Gender: &#34;woman&#34;})
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">	return c.JSON(http.StatusOK, users)
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>ポイントとしては、 <code>c.Param</code> でパスパラメータを受け取れて、 <code>c.QueryParam</code> でクエリパラメータを受け取れます。<br />
+</div><p>ポイントとしては、 <code>c.Param</code> でパスパラメータを受け取れて、 <code>c.QueryParam</code> でクエリパラメータを受け取れます。<br>
 ただし、いずれもstringでしか受け取れないので、型の変換はアプリのロジックの中でやる必要があります。</p>
-
-<p>では起動して実行してみます。<br />
+<p>では起動して実行してみます。<br>
 query parameterに <code>pretty</code> をつけるとjsonをpretty printしてくれます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -503,51 +483,49 @@ query parameterに <code>pretty</code> をつけるとjsonをpretty printして�
 </span><span class="lnt">19
 </span><span class="lnt">20
 </span><span class="lnt">21
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ curl localhost:1313/api/v1/groups/1/users
-[{&#34;id&#34;:1,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Taro&#34;,&#34;gender&#34;:&#34;man&#34;},{&#34;id&#34;:2,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Jiro&#34;,&#34;gender&#34;:&#34;man&#34;},{&#34;id&#34;:3,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Hanako&#34;,&#34;gender&#34;:&#34;woman&#34;},{&#34;id&#34;:4,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Yoshiko&#34;,&#34;gender&#34;:&#34;woman&#34;}]
-
-$ curl localhost:1313/api/v1/groups/1/users?gender=man
-[{&#34;id&#34;:1,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Taro&#34;,&#34;gender&#34;:&#34;man&#34;},{&#34;id&#34;:2,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Jiro&#34;,&#34;gender&#34;:&#34;man&#34;}]
-
-$ curl &#39;localhost:1313/api/v1/groups/1/users?gender=woman&amp;pretty&#39;
-[
-  {
-    &#34;id&#34;: 3,
-    &#34;group_id&#34;: 1,
-    &#34;name&#34;: &#34;Hanako&#34;,
-    &#34;gender&#34;: &#34;woman&#34;
-  },
-  {
-    &#34;id&#34;: 4,
-    &#34;group_id&#34;: 1,
-    &#34;name&#34;: &#34;Yoshiko&#34;,
-    &#34;gender&#34;: &#34;woman&#34;
-  }
-]</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ curl localhost:1313/api/v1/groups/1/users
+</span></span><span class="line"><span class="cl">[{&#34;id&#34;:1,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Taro&#34;,&#34;gender&#34;:&#34;man&#34;},{&#34;id&#34;:2,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Jiro&#34;,&#34;gender&#34;:&#34;man&#34;},{&#34;id&#34;:3,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Hanako&#34;,&#34;gender&#34;:&#34;woman&#34;},{&#34;id&#34;:4,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Yoshiko&#34;,&#34;gender&#34;:&#34;woman&#34;}]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ curl localhost:1313/api/v1/groups/1/users?gender=man
+</span></span><span class="line"><span class="cl">[{&#34;id&#34;:1,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Taro&#34;,&#34;gender&#34;:&#34;man&#34;},{&#34;id&#34;:2,&#34;group_id&#34;:1,&#34;name&#34;:&#34;Jiro&#34;,&#34;gender&#34;:&#34;man&#34;}]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ curl &#39;localhost:1313/api/v1/groups/1/users?gender=woman&amp;pretty&#39;
+</span></span><span class="line"><span class="cl">[
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">    &#34;id&#34;: 3,
+</span></span><span class="line"><span class="cl">    &#34;group_id&#34;: 1,
+</span></span><span class="line"><span class="cl">    &#34;name&#34;: &#34;Hanako&#34;,
+</span></span><span class="line"><span class="cl">    &#34;gender&#34;: &#34;woman&#34;
+</span></span><span class="line"><span class="cl">  },
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">    &#34;id&#34;: 4,
+</span></span><span class="line"><span class="cl">    &#34;group_id&#34;: 1,
+</span></span><span class="line"><span class="cl">    &#34;name&#34;: &#34;Yoshiko&#34;,
+</span></span><span class="line"><span class="cl">    &#34;gender&#34;: &#34;woman&#34;
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">]
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>また、エラーを返すとデフォルトでinternal server errorを返してくれます。</p>
+</div><p>また、エラーを返すとデフォルトでinternal server errorを返してくれます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ curl &#39;localhost:1314/api/v1/groups/invalid/users?gender=woman&amp;pretty&#39;
-{
-  &#34;message&#34;: &#34;Internal Server Error&#34;
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ curl &#39;localhost:1314/api/v1/groups/invalid/users?gender=woman&amp;pretty&#39;
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;message&#34;: &#34;Internal Server Error&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>ちゃんとAPIサーバが出来ましたね！</p>
-
+</div><p>ちゃんとAPIサーバが出来ましたね！</p>
 <h1 id="まとめ">まとめ</h1>
-
-<p>今回はとても簡単な使い方についてまとめてみました。<br />
+<p>今回はとても簡単な使い方についてまとめてみました。<br>
 今度、もう少し踏み込んだ使い方もまとめてみたいと思います。</p>
 
     </div>
@@ -559,11 +537,15 @@ $ curl &#39;localhost:1313/api/v1/groups/1/users?gender=woman&amp;pretty&#39;
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2019-01-31</span>
+    <span class="item-content">
+        2019-01-31
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/golang/">golang</a>
           <a href="/tags/echo/">echo</a>
@@ -584,6 +566,10 @@ $ curl &#39;localhost:1313/api/v1/groups/1/users?gender=woman&amp;pretty&#39;
   </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
@@ -611,24 +597,25 @@ $ curl &#39;localhost:1313/api/v1/groups/1/users?gender=woman&amp;pretty&#39;
 
   <span class="copyright-year">
     &copy; 
-    2019
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">@ken-aio</span>
+    2019 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

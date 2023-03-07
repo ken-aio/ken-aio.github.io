@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
 
 
 <link rel="canonical" href="https://ken-aio.github.io/post/2019/02/13/golang-sqlboiler/" />
@@ -34,28 +34,22 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="GolangのORM SQLBoilerを使ってみる - セットアップ編" />
 <meta property="og:description" content="Tweet はじめに GolangのORMである SQLBoiler を紹介します。 今回はSQLBoilerをセットアップするところまでやってみます。 SQLBoilerとは" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ken-aio.github.io/post/2019/02/13/golang-sqlboiler/" /><meta property="article:published_time" content="2019-02-13T23:00:00&#43;09:00"/>
-<meta property="article:modified_time" content="2019-02-13T23:00:00&#43;09:00"/>
-
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/02/13/golang-sqlboiler/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-02-13T23:00:00+09:00" />
+<meta property="article:modified_time" content="2019-02-13T23:00:00+09:00" />
 <meta itemprop="name" content="GolangのORM SQLBoilerを使ってみる - セットアップ編">
-<meta itemprop="description" content="Tweet はじめに GolangのORMである SQLBoiler を紹介します。 今回はSQLBoilerをセットアップするところまでやってみます。 SQLBoilerとは">
-
-
-<meta itemprop="datePublished" content="2019-02-13T23:00:00&#43;09:00" />
-<meta itemprop="dateModified" content="2019-02-13T23:00:00&#43;09:00" />
+<meta itemprop="description" content="Tweet はじめに GolangのORMである SQLBoiler を紹介します。 今回はSQLBoilerをセットアップするところまでやってみます。 SQLBoilerとは"><meta itemprop="datePublished" content="2019-02-13T23:00:00+09:00" />
+<meta itemprop="dateModified" content="2019-02-13T23:00:00+09:00" />
 <meta itemprop="wordCount" content="1579">
-
-
-
-<meta itemprop="keywords" content="golang,sqlboiler," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang,sqlboiler," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GolangのORM SQLBoilerを使ってみる - セットアップ編"/>
 <meta name="twitter:description" content="Tweet はじめに GolangのORMである SQLBoiler を紹介します。 今回はSQLBoilerをセットアップするところまでやってみます。 SQLBoilerとは"/>
 
@@ -92,12 +86,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">ken-aio&#39;s blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -112,6 +115,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -136,76 +140,66 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#はじめに">はじめに</a></li>
-<li><a href="#sqlboilerとは">SQLBoilerとは</a></li>
-<li><a href="#使ってみる">使ってみる</a>
-<ul>
-<li><a href="#インストール">インストール</a></li>
-<li><a href="#プロジェクト設定する">プロジェクト設定する</a></li>
-<li><a href="#対象のdb">対象のDB</a></li>
-<li><a href="#自動生成する">自動生成する</a></li>
-</ul></li>
-<li><a href="#まとめ">まとめ</a></li>
-</ul>
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#sqlboilerとは">SQLBoilerとは</a></li>
+    <li><a href="#使ってみる">使ってみる</a>
+      <ul>
+        <li><a href="#インストール">インストール</a></li>
+        <li><a href="#プロジェクト設定する">プロジェクト設定する</a></li>
+        <li><a href="#対象のdb">対象のDB</a></li>
+        <li><a href="#自動生成する">自動生成する</a></li>
+      </ul>
+    </li>
+    <li><a href="#まとめ">まとめ</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
 <h1 id="はじめに">はじめに</h1>
-
-<p>GolangのORMである <a href="https://github.com/volatiletech/sqlboiler">SQLBoiler</a> を紹介します。<br />
+<p>GolangのORMである <a href="https://github.com/volatiletech/sqlboiler">SQLBoiler</a> を紹介します。<br>
 今回はSQLBoilerをセットアップするところまでやってみます。</p>
-
 <h1 id="sqlboilerとは">SQLBoilerとは</h1>
-
-<p>DBのスキーマ情報を読み取って、そこからstructやそれらのレシーバを自動生成してくれるORMです。<br />
-自動生成の対象にはFK成約やUnique成約を考慮して、one to one や one to manyの関数を自動生成してくる素敵なORMです。<br />
-リフレクションなどを使っていないため、他のORMと比較しても動作が早いようです。ベンチマーク結果は <a href="https://github.com/volatiletech/sqlboiler#benchmarks">公式サイト</a> を参照ください。<br />
+<p>DBのスキーマ情報を読み取って、そこからstructやそれらのレシーバを自動生成してくれるORMです。<br>
+自動生成の対象にはFK成約やUnique成約を考慮して、one to one や one to manyの関数を自動生成してくる素敵なORMです。<br>
+リフレクションなどを使っていないため、他のORMと比較しても動作が早いようです。ベンチマーク結果は <a href="https://github.com/volatiletech/sqlboiler#benchmarks">公式サイト</a> を参照ください。<br>
 また、エラーや使い方など、何か困ったことがあっても自動生成されたコードを読めば大体わかるのもいいところです。</p>
-
-<p>同じようにスキーマ情報からstructなどを自動生成するORMに <a href="https://github.com/go-xorm">XORM</a> があります。<br />
+<p>同じようにスキーマ情報からstructなどを自動生成するORMに <a href="https://github.com/go-xorm">XORM</a> があります。<br>
 XORMも少し使ったことがあるのですが、生成される対象の関数などはSQLBoilerの方が圧倒的に多く、便利だと感じました。(私見)</p>
-
 <h1 id="使ってみる">使ってみる</h1>
-
 <h2 id="インストール">インストール</h2>
-
 <p>まずはsqlboilerのコマンドをインストールします。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ go get -u -t github.com/volatiletech/sqlboiler
-$ sqlboiler --version
-SQLBoiler v3.2.0</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ go get -u -t github.com/volatiletech/sqlboiler
+</span></span><span class="line"><span class="cl">$ sqlboiler --version
+</span></span><span class="line"><span class="cl">SQLBoiler v3.2.0
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>また使うRDBMS用のライブラリも必要です。<br />
+</div><p>また使うRDBMS用のライブラリも必要です。<br>
 今回のサンプルではPostgreSQLを使います。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="プロジェクト設定する">プロジェクト設定する</h2>
-
-<p>sqlboilerのコマンドをインストールしたら、次に接続先の設定を行います。<br />
+</div><h2 id="プロジェクト設定する">プロジェクト設定する</h2>
+<p>sqlboilerのコマンドをインストールしたら、次に接続先の設定を行います。<br>
 まずはプロジェクトのroot dirに以下のようなtomlファイルを作ります。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -216,62 +210,58 @@ SQLBoiler v3.2.0</pre></td></tr></table>
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">pkgname=&#34;db&#34;
-output=&#34;app/db&#34;
-add-global-variants=true
-add-panic-variants=true
-[psql]
-  dbname=&#34;sampledb&#34;
-  host=&#34;localhost&#34;
-  port=5432
-  user=&#34;postgres&#34;
-  pass=&#34;&#34;
-  sslmode=&#34;disable&#34;</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pkgname=&#34;db&#34;
+</span></span><span class="line"><span class="cl">output=&#34;app/db&#34;
+</span></span><span class="line"><span class="cl">add-global-variants=true
+</span></span><span class="line"><span class="cl">add-panic-variants=true
+</span></span><span class="line"><span class="cl">[psql]
+</span></span><span class="line"><span class="cl">  dbname=&#34;sampledb&#34;
+</span></span><span class="line"><span class="cl">  host=&#34;localhost&#34;
+</span></span><span class="line"><span class="cl">  port=5432
+</span></span><span class="line"><span class="cl">  user=&#34;postgres&#34;
+</span></span><span class="line"><span class="cl">  pass=&#34;&#34;
+</span></span><span class="line"><span class="cl">  sslmode=&#34;disable&#34;
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>それぞれ名前の通りの設定ですが、2つだけ見慣れないパラメータがあると思います。<br />
-SQLBoilerのDBとのコネクションはgolang標準のdatabase/sqlのコネクションを使います。<br />
-このコネクションはアプリケーション起動時にdatabase/sqlのコネクションプールを使うことも出来るし、実際にSQLを発行するタイミングで別のコネクションを渡すことも出来ます。<br />
+</div><p>それぞれ名前の通りの設定ですが、2つだけ見慣れないパラメータがあると思います。<br>
+SQLBoilerのDBとのコネクションはgolang標準のdatabase/sqlのコネクションを使います。<br>
+このコネクションはアプリケーション起動時にdatabase/sqlのコネクションプールを使うことも出来るし、実際にSQLを発行するタイミングで別のコネクションを渡すことも出来ます。<br>
 また、SQL実行時に何かしらのエラーが発生した場合、 <code>err</code> を返す方法とその場で <code>panic</code> を起こすことが出来ます。</p>
-
 <ul>
 <li>add-global-variants
-
 <ul>
 <li>これはグローバルに設定したコネクションを使ってSQLを発行するオプションを自動生成するか、のフラグです</li>
-</ul></li>
+</ul>
+</li>
 <li>add-panic-variants
-
 <ul>
 <li>これはSQLでエラーが発生した場合にpanicを起こすかどうかのオプションを自動生成するか、のフラグです。</li>
 <li>プロダクションコードではSQLエラーで直接panicを起こすことはあまりないかと思いますが、テストコードだとエラーハンドリングせずにpanicさせてしまうことはよくやります。</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>これらは有用なオプションなので、自動生成の対象に入れています。</p>
-
 <h2 id="対象のdb">対象のDB</h2>
-
-<p>次に自動生成しますが、対象のDBを作っておきます。<br />
+<p>次に自動生成しますが、対象のDBを作っておきます。<br>
 今回は以下のような簡単なテーブル構成を想定します。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">---------            -----------            ----------
-| Users | 1 ... 0..* | Members | 1..* ... 1 | Groups |
----------            -----------            ----------</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">---------            -----------            ----------
+</span></span><span class="line"><span class="cl">| Users | 1 ... 0..* | Members | 1..* ... 1 | Groups |
+</span></span><span class="line"><span class="cl">---------            -----------            ----------
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>DDLは以下を使います。</p>
+</div><p>DDLは以下を使います。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -316,61 +306,60 @@ SQLBoilerのDBとのコネクションはgolang標準のdatabase/sqlのコネク
 </span><span class="lnt">43
 </span><span class="lnt">44
 </span><span class="lnt">45
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">CREATE TABLE groups
-(
-        id serial NOT NULL,
-        name text NOT NULL,
-        description text NOT NULL,
-        created_at timestamp NOT NULL,
-        updated_at timestamp NOT NULL,
-        PRIMARY KEY (id)
-) WITHOUT OIDS;
-
-
-CREATE TABLE group_members
-(
-        id bigserial NOT NULL,
-        user_id int NOT NULL,
-        group_id int NOT NULL,
-        role text NOT NULL,
-        created_at timestamp NOT NULL,
-        updated_at timestamp NOT NULL,
-        PRIMARY KEY (id),
-        CONSTRAINT UQ_group_members_user_group UNIQUE (user_id, group_id)
-) WITHOUT OIDS;
-
-CREATE TABLE users
-(
-        id serial NOT NULL,
-        email text UNIQUE,
-        password_digest text,
-        created_at timestamp NOT NULL,
-        updated_at timestamp NOT NULL,
-        PRIMARY KEY (id)
-) WITHOUT OIDS;
-
-ALTER TABLE group_members
-        ADD CONSTRAINT FK_group_members_groups FOREIGN KEY (group_id)
-        REFERENCES groups (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
-;
-
-ALTER TABLE group_members
-        ADD CONSTRAINT FK_group_members_users FOREIGN KEY (user_id)
-        REFERENCES users (id)
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CREATE TABLE groups
+</span></span><span class="line"><span class="cl">(
+</span></span><span class="line"><span class="cl">        id serial NOT NULL,
+</span></span><span class="line"><span class="cl">        name text NOT NULL,
+</span></span><span class="line"><span class="cl">        description text NOT NULL,
+</span></span><span class="line"><span class="cl">        created_at timestamp NOT NULL,
+</span></span><span class="line"><span class="cl">        updated_at timestamp NOT NULL,
+</span></span><span class="line"><span class="cl">        PRIMARY KEY (id)
+</span></span><span class="line"><span class="cl">) WITHOUT OIDS;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">CREATE TABLE group_members
+</span></span><span class="line"><span class="cl">(
+</span></span><span class="line"><span class="cl">        id bigserial NOT NULL,
+</span></span><span class="line"><span class="cl">        user_id int NOT NULL,
+</span></span><span class="line"><span class="cl">        group_id int NOT NULL,
+</span></span><span class="line"><span class="cl">        role text NOT NULL,
+</span></span><span class="line"><span class="cl">        created_at timestamp NOT NULL,
+</span></span><span class="line"><span class="cl">        updated_at timestamp NOT NULL,
+</span></span><span class="line"><span class="cl">        PRIMARY KEY (id),
+</span></span><span class="line"><span class="cl">        CONSTRAINT UQ_group_members_user_group UNIQUE (user_id, group_id)
+</span></span><span class="line"><span class="cl">) WITHOUT OIDS;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">CREATE TABLE users
+</span></span><span class="line"><span class="cl">(
+</span></span><span class="line"><span class="cl">        id serial NOT NULL,
+</span></span><span class="line"><span class="cl">        email text UNIQUE,
+</span></span><span class="line"><span class="cl">        password_digest text,
+</span></span><span class="line"><span class="cl">        created_at timestamp NOT NULL,
+</span></span><span class="line"><span class="cl">        updated_at timestamp NOT NULL,
+</span></span><span class="line"><span class="cl">        PRIMARY KEY (id)
+</span></span><span class="line"><span class="cl">) WITHOUT OIDS;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ALTER TABLE group_members
+</span></span><span class="line"><span class="cl">        ADD CONSTRAINT FK_group_members_groups FOREIGN KEY (group_id)
+</span></span><span class="line"><span class="cl">        REFERENCES groups (id)
+</span></span><span class="line"><span class="cl">        ON UPDATE RESTRICT
+</span></span><span class="line"><span class="cl">        ON DELETE RESTRICT
+</span></span><span class="line"><span class="cl">;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ALTER TABLE group_members
+</span></span><span class="line"><span class="cl">        ADD CONSTRAINT FK_group_members_users FOREIGN KEY (user_id)
+</span></span><span class="line"><span class="cl">        REFERENCES users (id)
+</span></span><span class="line"><span class="cl">        ON UPDATE RESTRICT
+</span></span><span class="line"><span class="cl">        ON DELETE RESTRICT
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="自動生成する">自動生成する</h2>
-
+</div><h2 id="自動生成する">自動生成する</h2>
 <p>まずはpostgresにDBとTableを作ります。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -378,35 +367,32 @@ ALTER TABLE group_members
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ createdb sampledb
-$ psql -U postgres -f ddl.sql sampledb
-CREATE DATABASE
-CREATE TABLE
-CREATE TABLE
-CREATE TABLE
-ALTER TABLE
-ALTER TABLE</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ createdb sampledb
+</span></span><span class="line"><span class="cl">$ psql -U postgres -f ddl.sql sampledb
+</span></span><span class="line"><span class="cl">CREATE DATABASE
+</span></span><span class="line"><span class="cl">CREATE TABLE
+</span></span><span class="line"><span class="cl">CREATE TABLE
+</span></span><span class="line"><span class="cl">CREATE TABLE
+</span></span><span class="line"><span class="cl">ALTER TABLE
+</span></span><span class="line"><span class="cl">ALTER TABLE
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>そして、自動生成</p>
+</div><p>そして、自動生成</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">$ sqlboiler psql</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$ sqlboiler psql
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>成功していれば何も表示されず、 <code>app/db</code> のディレクトリが出来ていてその中に生成されたファイルが存在すると思います。</p>
-
+</div><p>成功していれば何も表示されず、 <code>app/db</code> のディレクトリが出来ていてその中に生成されたファイルが存在すると思います。</p>
 <h1 id="まとめ">まとめ</h1>
-
-<p>とりあえず今回はSQLBoilerのセットアップをして自動生成するところまでやってみました。<br />
+<p>とりあえず今回はSQLBoilerのセットアップをして自動生成するところまでやってみました。<br>
 次回は生成されたものを使ってSQLを発行してみようと思います。</p>
-
-<p>今回作ったサンプルは以下のリポジトリに入れておきます。<br />
+<p>今回作ったサンプルは以下のリポジトリに入れておきます。<br>
 <a href="https://github.com/ken-aio/go-sqlboiler-sample">https://github.com/ken-aio/go-sqlboiler-sample</a></p>
 
     </div>
@@ -418,11 +404,15 @@ ALTER TABLE</pre></td></tr></table>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2019-02-13</span>
+    <span class="item-content">
+        2019-02-13
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/golang/">golang</a>
           <a href="/tags/sqlboiler/">sqlboiler</a>
@@ -443,6 +433,10 @@ ALTER TABLE</pre></td></tr></table>
   </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
@@ -470,24 +464,25 @@ ALTER TABLE</pre></td></tr></table>
 
   <span class="copyright-year">
     &copy; 
-    2019
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">@ken-aio</span>
+    2019 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

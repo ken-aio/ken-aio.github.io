@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
 
 
 <link rel="canonical" href="https://ken-aio.github.io/post/2019/05/28/go-map-tips/" />
@@ -34,28 +34,22 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="[Golang]mapのkeyのちょっとした話" />
 <meta property="og:description" content="[Golang]mapのkeyのちょっとした話" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ken-aio.github.io/post/2019/05/28/go-map-tips/" /><meta property="article:published_time" content="2019-05-28T23:00:00&#43;09:00"/>
-<meta property="article:modified_time" content="2019-05-28T23:00:00&#43;09:00"/>
-
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/05/28/go-map-tips/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-05-28T23:00:00+09:00" />
+<meta property="article:modified_time" content="2019-05-28T23:00:00+09:00" />
 <meta itemprop="name" content="[Golang]mapのkeyのちょっとした話">
-<meta itemprop="description" content="[Golang]mapのkeyのちょっとした話">
-
-
-<meta itemprop="datePublished" content="2019-05-28T23:00:00&#43;09:00" />
-<meta itemprop="dateModified" content="2019-05-28T23:00:00&#43;09:00" />
+<meta itemprop="description" content="[Golang]mapのkeyのちょっとした話"><meta itemprop="datePublished" content="2019-05-28T23:00:00+09:00" />
+<meta itemprop="dateModified" content="2019-05-28T23:00:00+09:00" />
 <meta itemprop="wordCount" content="926">
-
-
-
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[Golang]mapのkeyのちょっとした話"/>
 <meta name="twitter:description" content="[Golang]mapのkeyのちょっとした話"/>
 
@@ -92,12 +86,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">ken-aio&#39;s blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -112,6 +115,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -135,74 +139,64 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#はじめに">はじめに</a></li>
-<li><a href="#結論">結論</a></li>
-<li><a href="#おさらい">おさらい</a></li>
-<li><a href="#keyがstructだったら">keyがstructだったら</a></li>
-<li><a href="#ポインタを使ったら">ポインタを使ったら</a></li>
-<li><a href="#まとめ">まとめ</a></li>
-</ul>
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#結論">結論</a></li>
+    <li><a href="#おさらい">おさらい</a></li>
+    <li><a href="#keyがstructだったら">keyがstructだったら</a></li>
+    <li><a href="#ポインタを使ったら">ポインタを使ったら</a></li>
+    <li><a href="#まとめ">まとめ</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
 <h1 id="はじめに">はじめに</h1>
-
-<p>Golangのmapのkeyは同一だと評価される場合、同一のkeyとしてみなされます。<br />
+<p>Golangのmapのkeyは同一だと評価される場合、同一のkeyとしてみなされます。<br>
 このmapのkeyがどういった場合に同じとみなされるか、時々わからなくなるので、備忘録です。</p>
-
 <h1 id="結論">結論</h1>
-
-<p>mapのkeyにstructを使う場合はポインタにしちゃダメだよ、きっと<br />
+<p>mapのkeyにstructを使う場合はポインタにしちゃダメだよ、きっと<br>
 (structだけじゃないけどね..)</p>
-
 <h1 id="おさらい">おさらい</h1>
-
-<p>mapについておさらいします。<br />
+<p>mapについておさらいします。<br>
 例えば、以下の場合は同じkeyに対してインクリメントされることになります。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func main() {
-	m := map[string]int{}
-	m[&#34;test&#34;]++
-	m[&#34;test&#34;]++
-	fmt.Println(m)
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func main() {
+</span></span><span class="line"><span class="cl">	m := map[string]int{}
+</span></span><span class="line"><span class="cl">	m[&#34;test&#34;]++
+</span></span><span class="line"><span class="cl">	m[&#34;test&#34;]++
+</span></span><span class="line"><span class="cl">	fmt.Println(m)
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>結果は以下です。</p>
+</div><p>結果は以下です。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">map[test:2]</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">map[test:2]
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>同じ文字列なら同じkeyとしてみなされます。<br />
+</div><p>同じ文字列なら同じkeyとしてみなされます。<br>
 このGolangの仕様はとても直感的だなと思います。</p>
-
 <h1 id="keyがstructだったら">keyがstructだったら</h1>
-
-<p>これはいわゆるプリミティブ型だけではなく、structでも同じことが言えます。<br />
+<p>これはいわゆるプリミティブ型だけではなく、structでも同じことが言えます。<br>
 例えば、以下の場合は同じstructと判定されます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -212,62 +206,61 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">type TestStruct struct {
-	Str string
-	Int int
-}
-
-func main() {
-	str1 := TestStruct{Str: &#34;test1&#34;, Int: 10}
-	str2 := TestStruct{Str: &#34;test1&#34;, Int: 10}
-	fmt.Println(&#34;str1 == str2 is &#34;, str1 == str2)
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type TestStruct struct {
+</span></span><span class="line"><span class="cl">	Str string
+</span></span><span class="line"><span class="cl">	Int int
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">func main() {
+</span></span><span class="line"><span class="cl">	str1 := TestStruct{Str: &#34;test1&#34;, Int: 10}
+</span></span><span class="line"><span class="cl">	str2 := TestStruct{Str: &#34;test1&#34;, Int: 10}
+</span></span><span class="line"><span class="cl">	fmt.Println(&#34;str1 == str2 is &#34;, str1 == str2)
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">str1 == str2 is  true</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">str1 == str2 is  true
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>つまり、同じvalue値を持ったstructは同一であるとみなされます。<br />
-この特性をmapにも適用することが出来ます。<br />
+</div><p>つまり、同じvalue値を持ったstructは同一であるとみなされます。<br>
+この特性をmapにも適用することが出来ます。<br>
 上記のコードの続きに書きます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">	m := map[TestStruct]int{}
-	m[str1]++
-	m[str2]++
-	fmt.Println(m)</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">	m := map[TestStruct]int{}
+</span></span><span class="line"><span class="cl">	m[str1]++
+</span></span><span class="line"><span class="cl">	m[str2]++
+</span></span><span class="line"><span class="cl">	fmt.Println(m)
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>これを実行してみると</p>
+</div><p>これを実行してみると</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">map[{test1 10}:2]</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">map[{test1 10}:2]
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>変数的には別の変数ですが、同一と判定されるので、mapのkeyとしても同一と判定されてインクリメントされました。</p>
-
+</div><p>変数的には別の変数ですが、同一と判定されるので、mapのkeyとしても同一と判定されてインクリメントされました。</p>
 <h1 id="ポインタを使ったら">ポインタを使ったら</h1>
-
-<p>これがポインタだったらどうでしょうか。<br />
+<p>これがポインタだったらどうでしょうか。<br>
 Structを使っている部分をポインタにして実行してみます。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -277,40 +270,37 @@ Structを使っている部分をポインタにして実行してみます。</
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func main() {
-	str1 := &amp;TestStruct{Str: &#34;test1&#34;, Int: 10}
-	str2 := &amp;TestStruct{Str: &#34;test1&#34;, Int: 10}
-	fmt.Println(&#34;str1 == str2 is &#34;, str1 == str2)
-	
-	m := map[*TestStruct]int{}
-	m[str1]++
-	m[str2]++
-	fmt.Println(m)
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func main() {
+</span></span><span class="line"><span class="cl">	str1 := &amp;TestStruct{Str: &#34;test1&#34;, Int: 10}
+</span></span><span class="line"><span class="cl">	str2 := &amp;TestStruct{Str: &#34;test1&#34;, Int: 10}
+</span></span><span class="line"><span class="cl">	fmt.Println(&#34;str1 == str2 is &#34;, str1 == str2)
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	m := map[*TestStruct]int{}
+</span></span><span class="line"><span class="cl">	m[str1]++
+</span></span><span class="line"><span class="cl">	m[str2]++
+</span></span><span class="line"><span class="cl">	fmt.Println(m)
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>結果は以下です。</p>
+</div><p>結果は以下です。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">str1 == str2 is  false
-map[0x40a0e0:1 0x40a0f0:1]</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">str1 == str2 is  false
+</span></span><span class="line"><span class="cl">map[0x40a0e0:1 0x40a0f0:1]
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>見事、別のkeyとしてみなされました。</p>
-
+</div><p>見事、別のkeyとしてみなされました。</p>
 <h1 id="まとめ">まとめ</h1>
-
-<p>ポインタの場合、アドレスが違ったら別物になるので、そりゃ同一とは判定されないよね、とちゃんと考えたら当たり前のことでした。<br />
-Golangで開発している場合、プリミティブ型はそんなにポインタを使わないですが、Structの場合はポインタで操作することが多いと思います。<br />
-このときに何も考えずにポインタのままでmapのkeyに使っちゃうと、中身が一緒でも同じにならないです。<br />
+<p>ポインタの場合、アドレスが違ったら別物になるので、そりゃ同一とは判定されないよね、とちゃんと考えたら当たり前のことでした。<br>
+Golangで開発している場合、プリミティブ型はそんなにポインタを使わないですが、Structの場合はポインタで操作することが多いと思います。<br>
+このときに何も考えずにポインタのままでmapのkeyに使っちゃうと、中身が一緒でも同じにならないです。<br>
 当たり前のことですが、忘れてしまうことがあったので、備忘録して残しておきます。</p>
-
 <p>以上でした。</p>
 
     </div>
@@ -322,11 +312,15 @@ Golangで開発している場合、プリミティブ型はそんなにポイ�
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2019-05-28</span>
+    <span class="item-content">
+        2019-05-28
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/golang/">golang</a>
           </div>
@@ -346,6 +340,10 @@ Golangで開発している場合、プリミティブ型はそんなにポイ�
   </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
@@ -373,24 +371,25 @@ Golangで開発している場合、プリミティブ型はそんなにポイ�
 
   <span class="copyright-year">
     &copy; 
-    2019
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">@ken-aio</span>
+    2019 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

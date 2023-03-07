@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
 
 
 <link rel="canonical" href="https://ken-aio.github.io/post/2019/01/21/golang-enum/" />
@@ -34,28 +34,22 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
 <meta property="og:title" content="GolangでEnumを作る" />
 <meta property="og:description" content="Tweet はじめに GolangでJavaのEnumっぽい機能が欲しいなと思って調べた結果を残しておきます。 今回やりたかったことは Enum自体はGol" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://ken-aio.github.io/post/2019/01/21/golang-enum/" /><meta property="article:published_time" content="2019-01-21T23:29:51&#43;09:00"/>
-<meta property="article:modified_time" content="2019-01-21T23:29:51&#43;09:00"/>
-
+<meta property="og:url" content="https://ken-aio.github.io/post/2019/01/21/golang-enum/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-01-21T23:29:51+09:00" />
+<meta property="article:modified_time" content="2019-01-21T23:29:51+09:00" />
 <meta itemprop="name" content="GolangでEnumを作る">
-<meta itemprop="description" content="Tweet はじめに GolangでJavaのEnumっぽい機能が欲しいなと思って調べた結果を残しておきます。 今回やりたかったことは Enum自体はGol">
-
-
-<meta itemprop="datePublished" content="2019-01-21T23:29:51&#43;09:00" />
-<meta itemprop="dateModified" content="2019-01-21T23:29:51&#43;09:00" />
+<meta itemprop="description" content="Tweet はじめに GolangでJavaのEnumっぽい機能が欲しいなと思って調べた結果を残しておきます。 今回やりたかったことは Enum自体はGol"><meta itemprop="datePublished" content="2019-01-21T23:29:51+09:00" />
+<meta itemprop="dateModified" content="2019-01-21T23:29:51+09:00" />
 <meta itemprop="wordCount" content="1106">
-
-
-
-<meta itemprop="keywords" content="golang,enum," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang,enum," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GolangでEnumを作る"/>
 <meta name="twitter:description" content="Tweet はじめに GolangでJavaのEnumっぽい機能が欲しいなと思って調べた結果を残しておきます。 今回やりたかったことは Enum自体はGol"/>
 
@@ -92,12 +86,21 @@
         <li class="mobile-menu-item">Categories</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">ken-aio&#39;s blog</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -112,6 +115,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -135,57 +139,43 @@
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#はじめに">はじめに</a></li>
-<li><a href="#調べたこと">調べたこと</a></li>
-<li><a href="#今回採用したenum">今回採用したEnum</a></li>
-<li><a href="#まとめ">まとめ</a></li>
-</ul>
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#調べたこと">調べたこと</a></li>
+    <li><a href="#今回採用したenum">今回採用したEnum</a></li>
+    <li><a href="#まとめ">まとめ</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
 <h1 id="はじめに">はじめに</h1>
-
-<p>GolangでJavaのEnumっぽい機能が欲しいなと思って調べた結果を残しておきます。<br />
+<p>GolangでJavaのEnumっぽい機能が欲しいなと思って調べた結果を残しておきます。<br>
 今回やりたかったことは</p>
-
 <ul>
 <li>Enum自体はGolangの文法に沿ってcamel caseになっている</li>
 <li>Enum変換元はstringでsnake caseになっている</li>
 </ul>
-
 <p>Webサービスのquery parameterはsnake caseだけど、golangのロジックに入ってくるタイミングではcamel caseになっていてほしい、という感じです。</p>
-
 <h1 id="調べたこと">調べたこと</h1>
-
-<p>ググってみると、やはり同じことを思う人は結構いるみたいでした。<br />
+<p>ググってみると、やはり同じことを思う人は結構いるみたいでした。<br>
 その中でも以下については詳しく見てみました。</p>
-
 <ol>
 <li><a href="https://blog.y-yuki.net/entry/2017/05/09/000000">Go言語 - enumを定義する</a></li>
 <li><a href="https://journal.lampetty.net/entry/introducing-goenum">GoLangでJavaのenumっぽいライブラリ作った話</a></li>
 <li><a href="https://mattn.kaoriya.net/software/lang/go/20141208093852.htm">Re: GoLangでJavaのenumっぽいライブラリ作った話</a></li>
 <li><a href="https://yourbasic.org/golang/iota/">4 iota enum examples</a></li>
 </ol>
-
 <p>1は要件を満たせそうでした。が、enumを作るたびにswitch caseで変換していくのは流石に面倒だな&hellip;ということで別の方法を探しました。</p>
-
 <p>2はiotaがあるのにstructを作るのもなーと思ってやめました。</p>
-
 <p>3は公式サポートの自動生成でいいと思ったのですが、得られるstringがcamel caseのままだったので、今回の要件には合いませんでした。</p>
-
 <p>そして最後に出会ったのが4でした。今回の要件的にはこれが一番いいな、ということでこれを採用することにしました。</p>
-
 <p>以下4の記事から引用</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -193,39 +183,38 @@
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">type Suite int
-
-const (
-    Spades Suite = iota
-    Hearts
-    Diamonds
-    Clubs
-)</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">type Suite int
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const (
+</span></span><span class="line"><span class="cl">    Spades Suite = iota
+</span></span><span class="line"><span class="cl">    Hearts
+</span></span><span class="line"><span class="cl">    Diamonds
+</span></span><span class="line"><span class="cl">    Clubs
+</span></span><span class="line"><span class="cl">)
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func (s Suite) String() string {
-    return [...]string{&#34;Spades&#34;, &#34;Hearts&#34;, &#34;Diamonds&#34;, &#34;Clubs&#34;}[s]
-}</pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">func (s Suite) String() string {
+</span></span><span class="line"><span class="cl">    return [...]string{&#34;Spades&#34;, &#34;Hearts&#34;, &#34;Diamonds&#34;, &#34;Clubs&#34;}[s]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<h1 id="今回採用したenum">今回採用したEnum</h1>
-
-<p>Enum =&gt; stringには簡単に変換することが出来ました。<br />
-しかし、string =&gt; Enumの変換をうまくすることが出来ませんでした&hellip;<br />
+</div><h1 id="今回採用したenum">今回採用したEnum</h1>
+<p>Enum =&gt; stringには簡単に変換することが出来ました。<br>
+しかし、string =&gt; Enumの変換をうまくすることが出来ませんでした&hellip;<br>
 試行錯誤した末、最終的には以下の形に落ち着きました。</p>
-
 <p><a href="https://play.golang.org/p/Bvc6neemVw9">https://play.golang.org/p/Bvc6neemVw9</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -292,90 +281,86 @@ const (
 </span><span class="lnt">65
 </span><span class="lnt">66
 </span><span class="lnt">67
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-
-<span class="kd">type</span> <span class="nx">Weekday</span> <span class="kt">int</span>
-
-<span class="kd">const</span> <span class="p">(</span>
-	<span class="nx">Unknown</span> <span class="nx">Weekday</span> <span class="p">=</span> <span class="kc">iota</span>
-	<span class="nx">Sunday</span>
-	<span class="nx">Monday</span>
-	<span class="nx">Tuesday</span>
-	<span class="nx">Wednesday</span>
-	<span class="nx">Thursday</span>
-	<span class="nx">Friday</span>
-	<span class="nx">Saturday</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">NewWeekday</span><span class="p">(</span><span class="nx">strWeekday</span> <span class="kt">string</span><span class="p">)</span> <span class="nx">Weekday</span> <span class="p">{</span>
-	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">name</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">Sunday</span><span class="p">.</span><span class="nf">Names</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="nx">strWeekday</span> <span class="o">==</span> <span class="nx">name</span> <span class="p">{</span>
-			<span class="k">return</span> <span class="nf">Weekday</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-	<span class="k">return</span> <span class="nx">Unknown</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="nx">Weekday</span><span class="p">)</span> <span class="nf">Names</span><span class="p">()</span> <span class="p">[]</span><span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
-		<span class="s">&#34;unknown&#34;</span><span class="p">,</span>
-		<span class="s">&#34;sunday&#34;</span><span class="p">,</span>
-		<span class="s">&#34;monday&#34;</span><span class="p">,</span>
-		<span class="s">&#34;tuesday&#34;</span><span class="p">,</span>
-		<span class="s">&#34;wednesday&#34;</span><span class="p">,</span>
-		<span class="s">&#34;thursday&#34;</span><span class="p">,</span>
-		<span class="s">&#34;friday&#34;</span><span class="p">,</span>
-		<span class="s">&#34;saturday&#34;</span><span class="p">,</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="nx">Weekday</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Names</span><span class="p">()[</span><span class="nx">e</span><span class="p">]</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">switchWeekday</span><span class="p">(</span><span class="nx">weekday</span> <span class="nx">Weekday</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">switch</span><span class="p">(</span><span class="nx">weekday</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">case</span> <span class="nx">Monday</span><span class="p">:</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello monday!!&#34;</span><span class="p">)</span>
-	<span class="k">case</span> <span class="nx">Friday</span><span class="p">:</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello friday!!&#34;</span><span class="p">)</span>
-	<span class="k">case</span> <span class="nx">Unknown</span><span class="p">:</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Unknown weekday....&#34;</span><span class="p">)</span>
-	<span class="k">default</span><span class="p">:</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;not found weekday...&#34;</span><span class="p">)</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;monday = %+v\n&#34;</span><span class="p">,</span> <span class="nx">Monday</span><span class="p">)</span>
-
-	<span class="nx">input</span> <span class="o">:=</span> <span class="s">&#34;friday&#34;</span>
-	<span class="nx">weekday</span> <span class="o">:=</span> <span class="nf">NewWeekday</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
-	<span class="nf">switchWeekday</span><span class="p">(</span><span class="nx">weekday</span><span class="p">)</span>
-
-	<span class="nx">input</span> <span class="p">=</span> <span class="s">&#34;nothing&#34;</span>
-	<span class="nx">weekday</span> <span class="p">=</span> <span class="nf">NewWeekday</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
-	<span class="nf">switchWeekday</span><span class="p">(</span><span class="nx">weekday</span><span class="p">)</span>
-<span class="p">}</span></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Weekday</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">const</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Unknown</span> <span class="nx">Weekday</span> <span class="p">=</span> <span class="kc">iota</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Sunday</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Monday</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Tuesday</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Wednesday</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Thursday</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Friday</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Saturday</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewWeekday</span><span class="p">(</span><span class="nx">strWeekday</span> <span class="kt">string</span><span class="p">)</span> <span class="nx">Weekday</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">name</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">Sunday</span><span class="p">.</span><span class="nf">Names</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">strWeekday</span> <span class="o">==</span> <span class="nx">name</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nf">Weekday</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">Unknown</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="nx">Weekday</span><span class="p">)</span> <span class="nf">Names</span><span class="p">()</span> <span class="p">[]</span><span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;unknown&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;sunday&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;monday&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;tuesday&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;wednesday&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;thursday&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;friday&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;saturday&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="nx">Weekday</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Names</span><span class="p">()[</span><span class="nx">e</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">switchWeekday</span><span class="p">(</span><span class="nx">weekday</span> <span class="nx">Weekday</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">switch</span><span class="p">(</span><span class="nx">weekday</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">Monday</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello monday!!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">Friday</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello friday!!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">Unknown</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Unknown weekday....&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;not found weekday...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;monday = %+v\n&#34;</span><span class="p">,</span> <span class="nx">Monday</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">input</span> <span class="o">:=</span> <span class="s">&#34;friday&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">weekday</span> <span class="o">:=</span> <span class="nf">NewWeekday</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">switchWeekday</span><span class="p">(</span><span class="nx">weekday</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">input</span> <span class="p">=</span> <span class="s">&#34;nothing&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">weekday</span> <span class="p">=</span> <span class="nf">NewWeekday</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">switchWeekday</span><span class="p">(</span><span class="nx">weekday</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-<p>ポイント</p>
-
+</div><p>ポイント</p>
 <ul>
 <li>EnumのタイプにUnknownを定義して見つからない場合はUnknownを返すようにした</li>
 <li>NewWeekday でstringをinputにWeekday型のenumを返す</li>
 <li>String()でEnumの文字を取得できる</li>
 </ul>
-
 <h1 id="まとめ">まとめ</h1>
-
-<p>これで今回の要件を満たせるEnumを定義することが出来ました！<br />
+<p>これで今回の要件を満たせるEnumを定義することが出来ました！<br>
 ただ、やはりGolangでEnumを定義するのは面倒ですね&hellip;</p>
-
 <p>引き続きナニカ書いていきます♪</p>
 
     </div>
@@ -387,11 +372,15 @@ const (
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2019-01-21</span>
+    <span class="item-content">
+        2019-01-21
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/golang/">golang</a>
           <a href="/tags/enum/">enum</a>
@@ -412,6 +401,10 @@ const (
   </article>
         </div>
         
+
+  
+
+  
 
       </div>
     </main>
@@ -439,24 +432,25 @@ const (
 
   <span class="copyright-year">
     &copy; 
-    2019
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">@ken-aio</span>
+    2019 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">
