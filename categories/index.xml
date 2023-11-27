@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Mon, 06 Mar 2023 10:30:00 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Nov 2023 19:57:46 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>isucon</title>
+      <link>https://ken-aio.github.io/categories/isucon/</link>
+      <pubDate>Mon, 27 Nov 2023 19:57:46 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/categories/isucon/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>golang</title>
       <link>https://ken-aio.github.io/categories/golang/</link>

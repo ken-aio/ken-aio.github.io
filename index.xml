@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Mon, 06 Mar 2023 10:30:00 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Nov 2023 19:57:46 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>isucon13に参加しました</title>
+      <link>https://ken-aio.github.io/post/2023/11/27/isucon13-soba/</link>
+      <pubDate>Mon, 27 Nov 2023 19:57:46 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2023/11/27/isucon13-soba/</guid>
+      <description>Tweet はじめに 11/25開催のisucon13に会社の同僚とsobaチームとして参加しました。 isucon9から参加していたみたいなので今年は5</description>
+    </item>
+    
     <item>
       <title>[Golang]Google Cloud PubSubでdocker container内でstreaming pullができない問題の解決方法</title>
       <link>https://ken-aio.github.io/post/2023/03/07/golang-pubsub/</link>
