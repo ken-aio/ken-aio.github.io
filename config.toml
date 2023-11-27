@@ -6,6 +6,7 @@ preserveTaxonomyNames = true
 enableRobotsTXT = true
 enableEmoji = true
 theme = "even"
+tenableGitInfo = false # use git commit log to generate lastmod record # 可根据 Git 中的提交生成最近更新记录。heme = "even"
 
 # Syntax highlighting by Chroma. NOTE: Don't enable `highlightInClient` and `chroma` at the same time!
 pygmentsOptions = "linenos=table"
@@ -53,6 +54,9 @@ copyright = "@ken-aio"            # default: author.name ↓        # 默认为�
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
 
   since = "2019"            # Site creation time          # 站点建立时间
+  # use public git repo url to link lastmod git commit, enableGitInfo should be true.
+  # 指定 git 仓库地址，可以生成指向最近更新的 git commit 的链接，需要将 enableGitInfo 设置成 true.
+  gitRepo = ""
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle = "ken-aio's blog"        # default: the title value    # 默认值: 上面设置的title值
@@ -72,7 +76,7 @@ copyright = "@ken-aio"            # default: author.name ↓        # 默认为�
   moreMeta = false
 
   # Syntax highlighting by highlight.js
-  highlightInClient = true
+  highlightInClient = false
 
   # 一些全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能，在 archetypes/default.md 查看更多信息。
   # Some global options, you can also close or open something in front matter for a single post, see more information from `archetypes/default.md`.
@@ -102,7 +106,7 @@ copyright = "@ken-aio"            # default: author.name ↓        # 默认为�
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  customCSS = []
+  customCSS = ["custom-font.css"]
   customJS = ["blank_link.js"]
 
   [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
@@ -178,6 +182,13 @@ copyright = "@ken-aio"            # default: author.name ↓        # 默认为�
     anonymizeIP = true      # 12.214.31.144 -> 12.214.31.0
   [privacy.youtube]
     privacyEnhanced = true
+
+# see https://gohugo.io/getting-started/configuration-markup
+[markup]
+  [markup.tableOfContents]
+    startLevel = 1
+  [markup.goldmark.renderer]
+    unsafe = true
 
 # 将下面这段配置取消注释可以使 hugo 生成 .md 文件
 # Uncomment these options to make hugo output .md files.
