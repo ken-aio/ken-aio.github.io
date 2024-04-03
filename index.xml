@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>@ken-aio</copyright>
-    <lastBuildDate>Sat, 09 Mar 2024 23:29:30 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Apr 2024 10:30:06 +0900</lastBuildDate><atom:link href="https://ken-aio.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Firebaseの公開名を設定する方法</title>
+      <link>https://ken-aio.github.io/post/2024/04/03/firebase-public-name-setting/</link>
+      <pubDate>Wed, 03 Apr 2024 10:30:06 +0900</pubDate>
+      
+      <guid>https://ken-aio.github.io/post/2024/04/03/firebase-public-name-setting/</guid>
+      <description>Tweet はじめに Firebase Authenticationを使っていて、メールをユーザに送信したいケースがありました。 メールを送信する際にメールテンプレート内</description>
+    </item>
+    
     <item>
       <title>「世界一流エンジニアの思考法」を読んで</title>
       <link>https://ken-aio.github.io/post/2024/03/09/top-engineers-thinking/</link>

@@ -2,35 +2,56 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ken-aio.github.io/post/2024/03/09/top-engineers-thinking/</loc>
-    <lastmod>2024-03-09T23:29:30+09:00</lastmod>
+    <loc>https://ken-aio.github.io/categories/</loc>
+    <lastmod>2024-04-03T10:30:06+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://ken-aio.github.io/categories/</loc>
-    <lastmod>2024-03-09T23:29:30+09:00</lastmod>
+    <loc>https://ken-aio.github.io/tags/firebase/</loc>
+    <lastmod>2024-04-03T10:30:06+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/categories/firebase/</loc>
+    <lastmod>2024-04-03T10:30:06+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/post/2024/04/03/firebase-public-name-setting/</loc>
+    <lastmod>2024-04-03T10:30:06+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/</loc>
-    <lastmod>2024-03-09T23:29:30+09:00</lastmod>
+    <lastmod>2024-04-03T10:30:06+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/post/</loc>
-    <lastmod>2024-03-09T23:29:30+09:00</lastmod>
+    <lastmod>2024-04-03T10:30:06+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://ken-aio.github.io/tags/</loc>
+    <lastmod>2024-04-03T10:30:06+09:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://ken-aio.github.io/post/2024/03/09/top-engineers-thinking/</loc>
     <lastmod>2024-03-09T23:29:30+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

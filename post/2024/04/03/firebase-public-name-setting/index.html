@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Firebaseの公開名を設定する方法 - ken-aio&#39;s blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="ken-aio" /><meta name="description" content="firebase" /><meta name="keywords" content="firebase" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
+
+
+<link rel="canonical" href="https://ken-aio.github.io/post/2024/04/03/firebase-public-name-setting/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/custom-font.css">
+
+
+<meta property="og:title" content="Firebaseの公開名を設定する方法" />
+<meta property="og:description" content="firebase" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ken-aio.github.io/post/2024/04/03/firebase-public-name-setting/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-04-03T10:30:06+09:00" />
+<meta property="article:modified_time" content="2024-04-03T10:30:06+09:00" />
+<meta itemprop="name" content="Firebaseの公開名を設定する方法">
+<meta itemprop="description" content="firebase"><meta itemprop="datePublished" content="2024-04-03T10:30:06+09:00" />
+<meta itemprop="dateModified" content="2024-04-03T10:30:06+09:00" />
+<meta itemprop="wordCount" content="783">
+<meta itemprop="keywords" content="firebase," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Firebaseの公開名を設定する方法"/>
+<meta name="twitter:description" content="firebase"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ken-aio&#39;s blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ken-aio&#39;s blog</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Firebaseの公開名を設定する方法</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2024-04-03 </span>
+        <div class="post-category">
+            <a href="/categories/firebase/"> firebase </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#調べたこと">調べたこと</a></li>
+    <li><a href="#返答">返答</a></li>
+    <li><a href="#結論">結論</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<h1 id="はじめに">はじめに</h1>
+<p>Firebase Authenticationを使っていて、メールをユーザに送信したいケースがありました。</p>
+<p>メールを送信する際にメールテンプレート内に <code>%APP_NAME%</code> の記述をすると該当のFirebaseプロジェクトのアプリケーション名を設定できるようです。</p>
+<p><a href="https://support.google.com/firebase/answer/7000714?hl=ja">https://support.google.com/firebase/answer/7000714?hl=ja</a></p>
+<p>しかし、Firebaseコンソールからアプリケーション名を設定する方法が分からなかったので調べてみました。</p>
+<p>以下画像の <code>公開設定</code> がどうしても表示されませんでした。
+<img src="../firebase-console.png" alt="firebase-console" width="600"></p>
+<h1 id="調べたこと">調べたこと</h1>
+<p>まず調べると、Firebaseコンソールの「プロジェクトの設定」から「全般」タブにて <code>公開名</code> を設定するような情報がいくつか見つかりました。
+しかし、私のFirebaseコンソールには <code>公開名</code> の設定項目が見当たりませんでした。
+色々と調べてもどうやって設定するのかの情報がなく、FirebaseのHelpからGoogleにお問合せをすることにしました。</p>
+<h1 id="返答">返答</h1>
+<p>問い合わせの翌日、早速以下のメール文章が返ってきました。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Could you try to set your public settings through Google Cloud Console? You may follow the steps below:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1. Go to Cloud Console Credentials.
+</span></span><span class="line"><span class="cl">2. Select your project.
+</span></span><span class="line"><span class="cl">3. Click Edit app.
+</span></span><span class="line"><span class="cl">4. Under the &#34;Application name&#34; section, set your public-facing name. or
+</span></span><span class="line"><span class="cl">5. Select your email in the drop down under &#34;Support email Shown on consent screen for user support&#34;.
+</span></span><span class="line"><span class="cl">6. Click Save.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Additionally, I also suggest to verify your &#34;Application logo&#34;, make sure that it points the URL to a valid png, jpg, bmp, or single frame gif, less than 1MB.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If the issues persists, provide the HAR file generated from the browser logs when the issue occurred to check if there&#39;s any underlying errors on that page.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定がFirebaseコンソール上ではなく、GoogleCloudConsole上で行うようです。</p>
+<p>早速、この手順で設定を行っていました。</p>
+<h1 id="結論">結論</h1>
+<p>こちらの手順でGoogleCloudから設定をこなうと、Firebaseコンソール上でも無事に <code>公開名</code> の設定ができるようになりました。
+この設定を行い、無事に目的のメールテンプレートの <code>%APP_NAME%</code> にアプリケーション名を設定することができました。</p>
+<p>Googleにお問合せをして、翌日に丁寧な返答がもらえてとても助かりました。
+同じようにお困りの方がいたら参考になれば幸いです。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">ken-aio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2024-04-03
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/firebase/">firebase</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/2024/03/09/top-engineers-thinking/">
+            <span class="next-text nav-default">「世界一流エンジニアの思考法」を読んで</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:suguru.akiho@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://twitter.com/ken_aio" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.facebook.com/suguru.akiho.7" class="iconfont icon-facebook" title="facebook"></a>
+      <a href="https://www.linkedin.com/in/%E8%B3%A2-%E7%A7%8B%E7%A9%82-6a302653/" class="iconfont icon-linkedin" title="linkedin"></a>
+  <a href="https://ken-aio.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>@ken-aio</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-38967677-1', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+<script src="/js/blank_link.js"></script>
+
+
+</body>
+</html>
