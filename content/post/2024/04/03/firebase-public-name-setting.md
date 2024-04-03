@@ -1,7 +1,7 @@
 ---
 title: "Firebaseの公開名を設定する方法"
 date: 2024-04-03T10:30:06+09:00
-draft: true
+draft: false
 keywords: ["firebase"]
 description: "firebase"
 tags: ["firebase"]
